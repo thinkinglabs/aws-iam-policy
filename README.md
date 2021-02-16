@@ -1,4 +1,4 @@
-# aws-iam-policy
+# aws-iam-policy [![Build Status](https://travis-ci.org/thinkinglabs/aws-iam-policy.svg?branch=main)](https://travis-ci.org/thinkinglabs/aws-iam-policy)
 
 A Node.js module for working with AWS IAM Policy documents.
 
