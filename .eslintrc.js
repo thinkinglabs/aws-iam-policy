@@ -8,7 +8,6 @@ module.exports = {
   },
   'extends': [
     'google',
-    'plugin:json/recommended',
   ],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
@@ -17,7 +16,6 @@ module.exports = {
   },
   'plugins': [
     '@typescript-eslint',
-    'json',
   ],
   'rules': {
     'max-len': ['error', {'code': 120}],
