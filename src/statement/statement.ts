@@ -1,9 +1,9 @@
 import {Effect} from './types';
 import {Principal} from '../principals/base';
-import {IAMPolicyStatementJSONDeserialiser} from './deserialiser';
-import {IAMPolicyStatementJSONSerialiser} from './serialiser';
+import {StatementJSONDeserialiser} from './deserialiser';
+import {StatementJSONSerialiser} from './serialiser';
 
-class IAMPolicyStatement {
+export class Statement {
   public sid: string | undefined;
   public effect: Effect;
   public principals: Principal[] = [];
@@ -11,7 +11,7 @@ class IAMPolicyStatement {
   public resources: string[] = [];
   public conditions: {[key:string]: any} = {};
 
-  constructor(props?: IAMPolicyStatementArgs) {
+  constructor(props?: StatementArgs) {
     this.sid = props?.sid;
     this.effect = props?.effect || Effect.ALLOW;
 
@@ -47,11 +47,11 @@ class IAMPolicyStatement {
   }
 
   toJSON() {
-    return IAMPolicyStatementJSONSerialiser.toJSON(this);
+    return StatementJSONSerialiser.toJSON(this);
   }
 
-  static fromJSON(obj: any): IAMPolicyStatement {
-    return IAMPolicyStatementJSONDeserialiser.fromJSON(obj);
+  static fromJSON(obj: any): Statement {
+    return StatementJSONDeserialiser.fromJSON(obj);
   }
 
   validateForAnyPolicy() {
@@ -82,7 +82,7 @@ class IAMPolicyStatement {
   }
 };
 
-interface IAMPolicyStatementArgs {
+interface StatementArgs {
   readonly sid?: string;
   readonly effect?: Effect;
   readonly principals?: Principal[];
@@ -92,5 +92,3 @@ interface IAMPolicyStatementArgs {
       [key: string]: any;
   };
 }
-
-export {IAMPolicyStatement};

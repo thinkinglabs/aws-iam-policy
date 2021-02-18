@@ -1,14 +1,14 @@
 import {expect} from 'chai';
 import {Effect} from '../../src/statement/types';
-import {IAMPolicyStatement} from '../../src/statement/statement';
+import {Statement} from '../../src/statement/statement';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
 import {AccountPrincipal} from '../../src/principals/account';
 
-describe('#IAMPolicyStatement', function() {
+describe('#Statement', function() {
   describe('when serialising to JSON', function() {
-    const statement = new IAMPolicyStatement({
+    const statement = new Statement({
       sid: 'anSID',
       effect: Effect.ALLOW,
       principals: [
@@ -35,13 +35,13 @@ describe('#IAMPolicyStatement', function() {
 
     it('should successfully pass a JSON round trip', function() {
       const json = JSON.stringify(statement.toJSON());
-      const actual = IAMPolicyStatement.fromJSON(JSON.parse(json));
+      const actual = Statement.fromJSON(JSON.parse(json));
       expect(actual).to.deep.equal(statement);
     });
   });
 
   describe('for identity-based policies', function() {
-    const statement = new IAMPolicyStatement({
+    const statement = new Statement({
       sid: 'ValidForIdentity',
       effect: Effect.ALLOW,
       actions: ['ec2:*'],
@@ -62,7 +62,7 @@ describe('#IAMPolicyStatement', function() {
   });
 
   describe('for resource-based policies', function() {
-    const statement = new IAMPolicyStatement({
+    const statement = new Statement({
       sid: 'ValidForResource',
       effect: Effect.ALLOW,
       principals: [new ServicePrincipal('aservice.amazonaws.com')],
@@ -86,7 +86,7 @@ describe('#IAMPolicyStatement', function() {
   });
 
   describe('without actions', function() {
-    const statement = new IAMPolicyStatement({
+    const statement = new Statement({
       sid: 'Invalid',
       effect: Effect.ALLOW,
       principals: [new ArnPrincipal('arn:aws:iam::123456789000:user/aUser')],
@@ -103,10 +103,10 @@ describe('#IAMPolicyStatement', function() {
   });
 
   describe('when empty', function() {
-    let statement: IAMPolicyStatement;
+    let statement: Statement;
 
     beforeEach(function() {
-      statement = new IAMPolicyStatement();
+      statement = new Statement();
     });
 
     it('should have effect set by default to ALLOW', function() {

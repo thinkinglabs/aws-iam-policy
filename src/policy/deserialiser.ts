@@ -1,4 +1,4 @@
-import {IAMPolicyStatement} from '../statement/statement';
+import {Statement} from '../statement/statement';
 import {PolicyDocument} from './policy';
 
 export class PolicyDocumentJSONDeserialiser {
@@ -12,7 +12,7 @@ export class PolicyDocumentJSONDeserialiser {
     }
 
     const result = new PolicyDocument({
-      statements: statements.map((statement: any) => IAMPolicyStatement.fromJSON(statement)),
+      statements: statements.map((statement: any) => Statement.fromJSON(statement)),
     });
     return result;
   }

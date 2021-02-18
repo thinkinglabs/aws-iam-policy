@@ -1,9 +1,9 @@
-import {IAMPolicyStatement} from './statement';
+import {Statement} from './statement';
 import {normalise} from '../normaliser';
 import {PrincipalJSONSerialiser} from '../principals/serialiser';
 
-class IAMPolicyStatementJSONSerialiser {
-  static toJSON(statement: IAMPolicyStatement) {
+export class StatementJSONSerialiser {
+  static toJSON(statement: Statement) {
     return {
       Sid: normalise(statement.sid),
       Effect: normalise(statement.effect),
@@ -14,5 +14,3 @@ class IAMPolicyStatementJSONSerialiser {
     };
   }
 }
-
-export {IAMPolicyStatementJSONSerialiser};

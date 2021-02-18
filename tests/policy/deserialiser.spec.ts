@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {PolicyDocumentJSONDeserialiser} from '../../src/policy/deserialiser';
 import {PolicyDocument} from '../../src/policy/policy';
-import {IAMPolicyStatement} from '../../src/statement/statement';
+import {Statement} from '../../src/statement/statement';
 
 
 describe('#PolicyDocumentJSONDeserialiser', function() {
@@ -37,7 +37,7 @@ describe('#PolicyDocumentJSONDeserialiser', function() {
         };
         it('should return a Policy with Statements', function() {
           const expected = new PolicyDocument({
-            statements: [new IAMPolicyStatement({sid: 'sid1'}), new IAMPolicyStatement({sid: 'sid2'})],
+            statements: [new Statement({sid: 'sid1'}), new Statement({sid: 'sid2'})],
           });
           expect(PolicyDocumentJSONDeserialiser.fromJSON(json)).to.deep.equal(expected);
         });

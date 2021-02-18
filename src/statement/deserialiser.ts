@@ -1,9 +1,9 @@
 import {PrincipalJSONDeserialiser} from '../../src/principals/deserialiser';
-import {IAMPolicyStatement} from '../../src/statement/statement';
+import {Statement} from '../../src/statement/statement';
 
-class IAMPolicyStatementJSONDeserialiser {
+export class StatementJSONDeserialiser {
   static fromJSON(obj: any) {
-    return new IAMPolicyStatement({
+    return new Statement({
       sid: obj.Sid,
       effect: obj.Effect,
       principals: PrincipalJSONDeserialiser.fromJSON(obj.Principal),
@@ -30,5 +30,3 @@ class IAMPolicyStatementJSONDeserialiser {
     }
   }
 }
-
-export {IAMPolicyStatementJSONDeserialiser};

@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {PolicyDocument} from '../../src/policy/policy';
 import {PolicyDocumentJSONSerialiser} from '../../src/policy/serialiser';
-import {IAMPolicyStatement} from '../../src/statement/statement';
+import {Statement} from '../../src/statement/statement';
 
 describe('#PolicyDocumentJSONSerialiser', function() {
   describe('#toJSON', function() {
@@ -13,7 +13,7 @@ describe('#PolicyDocumentJSONSerialiser', function() {
     });
 
     describe('when policy has an empty statement', function() {
-      const input = new PolicyDocument({statements: [new IAMPolicyStatement()]});
+      const input = new PolicyDocument({statements: [new Statement()]});
       it('should return a JSON policy with an empty Statement', function() {
         const expected = {
           Statement: [{

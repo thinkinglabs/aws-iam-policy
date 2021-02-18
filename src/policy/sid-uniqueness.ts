@@ -1,12 +1,12 @@
-import {IAMPolicyStatement} from '../statement/statement';
+import {Statement} from '../statement/statement';
 
 class SidUniquenessValidator {
-  private statements: IAMPolicyStatement[];
-  constructor(statements: IAMPolicyStatement[]) {
+  private statements: Statement[];
+  constructor(statements: Statement[]) {
     this.statements = statements;
   }
 
-  validate(newStatement: IAMPolicyStatement) {
+  validate(newStatement: Statement) {
     if (newStatement.sid === undefined) {
       return true;
     }

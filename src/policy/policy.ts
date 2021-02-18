@@ -1,9 +1,9 @@
 import {PolicyDocumentJSONSerialiser} from './serialiser';
-import {IAMPolicyStatement} from '../statement/statement';
+import {Statement} from '../statement/statement';
 import {SidUniquenessValidator} from './sid-uniqueness';
 
 export class PolicyDocument {
-  public statements: IAMPolicyStatement[] = [];
+  public statements: Statement[] = [];
 
   constructor(props?: PolicyDocumentArgs) {
     this.addStatements(...props?.statements || []);
@@ -17,7 +17,7 @@ export class PolicyDocument {
     return this.statements.length;
   }
 
-  private addStatements(...statements: IAMPolicyStatement[]) {
+  private addStatements(...statements: Statement[]) {
     statements.forEach((statement) => {
       if (!new SidUniquenessValidator(this.statements).validate(statement)) {
         throw new Error(`Non-unique Sid "${statement.sid}"`);
@@ -26,7 +26,7 @@ export class PolicyDocument {
     });
   }
 
-  getStatement(sid: string): IAMPolicyStatement | undefined {
+  getStatement(sid: string): Statement | undefined {
     return this.statements.find((stmt) => stmt.sid === sid);
   }
 
@@ -40,7 +40,7 @@ export class PolicyDocument {
     if (statements && !Array.isArray(statements)) {
       throw new Error('Statement must be an array');
     }
-    result.addStatements(...statements.map((statement: any) => IAMPolicyStatement.fromJSON(statement)));
+    result.addStatements(...statements.map((statement: any) => Statement.fromJSON(statement)));
     return result;
   }
 
@@ -70,5 +70,5 @@ export class PolicyDocument {
 }
 
 interface PolicyDocumentArgs {
-  readonly statements?: IAMPolicyStatement[];
+  readonly statements?: Statement[];
 }

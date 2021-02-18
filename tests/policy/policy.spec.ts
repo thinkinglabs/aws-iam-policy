@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import {Effect} from '../../src/statement/types';
 import {PolicyDocument} from '../../src/policy/policy';
-import {IAMPolicyStatement} from '../../src/statement/statement';
+import {Statement} from '../../src/statement/statement';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
@@ -11,7 +11,7 @@ describe('#PolicyDocument', function() {
   describe('when serialising to JSON', function() {
     const policy = new PolicyDocument({
       statements: [
-        new IAMPolicyStatement({
+        new Statement({
           sid: 'anSID',
           effect: Effect.ALLOW,
           principals: [
@@ -35,7 +35,7 @@ describe('#PolicyDocument', function() {
             },
           },
         }),
-        new IAMPolicyStatement({
+        new Statement({
           sid: 'anSID2',
           effect: Effect.DENY,
           principals: [new ArnPrincipal('arn:aws:iam::123456789000:role/aRole')],
@@ -55,7 +55,7 @@ describe('#PolicyDocument', function() {
   describe('#fromJSON', function() {
     describe('when Statement is not an array', function() {
       it('should throw an Error', function() {
-        const input = {Statement: new IAMPolicyStatement({sid: 'not an array'})};
+        const input = {Statement: new Statement({sid: 'not an array'})};
         expect(() => PolicyDocument.fromJSON(input)).to.throw(Error)
             .with.property('message', 'Statement must be an array');
       });
@@ -73,7 +73,7 @@ describe('#PolicyDocument', function() {
 
     describe('when adding 1 statement', function() {
       const policy = new PolicyDocument({
-        statements: [new IAMPolicyStatement()],
+        statements: [new Statement()],
       });
 
       it('should have one statement', function() {
@@ -86,8 +86,8 @@ describe('#PolicyDocument', function() {
         const sid = 'anSid';
         expect(() => new PolicyDocument({
           statements: [
-            new IAMPolicyStatement({sid: sid}),
-            new IAMPolicyStatement({sid: sid, resources: ['*']}),
+            new Statement({sid: sid}),
+            new Statement({sid: sid, resources: ['*']}),
           ],
         })).to.throw(Error).with.property('message', 'Non-unique Sid "anSid"');
       });
@@ -97,17 +97,17 @@ describe('#PolicyDocument', function() {
   describe('when having statements', function() {
     const policy = new PolicyDocument({
       statements: [
-        new IAMPolicyStatement({sid: 'first sid', resources: ['resource1']}),
-        new IAMPolicyStatement({resources: ['resource2']}),
-        new IAMPolicyStatement({sid: 'third sid', resources: ['resource3']}),
-        new IAMPolicyStatement({sid: 'fourth sid', resources: ['resource4']}),
+        new Statement({sid: 'first sid', resources: ['resource1']}),
+        new Statement({resources: ['resource2']}),
+        new Statement({sid: 'third sid', resources: ['resource3']}),
+        new Statement({sid: 'fourth sid', resources: ['resource4']}),
       ],
     });
 
     describe('#getStatement', function() {
       describe('when Sid exists', function() {
         it('should return the statement having the given Sid', function() {
-          const expected = new IAMPolicyStatement({sid: 'third sid', resources: ['resource3']});
+          const expected = new Statement({sid: 'third sid', resources: ['resource3']});
           expect(policy.getStatement('third sid')).to.deep.equal(expected);
         });
       });
@@ -123,8 +123,8 @@ describe('#PolicyDocument', function() {
   describe('identity-based policy', function() {
     const policy = new PolicyDocument({
       statements: [
-        new IAMPolicyStatement({sid: '1st', actions: ['action'], resources: ['resource']}),
-        new IAMPolicyStatement({sid: '2nd', actions: ['action'], resources: ['resource']}),
+        new Statement({sid: '1st', actions: ['action'], resources: ['resource']}),
+        new Statement({sid: '2nd', actions: ['action'], resources: ['resource']}),
       ]});
 
     it('should be valid for identity-based policy', function() {
@@ -143,8 +143,8 @@ describe('#PolicyDocument', function() {
   describe('resource-based policy', function() {
     const policy = new PolicyDocument({
       statements: [
-        new IAMPolicyStatement({sid: '1st', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
-        new IAMPolicyStatement({sid: '2nd', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
+        new Statement({sid: '1st', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
+        new Statement({sid: '2nd', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
       ]});
 
     it('should be valid for resource-based policy', function() {
@@ -165,8 +165,8 @@ describe('#PolicyDocument', function() {
   describe('policy without actions', function() {
     const policy = new PolicyDocument({
       statements: [
-        new IAMPolicyStatement({sid: '1st'}),
-        new IAMPolicyStatement({sid: '2nd'}),
+        new Statement({sid: '1st'}),
+        new Statement({sid: '2nd'}),
       ]});
 
     it('should be invalid for any policy', function() {
