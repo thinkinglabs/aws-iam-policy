@@ -1,11 +1,11 @@
-import {IAMPolicyJSONSerialiser} from './serialiser';
+import {PolicyDocumentJSONSerialiser} from './serialiser';
 import {IAMPolicyStatement} from '../statement/statement';
 import {SidUniquenessValidator} from './sid-uniqueness';
 
-class IAMPolicy {
+export class PolicyDocument {
   public statements: IAMPolicyStatement[] = [];
 
-  constructor(props?: IAMPolicyDocumentArgs) {
+  constructor(props?: PolicyDocumentArgs) {
     this.addStatements(...props?.statements || []);
   }
 
@@ -31,11 +31,11 @@ class IAMPolicy {
   }
 
   toJSON() {
-    return IAMPolicyJSONSerialiser.toJSON(this);
+    return PolicyDocumentJSONSerialiser.toJSON(this);
   }
 
   static fromJSON(obj: any) {
-    const result = new IAMPolicy();
+    const result = new PolicyDocument();
     const statements = obj.Statement;
     if (statements && !Array.isArray(statements)) {
       throw new Error('Statement must be an array');
@@ -69,8 +69,6 @@ class IAMPolicy {
   }
 }
 
-interface IAMPolicyDocumentArgs {
+interface PolicyDocumentArgs {
   readonly statements?: IAMPolicyStatement[];
 }
-
-export {IAMPolicy};

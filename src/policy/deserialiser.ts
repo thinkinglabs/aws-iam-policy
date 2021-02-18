@@ -1,21 +1,19 @@
 import {IAMPolicyStatement} from '../statement/statement';
-import {IAMPolicy} from './policy';
+import {PolicyDocument} from './policy';
 
-class IAMPolicyJSONDeserialiser {
+export class PolicyDocumentJSONDeserialiser {
   static fromJSON(obj: any) {
     const statements = obj.Statement;
     if (statements === undefined) {
-      return new IAMPolicy();
+      return new PolicyDocument();
     }
     if (!Array.isArray(statements)) {
       throw new Error('Unexpected type: Statement must be an array');
     }
 
-    const result = new IAMPolicy({
+    const result = new PolicyDocument({
       statements: statements.map((statement: any) => IAMPolicyStatement.fromJSON(statement)),
     });
     return result;
   }
 }
-
-export {IAMPolicyJSONDeserialiser};

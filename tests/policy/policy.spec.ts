@@ -1,15 +1,15 @@
 import {expect} from 'chai';
 import {Effect} from '../../src/statement/types';
-import {IAMPolicy} from '../../src/policy/policy';
+import {PolicyDocument} from '../../src/policy/policy';
 import {IAMPolicyStatement} from '../../src/statement/statement';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
 import {AccountPrincipal} from '../../src/principals/account';
 
-describe('#IAMPolicyDocument', function() {
+describe('#PolicyDocument', function() {
   describe('when serialising to JSON', function() {
-    const policy = new IAMPolicy({
+    const policy = new PolicyDocument({
       statements: [
         new IAMPolicyStatement({
           sid: 'anSID',
@@ -47,7 +47,7 @@ describe('#IAMPolicyDocument', function() {
 
     it('should successfully pass a JSON round trip', function() {
       const json = JSON.stringify(policy.toJSON());
-      const actual = IAMPolicy.fromJSON(JSON.parse(json));
+      const actual = PolicyDocument.fromJSON(JSON.parse(json));
       expect(actual).to.deep.equal(policy);
     });
   });
@@ -56,7 +56,7 @@ describe('#IAMPolicyDocument', function() {
     describe('when Statement is not an array', function() {
       it('should throw an Error', function() {
         const input = {Statement: new IAMPolicyStatement({sid: 'not an array'})};
-        expect(() => IAMPolicy.fromJSON(input)).to.throw(Error)
+        expect(() => PolicyDocument.fromJSON(input)).to.throw(Error)
             .with.property('message', 'Statement must be an array');
       });
     });
@@ -64,7 +64,7 @@ describe('#IAMPolicyDocument', function() {
 
   describe('#constructor', function() {
     describe('when empty', function() {
-      const policy = new IAMPolicy();
+      const policy = new PolicyDocument();
 
       it('should be empty', function() {
         expect(policy.isEmpty).to.be.true;
@@ -72,7 +72,7 @@ describe('#IAMPolicyDocument', function() {
     });
 
     describe('when adding 1 statement', function() {
-      const policy = new IAMPolicy({
+      const policy = new PolicyDocument({
         statements: [new IAMPolicyStatement()],
       });
 
@@ -84,7 +84,7 @@ describe('#IAMPolicyDocument', function() {
     describe('when adding 2 statements having the same Sid', function() {
       it('should throw an error', function() {
         const sid = 'anSid';
-        expect(() => new IAMPolicy({
+        expect(() => new PolicyDocument({
           statements: [
             new IAMPolicyStatement({sid: sid}),
             new IAMPolicyStatement({sid: sid, resources: ['*']}),
@@ -95,7 +95,7 @@ describe('#IAMPolicyDocument', function() {
   });
 
   describe('when having statements', function() {
-    const policy = new IAMPolicy({
+    const policy = new PolicyDocument({
       statements: [
         new IAMPolicyStatement({sid: 'first sid', resources: ['resource1']}),
         new IAMPolicyStatement({resources: ['resource2']}),
@@ -121,7 +121,7 @@ describe('#IAMPolicyDocument', function() {
   });
 
   describe('identity-based policy', function() {
-    const policy = new IAMPolicy({
+    const policy = new PolicyDocument({
       statements: [
         new IAMPolicyStatement({sid: '1st', actions: ['action'], resources: ['resource']}),
         new IAMPolicyStatement({sid: '2nd', actions: ['action'], resources: ['resource']}),
@@ -141,7 +141,7 @@ describe('#IAMPolicyDocument', function() {
   });
 
   describe('resource-based policy', function() {
-    const policy = new IAMPolicy({
+    const policy = new PolicyDocument({
       statements: [
         new IAMPolicyStatement({sid: '1st', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
         new IAMPolicyStatement({sid: '2nd', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
@@ -163,7 +163,7 @@ describe('#IAMPolicyDocument', function() {
   });
 
   describe('policy without actions', function() {
-    const policy = new IAMPolicy({
+    const policy = new PolicyDocument({
       statements: [
         new IAMPolicyStatement({sid: '1st'}),
         new IAMPolicyStatement({sid: '2nd'}),

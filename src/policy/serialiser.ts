@@ -1,7 +1,7 @@
-import {IAMPolicy} from './policy';
+import {PolicyDocument} from './policy';
 
-class IAMPolicyJSONSerialiser {
-  static toJSON(policy: IAMPolicy) {
+export class PolicyDocumentJSONSerialiser {
+  static toJSON(policy: PolicyDocument) {
     if (policy.isEmpty) {
       return undefined;
     }
@@ -11,5 +11,3 @@ class IAMPolicyJSONSerialiser {
     };
   }
 }
-
-export {IAMPolicyJSONSerialiser};
