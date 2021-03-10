@@ -1,5 +1,4 @@
 import {expect} from 'chai';
-import {Effect} from '../../src/statement/types';
 import {Statement} from '../../src/statement/statement';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {ServicePrincipal} from '../../src/principals/service';
@@ -10,7 +9,7 @@ describe('#Statement', function() {
   describe('when serialising to JSON', function() {
     const statement = new Statement({
       sid: 'anSID',
-      effect: Effect.ALLOW,
+      effect: 'Allow',
       principals: [
         new ArnPrincipal('arn:aws:iam::123456789000:user/aUser'),
         new RootAccountPrincipal('123456789000'),
@@ -43,7 +42,7 @@ describe('#Statement', function() {
   describe('for identity-based policies', function() {
     const statement = new Statement({
       sid: 'ValidForIdentity',
-      effect: Effect.ALLOW,
+      effect: 'Allow',
       actions: ['ec2:*'],
       resources: ['*'],
     });
@@ -64,7 +63,7 @@ describe('#Statement', function() {
   describe('for resource-based policies', function() {
     const statement = new Statement({
       sid: 'ValidForResource',
-      effect: Effect.ALLOW,
+      effect: 'Allow',
       principals: [new ServicePrincipal('aservice.amazonaws.com')],
       actions: ['ec2:*'],
     });
@@ -88,7 +87,7 @@ describe('#Statement', function() {
   describe('without actions', function() {
     const statement = new Statement({
       sid: 'Invalid',
-      effect: Effect.ALLOW,
+      effect: 'Allow',
       principals: [new ArnPrincipal('arn:aws:iam::123456789000:user/aUser')],
       resources: ['*'],
     });
@@ -110,7 +109,7 @@ describe('#Statement', function() {
     });
 
     it('should have effect set by default to ALLOW', function() {
-      expect(statement.effect).to.equal(Effect.ALLOW);
+      expect(statement.effect).to.equal('Allow');
     });
   });
 });

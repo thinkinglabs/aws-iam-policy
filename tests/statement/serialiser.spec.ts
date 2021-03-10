@@ -2,7 +2,6 @@ import {expect} from 'chai';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONSerialiser} from '../../src/statement/serialiser';
 import {Statement} from '../../src/statement/statement';
-import {Effect} from '../../src/statement/types';
 
 describe('#StatementJSONSerialiser', function() {
   describe('when statement is empty', function() {
@@ -10,7 +9,7 @@ describe('#StatementJSONSerialiser', function() {
     it('should return a JSON object with default Effect and undefined properties', function() {
       const expected = {
         Sid: undefined,
-        Effect: Effect.ALLOW,
+        Effect: 'Allow',
         Principal: undefined,
         Action: undefined,
         Resource: undefined,
@@ -25,7 +24,7 @@ describe('#StatementJSONSerialiser', function() {
     it('should return a JSON object with an Sid', function() {
       const expected = {
         Sid: 'an sid',
-        Effect: Effect.ALLOW,
+        Effect: 'Allow',
         Principal: undefined,
         Action: undefined,
         Resource: undefined,
@@ -40,7 +39,7 @@ describe('#StatementJSONSerialiser', function() {
     it('should return a JSON object with undefined Principal, Action and Resource', function() {
       const expected = {
         Sid: undefined,
-        Effect: Effect.ALLOW,
+        Effect: 'Allow',
         Principal: undefined,
         Action: undefined,
         Resource: undefined,
@@ -60,7 +59,7 @@ describe('#StatementJSONSerialiser', function() {
     it('should return a JSON object with undefined Principal, Action and Resource', function() {
       const expected = {
         Sid: undefined,
-        Effect: Effect.ALLOW,
+        Effect: 'Allow',
         Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
         Action: ['action1'],
         Resource: ['resource1'],
@@ -76,7 +75,7 @@ describe('#StatementJSONSerialiser', function() {
       it('should return a JSON object with undefined Condition', function() {
         const expected = {
           Sid: undefined,
-          Effect: Effect.ALLOW,
+          Effect: 'Allow',
           Principal: undefined,
           Action: undefined,
           Resource: undefined,
@@ -92,7 +91,7 @@ describe('#StatementJSONSerialiser', function() {
         it('should return a JSON object having a Condition with operator having an undefined value', function() {
           const expected = {
             Sid: undefined,
-            Effect: Effect.ALLOW,
+            Effect: 'Allow',
             Principal: undefined,
             Action: undefined,
             Resource: undefined,
@@ -107,7 +106,7 @@ describe('#StatementJSONSerialiser', function() {
         it('should return a JSON object having a Condition with operator having an empty object', function() {
           const expected = {
             Sid: undefined,
-            Effect: Effect.ALLOW,
+            Effect: 'Allow',
             Principal: undefined,
             Action: undefined,
             Resource: undefined,
@@ -123,7 +122,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with undefined condition key', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,
@@ -140,7 +139,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with condition key having an empty string', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,
@@ -155,7 +154,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with condition key having a non-empty string', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,
@@ -172,7 +171,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with condition key having an empty array', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,
@@ -187,7 +186,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with condition key having a non-empty array', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,
@@ -204,7 +203,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with condition key having an empty object', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,
@@ -219,7 +218,7 @@ describe('#StatementJSONSerialiser', function() {
           it('should return a JSON object having a Condition with condition key having a non-empty object', function() {
             const expected = {
               Sid: undefined,
-              Effect: Effect.ALLOW,
+              Effect: 'Allow',
               Principal: undefined,
               Action: undefined,
               Resource: undefined,

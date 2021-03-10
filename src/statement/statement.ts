@@ -1,7 +1,10 @@
-import {Effect} from './types';
 import {Principal} from '../principals/base';
 import {StatementJSONDeserialiser} from './deserialiser';
 import {StatementJSONSerialiser} from './serialiser';
+
+/* eslint-disable no-unused-vars */
+export type Effect = 'Allow' | 'Deny'
+/* eslint-enable no-unused-vars */
 
 export class Statement {
   public sid: string | undefined;
@@ -13,7 +16,7 @@ export class Statement {
 
   constructor(props?: StatementArgs) {
     this.sid = props?.sid;
-    this.effect = props?.effect || Effect.ALLOW;
+    this.effect = props?.effect || 'Allow';
 
     this.addPrincipals(...props?.principals || []);
     this.addActions(...props?.actions || []);

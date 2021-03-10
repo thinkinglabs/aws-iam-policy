@@ -1,5 +1,4 @@
 import {expect} from 'chai';
-import {Effect} from '../../src/statement/types';
 import {PolicyDocument} from '../../src/policy/policy';
 import {Statement} from '../../src/statement/statement';
 import {ArnPrincipal} from '../../src/principals/arn';
@@ -13,7 +12,7 @@ describe('#PolicyDocument', function() {
       statements: [
         new Statement({
           sid: 'anSID',
-          effect: Effect.ALLOW,
+          effect: 'Allow',
           principals: [
             new ArnPrincipal('arn:aws:iam::123456789000:user/aUser'),
             new RootAccountPrincipal('123456789000'),
@@ -37,7 +36,7 @@ describe('#PolicyDocument', function() {
         }),
         new Statement({
           sid: 'anSID2',
-          effect: Effect.DENY,
+          effect: 'Deny',
           principals: [new ArnPrincipal('arn:aws:iam::123456789000:role/aRole')],
           actions: ['ec2:TerminateInstance'],
           resources: ['arn:aws:ec2:eu-west-1:123456789000:instance/i-123456'],

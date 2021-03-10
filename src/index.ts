@@ -1,6 +1,5 @@
 export * from './policy/policy';
 export * from './statement/statement';
-export * from './statement/types';
 export * from './principals/base';
 export * from './principals/anonymous';
 export * from './principals/arn';
