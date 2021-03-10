@@ -45,17 +45,17 @@ describe('#PolicyDocument', function() {
     });
 
     it('should successfully pass a JSON round trip', function() {
-      const json = JSON.stringify(policy.toJSON());
-      const actual = PolicyDocument.fromJSON(JSON.parse(json));
+      const json = policy.json;
+      const actual = PolicyDocument.fromJson(json);
       expect(actual).to.deep.equal(policy);
     });
   });
 
-  describe('#fromJSON', function() {
+  describe('#fromJson', function() {
     describe('when Statement is not an array', function() {
       it('should throw an Error', function() {
-        const input = {Statement: new Statement({sid: 'not an array'})};
-        expect(() => PolicyDocument.fromJSON(input)).to.throw(Error)
+        const input = JSON.stringify({Statement: new Statement({sid: 'not an array'})});
+        expect(() => PolicyDocument.fromJson(input)).to.throw(Error)
             .with.property('message', 'Statement must be an array');
       });
     });

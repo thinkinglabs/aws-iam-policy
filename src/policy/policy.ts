@@ -30,11 +30,12 @@ export class PolicyDocument {
     return this.statements.find((stmt) => stmt.sid === sid);
   }
 
-  toJSON() {
-    return PolicyDocumentJSONSerialiser.toJSON(this);
+  get json() {
+    return JSON.stringify(PolicyDocumentJSONSerialiser.toJSON(this));
   }
 
-  static fromJSON(obj: any) {
+  static fromJson(json: string) {
+    const obj = JSON.parse(json);
     const result = new PolicyDocument();
     const statements = obj.Statement;
     if (statements && !Array.isArray(statements)) {
