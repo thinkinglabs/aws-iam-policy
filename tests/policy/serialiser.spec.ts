@@ -13,7 +13,7 @@ describe('#PolicyDocumentJSONSerialiser', function() {
     });
 
     describe('when policy has an empty statement', function() {
-      const input = new PolicyDocument({statements: [new Statement()]});
+      const input = new PolicyDocument([new Statement()]);
       it('should return a JSON policy with an empty Statement', function() {
         const expected = {
           Statement: [{

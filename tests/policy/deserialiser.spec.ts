@@ -36,9 +36,10 @@ describe('#PolicyDocumentJSONDeserialiser', function() {
           Statement: [{Sid: 'sid1'}, {Sid: 'sid2'}],
         };
         it('should return a Policy with Statements', function() {
-          const expected = new PolicyDocument({
-            statements: [new Statement({sid: 'sid1'}), new Statement({sid: 'sid2'})],
-          });
+          const expected = new PolicyDocument([
+            new Statement({sid: 'sid1'}),
+            new Statement({sid: 'sid2'}),
+          ]);
           expect(PolicyDocumentJSONDeserialiser.fromJSON(json)).to.deep.equal(expected);
         });
       });

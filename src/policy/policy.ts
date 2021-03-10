@@ -5,8 +5,8 @@ import {SidUniquenessValidator} from './sid-uniqueness';
 export class PolicyDocument {
   public statements: Statement[] = [];
 
-  constructor(props?: PolicyDocumentArgs) {
-    this.addStatements(...props?.statements || []);
+  constructor(statements?: Statement[]) {
+    this.addStatements(...statements || []);
   }
 
   get isEmpty() {
@@ -68,8 +68,4 @@ export class PolicyDocument {
     });
     return errors;
   }
-}
-
-interface PolicyDocumentArgs {
-  readonly statements?: Statement[];
 }
