@@ -1,5 +1,5 @@
 {
-  "name": "@thinkinglabs/aws-iam-policy",
+  "name": "aws-iam-policy",
   "version": "1.0.0",
   "description": "TypeScript library for handling AWS IAM Policy documents",
   "homepage": "https://github.com/thinkinglabs/aws-iam-policy",
