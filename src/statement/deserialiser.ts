@@ -1,5 +1,5 @@
-import {PrincipalJSONDeserialiser} from '../../src/principals/deserialiser';
-import {Statement} from '../../src/statement/statement';
+import {PrincipalJSONDeserialiser} from '../principals/deserialiser';
+import {Statement} from '../statement/statement';
 
 export class StatementJSONDeserialiser {
   static fromJSON(obj: any) {
