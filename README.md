@@ -64,7 +64,8 @@ function kmsKeyPolicyDocument(accountId: string, keyAdminArns: string[], keyUser
 });
 ```
 
-Unit testing the policy document.
+Unit testing a statement from a policy document. You can retrieve a single
+statement using the Sid of that statement.
 
 ```typescript
 import {expect} from 'chai';
