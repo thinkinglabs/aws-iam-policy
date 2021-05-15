@@ -8,43 +8,43 @@ export class ConditionJSONSerialiser {
     return merge(conditions);
 
     function merge(conditions: Condition[]) {
-      const result: { [test: string]: {[key: string]: string[]}} = {};
+      const result: { [operator: string]: {[key: string]: string[]}} = {};
 
       conditions.forEach((condition) => {
         const json = condition.toJSON();
 
-        Object.keys(json).forEach((test) => {
-          mergeTest(result, json, test);
+        Object.keys(json).forEach((operator) => {
+          mergeOperator(result, json, operator);
         });
       });
       return result;
     }
 
-    function mergeTest(
-        result: {[test: string]: {[key: string]: string[]}},
-        json: {[test: string]: {[key: string]: string[]}},
-        test: string,
+    function mergeOperator(
+        result: {[operator: string]: {[key: string]: string[]}},
+        json: {[operator: string]: {[key: string]: string[]}},
+        operator: string,
     ) {
-      const jsonTest = json[test];
-      if (test in result) {
-        Object.keys(jsonTest).forEach((key) => {
-          mergeKey(result[test], jsonTest, key);
+      const jsonOperator = json[operator];
+      if (operator in result) {
+        Object.keys(jsonOperator).forEach((key) => {
+          mergeKey(result[operator], jsonOperator, key);
         });
       } else {
-        result[test] = jsonTest;
+        result[operator] = jsonOperator;
       }
     }
 
     function mergeKey(
-        resultTest: {[key:string]: string[]},
-        jsonTest: {[key:string]: string[]},
+        resultOperator: {[key:string]: string[]},
+        jsonOperator: {[key:string]: string[]},
         key: string,
     ) {
-      const values = jsonTest[key];
-      if (key in resultTest) {
-        resultTest[key].push(...values);
+      const values = jsonOperator[key];
+      if (key in resultOperator) {
+        resultOperator[key].push(...values);
       } else {
-        resultTest[key] = values;
+        resultOperator[key] = values;
       }
     }
   }

@@ -4,9 +4,9 @@ export class Condition {
   public readonly key: string;
   public readonly values: string[];
 
-  constructor(test: string, key: string, values: string[]) {
-    if (test === '') {
-      throw new Error('test should not be empty');
+  constructor(operator: string, key: string, values: string[]) {
+    if (operator === '') {
+      throw new Error('operator should not be empty');
     }
     if (key === '') {
       throw new Error('key should not be empty');
@@ -17,7 +17,7 @@ export class Condition {
     if (values.filter((value) => value === '').length > 0) {
       throw new Error('values should not have an empty string');
     }
-    this.operator = test;
+    this.operator = operator;
     this.key = key;
     this.values = values;
   }

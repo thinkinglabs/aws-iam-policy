@@ -12,50 +12,50 @@ describe('#ConditionJSONSerialiser', function() {
     });
 
     describe('when having one condition', function() {
-      const conditions = [new Condition('aTest', 'aKey', ['aValue'])];
+      const conditions = [new Condition('anOperator', 'aKey', ['aValue'])];
       it('should return the Condition JSON object', function() {
         const expected = {
-          'aTest': {'aKey': ['aValue']},
+          'anOperator': {'aKey': ['aValue']},
         };
         expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
       });
     });
 
-    describe('when having two conditions having a different test', function() {
+    describe('when having two conditions having a different operator', function() {
       const conditions = [
-        new Condition('aTest1', 'aKey1', ['aValue1']),
-        new Condition('aTest2', 'aKey2', ['aValue2']),
+        new Condition('anOperator1', 'aKey1', ['aValue1']),
+        new Condition('anOperator2', 'aKey2', ['aValue2']),
       ];
       it('should return the Condition JSON object', function() {
         const expected = {
-          'aTest1': {'aKey1': ['aValue1']},
-          'aTest2': {'aKey2': ['aValue2']},
+          'anOperator1': {'aKey1': ['aValue1']},
+          'anOperator2': {'aKey2': ['aValue2']},
         };
         expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
       });
     });
 
-    describe('when having two conditions having the same test', function() {
+    describe('when having two conditions having the same operator', function() {
       const conditions = [
-        new Condition('aTest', 'aKey1', ['aValue1']),
-        new Condition('aTest', 'aKey2', ['aValue2']),
+        new Condition('anOperator', 'aKey1', ['aValue1']),
+        new Condition('anOperator', 'aKey2', ['aValue2']),
       ];
       it('should return the Condition JSON object', function() {
         const expected = {
-          'aTest': {'aKey1': ['aValue1'], 'aKey2': ['aValue2']},
+          'anOperator': {'aKey1': ['aValue1'], 'aKey2': ['aValue2']},
         };
         expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
       });
     });
 
-    describe('when having two conditions having the same test and same key', function() {
+    describe('when having two conditions having the same operator and same key', function() {
       const conditions = [
-        new Condition('aTest', 'aKey', ['aValue1']),
-        new Condition('aTest', 'aKey', ['aValue2']),
+        new Condition('anOperator', 'aKey', ['aValue1']),
+        new Condition('anOperator', 'aKey', ['aValue2']),
       ];
       it('should return the Condition JSON object', function() {
         const expected = {
-          'aTest': {'aKey': ['aValue1', 'aValue2']},
+          'anOperator': {'aKey': ['aValue1', 'aValue2']},
         };
         expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
       });
