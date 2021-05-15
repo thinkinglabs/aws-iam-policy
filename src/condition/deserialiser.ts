@@ -11,6 +11,11 @@ export class ConditionJSONDeserialiser {
           `Unsupported type ${typeof input}: expecting an object {[operator:string]: {[key:string]:string[]}}`);
     }
 
+    if (Array.isArray(input)) {
+      throw new Error(
+          `Unsupported type array: expecting an object {[operator:string]: {[key:string]:string[]}}`);
+    }
+
     const result: Condition[] = [];
 
     Object.keys(input).forEach((operator) => {

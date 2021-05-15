@@ -87,5 +87,14 @@ describe('#ConditionJSONDeserialiser', function() {
                 'Unsupported type number: expecting an object {[operator:string]: {[key:string]:string[]}}');
       });
     });
+    describe('when Condition is an array', function() {
+      it('should throw an Error', function() {
+        const input = ['condition'];
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported type array: expecting an object {[operator:string]: {[key:string]:string[]}}');
+      });
+    });
   });
 });
