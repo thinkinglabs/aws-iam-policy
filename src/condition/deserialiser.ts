@@ -29,6 +29,12 @@ export class ConditionJSONDeserialiser {
             `expecting an object {[key:string]:string[]}`);
       }
 
+      if (Array.isArray(operatorValue)) {
+        throw new Error(
+            `Unsupported Condition operator type array: ` +
+            `expecting an object {[key:string]:string[]}`);
+      }
+
       Object.keys(operatorValue).forEach((key) => {
         const values = operatorValue[key];
         result.push(new Condition(operator, key, values));
