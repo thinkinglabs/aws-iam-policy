@@ -11,7 +11,11 @@ export class ConditionJSONSerialiser {
       Object.keys(obj).forEach((key) => {
         if (key in result) {
           Object.keys(obj[key]).forEach((subKey) => {
-            result[key][subKey] = obj[key][subKey];
+            if (subKey in result[key]) {
+              result[key][subKey].push(...obj[key][subKey]);
+            } else {
+              result[key][subKey] = obj[key][subKey];
+            }
           });
         } else {
           result[key] = obj[key];
