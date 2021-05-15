@@ -78,5 +78,14 @@ describe('#ConditionJSONDeserialiser', function() {
                 'Unsupported type string: expecting an object {[operator:string]: {[key:string]:string[]}}');
       });
     });
+    describe('when Condition is a number', function() {
+      it('should throw an Error', function() {
+        const input = 1234;
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported type number: expecting an object {[operator:string]: {[key:string]:string[]}}');
+      });
+    });
   });
 });
