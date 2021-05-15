@@ -8,19 +8,29 @@ export class ConditionJSONDeserialiser {
 
     if (typeof input !== 'object') {
       throw new Error(
-          `Unsupported type ${typeof input}: expecting an object {[operator:string]: {[key:string]:string[]}}`);
+          `Unsupported Condition type ${typeof input}: ` +
+          `expecting an object {[operator:string]: {[key:string]:string[]}}`);
     }
 
     if (Array.isArray(input)) {
       throw new Error(
-          `Unsupported type array: expecting an object {[operator:string]: {[key:string]:string[]}}`);
+          `Unsupported Condition type array: ` +
+          `expecting an object {[operator:string]: {[key:string]:string[]}}`);
     }
 
     const result: Condition[] = [];
 
     Object.keys(input).forEach((operator) => {
-      Object.keys(input[operator]).forEach((key) => {
-        const values = input[operator][key];
+      const operatorValue = input[operator];
+
+      if (typeof operatorValue !== 'object') {
+        throw new Error(
+            `Unsupported Condition operator type ${typeof operatorValue}: ` +
+            `expecting an object {[key:string]:string[]}`);
+      }
+
+      Object.keys(operatorValue).forEach((key) => {
+        const values = operatorValue[key];
         result.push(new Condition(operator, key, values));
       });
     });
