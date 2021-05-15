@@ -4,7 +4,7 @@ export class Condition {
   public readonly key: string;
   public readonly values: string[];
 
-  constructor(test: string, key: string, ...values: string[]) {
+  constructor(test: string, key: string, values: string[]) {
     if (!test) {
       throw new Error('Empty test');
     }
