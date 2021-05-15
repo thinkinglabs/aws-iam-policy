@@ -1,12 +1,16 @@
 import {Condition} from './condition';
 
 export class ConditionJSONDeserialiser {
-  static fromJSON(
-      input: {[condition:string]: {[key:string]: string[]}} | undefined,
-  ): Condition[] {
+  static fromJSON(input: any): Condition[] {
     if (input === undefined) {
       return [];
     }
+
+    if (typeof input !== 'object') {
+      throw new Error(
+          `Unsupported type ${typeof input}: expecting an object {[operator:string]: {[key:string]:string[]}}`);
+    }
+
     const result: Condition[] = [];
 
     Object.keys(input).forEach((operator) => {
