@@ -1,7 +1,10 @@
 import {Condition} from './condition';
 
 export class ConditionJSONSerialiser {
-  static toJSON(condition: Condition) {
-    return condition.toJSON();
+  static toJSON(conditions: Condition[]) {
+    if (conditions.length == 0) {
+      return undefined;
+    }
+    return [];
   }
 }
