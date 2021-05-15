@@ -6,10 +6,13 @@ export class Condition {
 
   constructor(test: string, key: string, values: string[]) {
     if (!test) {
-      throw new Error('Empty test');
+      throw new Error('test should not be empty');
     }
     if (!key) {
-      throw new Error('Empty key');
+      throw new Error('key should not be empty');
+    }
+    if (!values.length) {
+      throw new Error('values should not be empty');
     }
     this.operator = test;
     this.key = key;
