@@ -7,13 +7,15 @@ export class ConditionJSONDeserialiser {
     if (input === undefined) {
       return [];
     }
-    const operator = Object.keys(input)[0];
-
     const result: Condition[] = [];
-    Object.keys(input[operator]).forEach((key) => {
-      const values = input[operator][key];
-      result.push(new Condition(operator, key, values));
+
+    Object.keys(input).forEach((operator) => {
+      Object.keys(input[operator]).forEach((key) => {
+        const values = input[operator][key];
+        result.push(new Condition(operator, key, values));
+      });
     });
+
     return result;
   };
 }
