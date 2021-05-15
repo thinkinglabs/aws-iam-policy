@@ -10,5 +10,15 @@ describe('#ConditionJSONSerialiser', function() {
         expect(ConditionJSONSerialiser.toJSON(conditions)).to.be.undefined;
       });
     });
+
+    describe('when having one condition', function() {
+      const conditions = [new Condition('aTest', 'aKey', ['aValue'])];
+      it('should return the Condition JSON object', function() {
+        const expected = {
+          'aTest': {'aKey': ['aValue']},
+        };
+        expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
+      });
+    });
   });
 });

@@ -5,6 +5,10 @@ export class ConditionJSONSerialiser {
     if (conditions.length == 0) {
       return undefined;
     }
+    if (conditions.length == 1) {
+      const condition = conditions[0];
+      return condition.toJSON();
+    }
     return [];
   }
 }
