@@ -21,5 +21,11 @@ describe('#Condition', function() {
             .throw(Error).with.property('message', 'values should not be empty');
       });
     });
+    describe('when values contains one empty string', function() {
+      it('should raise an error', function() {
+        expect(() => new Condition('test', 'key', [''])).to
+            .throw(Error).with.property('message', 'values should not be empty');
+      });
+    });
   });
 });
