@@ -20,5 +20,14 @@ describe('#ConditionJSONDeserialiser', function() {
         expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
       });
     });
+    describe('when having a condition with one operator, one key and two values', function() {
+      it('should return one condition', function() {
+        const input = {
+          'operator': {'key': ['value1', 'value2']},
+        };
+        const expected = [new Condition('operator', 'key', ['value1', 'value2'])];
+        expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+      });
+    });
   });
 });
