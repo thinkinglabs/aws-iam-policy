@@ -4,12 +4,15 @@ export class Condition {
   public readonly key: string;
   public readonly values: string[];
 
-  constructor(test: string, variable: string, ...values: string[]) {
-    if (test === '') {
+  constructor(test: string, key: string, ...values: string[]) {
+    if (!test) {
       throw new Error('Empty test');
     }
+    if (!key) {
+      throw new Error('Empty key');
+    }
     this.operator = test;
-    this.key = variable;
+    this.key = key;
     this.values = values;
   }
 }

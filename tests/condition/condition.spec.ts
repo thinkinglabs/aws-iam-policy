@@ -9,5 +9,11 @@ describe('#Condition', function() {
             .throw(Error).with.property('message', 'Empty test');
       });
     });
+    describe('when key is empty', function() {
+      it('should raise an error', function() {
+        expect(() => new Condition('test', '', 'value')).to
+            .throw(Error).with.property('message', 'Empty key');
+      });
+    });
   });
 });
