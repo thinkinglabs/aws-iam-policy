@@ -21,4 +21,11 @@ export class Condition {
     this.key = key;
     this.values = values;
   }
+
+  toJSON() {
+    const result: { [operator: string]: { [key:string]: string[] }; } = {};
+    result[this.operator] = {};
+    result[this.operator][this.key] = this.values;
+    return result;
+  }
 }
