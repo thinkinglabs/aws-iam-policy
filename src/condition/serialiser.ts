@@ -9,7 +9,13 @@ export class ConditionJSONSerialiser {
     conditions.forEach((condition) => {
       const obj = condition.toJSON();
       Object.keys(obj).forEach((key) => {
-        result[key] = obj[key];
+        if (key in result) {
+          Object.keys(obj[key]).forEach((subKey) => {
+            result[key][subKey] = obj[key][subKey];
+          });
+        } else {
+          result[key] = obj[key];
+        }
       });
     });
     return result;

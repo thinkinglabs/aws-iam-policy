@@ -34,5 +34,18 @@ describe('#ConditionJSONSerialiser', function() {
         expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
       });
     });
+
+    describe('when having two conditions having the same test', function() {
+      const conditions = [
+        new Condition('aTest', 'aKey1', ['aValue1']),
+        new Condition('aTest', 'aKey2', ['aValue2']),
+      ];
+      it('should return the Condition JSON object', function() {
+        const expected = {
+          'aTest': {'aKey1': ['aValue1'], 'aKey2': ['aValue2']},
+        };
+        expect(ConditionJSONSerialiser.toJSON(conditions)).to.deep.equal(expected);
+      });
+    });
   });
 });
