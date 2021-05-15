@@ -8,8 +8,12 @@ export class ConditionJSONDeserialiser {
       return [];
     }
     const operator = Object.keys(input)[0];
-    const key = Object.keys(input[operator])[0];
-    const values = input[operator][key];
-    return [new Condition(operator, key, values)];
+
+    const result: Condition[] = [];
+    Object.keys(input[operator]).forEach((key) => {
+      const values = input[operator][key];
+      result.push(new Condition(operator, key, values));
+    });
+    return result;
   };
 }
