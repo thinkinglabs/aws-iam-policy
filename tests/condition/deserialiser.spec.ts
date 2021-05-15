@@ -123,5 +123,14 @@ describe('#ConditionJSONDeserialiser', function() {
                 'Unsupported Condition operator type array: expecting an object {[key:string]:string[]}');
       });
     });
+    describe('when Condition is an object having an undefined operator', function() {
+      it('should throw an Error', function() {
+        const input = {'operator': undefined};
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported Condition operator type undefined: expecting an object {[key:string]:string[]}');
+      });
+    });
   });
 });
