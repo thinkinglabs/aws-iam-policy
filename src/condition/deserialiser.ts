@@ -21,6 +21,12 @@ export class ConditionJSONDeserialiser {
     const result: Condition[] = Object.keys(input).flatMap((operator: any) => {
       const operatorValue = input[operator];
 
+      return parseOperator(operator, operatorValue);
+    });
+
+    return result;
+
+    function parseOperator(operator: string, operatorValue: any) {
       if (typeof operatorValue !== 'object') {
         throw new Error(
             `Unsupported Condition operator type ${typeof operatorValue}: ` +
@@ -38,9 +44,7 @@ export class ConditionJSONDeserialiser {
 
         return new Condition(operator, key, parseArray(values));
       });
-    });
-
-    return result;
+    }
 
     function parseArray(obj: any) {
       if (Array.isArray(obj)) {
