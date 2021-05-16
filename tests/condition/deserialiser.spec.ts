@@ -98,7 +98,7 @@ describe('#ConditionJSONDeserialiser', function() {
                 expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                     .with.property(
                         'message',
-                        'Unsupported Condition key type undefined: expecting an array of strings');
+                        'Unsupported type: expecting an array');
               });
             });
             describe('and its value is an object', function() {
@@ -107,7 +107,7 @@ describe('#ConditionJSONDeserialiser', function() {
                 expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                     .with.property(
                         'message',
-                        'Unsupported Condition key type object: expecting an array of strings');
+                        'Unsupported type: expecting an array');
               });
             });
             describe('and its value is an array', function() {
@@ -126,7 +126,7 @@ describe('#ConditionJSONDeserialiser', function() {
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
-                          'Unsupported Condition values type: expecting strings');
+                          'Unsupported type: expecting an array of strings');
                 });
               });
               describe('and it contains an object', function() {
@@ -135,7 +135,7 @@ describe('#ConditionJSONDeserialiser', function() {
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
-                          'Unsupported Condition values type: expecting strings');
+                          'Unsupported type: expecting an array of strings');
                 });
               });
               describe('and it contains an undefined value', function() {
@@ -144,7 +144,7 @@ describe('#ConditionJSONDeserialiser', function() {
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
-                          'Unsupported Condition values type: expecting strings');
+                          'Unsupported type: expecting an array of strings');
                 });
               });
             });
