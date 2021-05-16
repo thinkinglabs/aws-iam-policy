@@ -84,6 +84,13 @@ describe('#ConditionJSONDeserialiser', function() {
           });
         });
         describe('and its value is an object', function() {
+          describe('and it is empty', function() {
+            it('should return an empty array', function() {
+              const input = {'operator': {}};
+              const expected: Condition[] = [];
+              expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+            });
+          });
           describe('and it has a key property', function() {
             describe('and its value is undefined', function() {
               it('should throw an Error', function() {
