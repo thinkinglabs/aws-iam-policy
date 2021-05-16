@@ -18,9 +18,7 @@ export class ConditionJSONDeserialiser {
           `expecting an object {[operator:string]: {[key:string]:string[]}}`);
     }
 
-    const result: Condition[] = [];
-
-    Object.keys(input).forEach((operator) => {
+    const result: Condition[] = Object.keys(input).flatMap((operator: any) => {
       const operatorValue = input[operator];
 
       if (typeof operatorValue !== 'object') {
@@ -35,11 +33,11 @@ export class ConditionJSONDeserialiser {
             'expecting an object {[key:string]:string[]}');
       }
 
-      result.push(...Object.keys(operatorValue).map((key) => {
+      return Object.keys(operatorValue).map((key) => {
         const values = operatorValue[key];
 
         return new Condition(operator, key, parseArray(values));
-      }));
+      });
     });
 
     return result;

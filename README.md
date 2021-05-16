@@ -10,6 +10,10 @@ The primary reasons for creating the library were:
 - simplify the unit testing of those policies and more specifically testing of
   single policy statements.
 
+## Requirements
+
+Node.js lts/erbium (12.x)
+
 ## Features
 
 - Reading/writing AWS IAM Policy JSON documents.
