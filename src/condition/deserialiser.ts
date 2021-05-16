@@ -26,17 +26,24 @@ export class ConditionJSONDeserialiser {
       if (typeof operatorValue !== 'object') {
         throw new Error(
             `Unsupported Condition operator type ${typeof operatorValue}: ` +
-            `expecting an object {[key:string]:string[]}`);
+            'expecting an object {[key:string]:string[]}');
       }
 
       if (Array.isArray(operatorValue)) {
         throw new Error(
-            `Unsupported Condition operator type array: ` +
-            `expecting an object {[key:string]:string[]}`);
+            'Unsupported Condition operator type array: ' +
+            'expecting an object {[key:string]:string[]}');
       }
 
       Object.keys(operatorValue).forEach((key) => {
         const values = operatorValue[key];
+
+        if (!Array.isArray(values)) {
+          throw new Error(
+              `Unsupported Condition key type ${typeof values}: ` +
+              'expecting an array of strings');
+        }
+
         result.push(new Condition(operator, key, values));
       });
     });

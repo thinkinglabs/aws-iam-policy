@@ -11,6 +11,13 @@ describe('#ConditionJSONDeserialiser', function() {
         expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
       });
     });
+    describe('when Condition is an empty object', function() {
+      it('should return an emoty array', function() {
+        const input = {};
+        const expected: Condition[] = [];
+        expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+      });
+    });
     describe('when Condition has one operator, one key and one value', function() {
       it('should return one Condition', function() {
         const input = {
@@ -96,6 +103,15 @@ describe('#ConditionJSONDeserialiser', function() {
                 'Unsupported Condition type array: expecting an object {[operator:string]: {[key:string]:string[]}}');
       });
     });
+    describe('when Condition has an undefined operator', function() {
+      it('should throw an Error', function() {
+        const input = {'operator': undefined};
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported Condition operator type undefined: expecting an object {[key:string]:string[]}');
+      });
+    });
     describe('when Condition has an operator of type string', function() {
       it('should throw an Error', function() {
         const input = {'operator': 'value'};
@@ -123,13 +139,13 @@ describe('#ConditionJSONDeserialiser', function() {
                 'Unsupported Condition operator type array: expecting an object {[key:string]:string[]}');
       });
     });
-    describe('when Condition is an object having an undefined operator', function() {
+    describe('when Condition is an object with an operator object and the key is undefined', function() {
       it('should throw an Error', function() {
-        const input = {'operator': undefined};
+        const input = {'operator': {'key': undefined}};
         expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
             .with.property(
                 'message',
-                'Unsupported Condition operator type undefined: expecting an object {[key:string]:string[]}');
+                'Unsupported Condition key type undefined: expecting an array of strings');
       });
     });
   });
