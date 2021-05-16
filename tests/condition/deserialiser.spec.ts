@@ -11,11 +11,129 @@ describe('#ConditionJSONDeserialiser', function() {
         expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
       });
     });
-    describe('when Condition is an empty object', function() {
-      it('should return an emoty array', function() {
-        const input = {};
-        const expected: Condition[] = [];
-        expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+    describe('when Condition is a string', function() {
+      it('should throw an Error', function() {
+        const input = 'condition';
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported Condition type string: expecting an object {[operator:string]: {[key:string]:string[]}}');
+      });
+    });
+    describe('when Condition is a number', function() {
+      it('should throw an Error', function() {
+        const input = 1234;
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported Condition type number: expecting an object {[operator:string]: {[key:string]:string[]}}');
+      });
+    });
+    describe('when Condition is an array', function() {
+      it('should throw an Error', function() {
+        const input = ['condition'];
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported Condition type array: expecting an object {[operator:string]: {[key:string]:string[]}}');
+      });
+    });
+    describe('when Condition is an object', function() {
+      describe('and it is empty', function() {
+        it('should return an empty array', function() {
+          const input = {};
+          const expected: Condition[] = [];
+          expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+        });
+      });
+      describe('and it has an operator property', function() {
+        describe('and its value is undefined', function() {
+          it('should throw an Error', function() {
+            const input = {'operator': undefined};
+            expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                .with.property(
+                    'message',
+                    'Unsupported Condition operator type undefined: expecting an object {[key:string]:string[]}');
+          });
+        });
+        describe('and its value is a string', function() {
+          it('should throw an Error', function() {
+            const input = {'operator': 'value'};
+            expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                .with.property(
+                    'message',
+                    'Unsupported Condition operator type string: expecting an object {[key:string]:string[]}');
+          });
+        });
+        describe('and its value is a number', function() {
+          it('should throw an Error', function() {
+            const input = {'operator': 12345};
+            expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                .with.property(
+                    'message',
+                    'Unsupported Condition operator type number: expecting an object {[key:string]:string[]}');
+          });
+        });
+        describe('and its value is an array', function() {
+          it('should throw an Error', function() {
+            const input = {'operator': ['value']};
+            expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                .with.property(
+                    'message',
+                    'Unsupported Condition operator type array: expecting an object {[key:string]:string[]}');
+          });
+        });
+        describe('and its value is an object', function() {
+          describe('and it has a key property', function() {
+            describe('and its value is undefined', function() {
+              it('should throw an Error', function() {
+                const input = {'operator': {'key': undefined}};
+                expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                    .with.property(
+                        'message',
+                        'Unsupported Condition key type undefined: expecting an array of strings');
+              });
+            });
+            describe('and its value is an object', function() {
+              it('should throw an Error', function() {
+                const input = {'operator': {'key': {}}};
+                expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                    .with.property(
+                        'message',
+                        'Unsupported Condition key type object: expecting an array of strings');
+              });
+            });
+            describe('and its value is an array', function() {
+              describe('and it contains a number', function() {
+                it('should throw an Error', function() {
+                  const input = {'operator': {'key': [12345]}};
+                  expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                      .with.property(
+                          'message',
+                          'Unsupported Condition values type: expecting strings');
+                });
+              });
+              describe('and it contains an object', function() {
+                it('should throw an Error', function() {
+                  const input = {'operator': {'key': [{}]}};
+                  expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                      .with.property(
+                          'message',
+                          'Unsupported Condition values type: expecting strings');
+                });
+              });
+              describe('and it contains an undefined value', function() {
+                it('should throw an Error', function() {
+                  const input = {'operator': {'key': [undefined, 'value']}};
+                  expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                      .with.property(
+                          'message',
+                          'Unsupported Condition values type: expecting strings');
+                });
+              });
+            });
+          });
+        });
       });
     });
     describe('when Condition has one operator, one key and one value', function() {
@@ -74,114 +192,6 @@ describe('#ConditionJSONDeserialiser', function() {
           new Condition('operator2', 'key22', ['value221', 'value222']),
         ];
         expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
-      });
-    });
-    describe('when Condition is a string', function() {
-      it('should throw an Error', function() {
-        const input = 'condition';
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition type string: expecting an object {[operator:string]: {[key:string]:string[]}}');
-      });
-    });
-    describe('when Condition is a number', function() {
-      it('should throw an Error', function() {
-        const input = 1234;
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition type number: expecting an object {[operator:string]: {[key:string]:string[]}}');
-      });
-    });
-    describe('when Condition is an array', function() {
-      it('should throw an Error', function() {
-        const input = ['condition'];
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition type array: expecting an object {[operator:string]: {[key:string]:string[]}}');
-      });
-    });
-    describe('when Condition has an undefined operator', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': undefined};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition operator type undefined: expecting an object {[key:string]:string[]}');
-      });
-    });
-    describe('when Condition has an operator of type string', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': 'value'};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition operator type string: expecting an object {[key:string]:string[]}');
-      });
-    });
-    describe('when Condition has an operator of type number', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': 12345};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition operator type number: expecting an object {[key:string]:string[]}');
-      });
-    });
-    describe('when Condition has an operator of type array', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': ['value']};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition operator type array: expecting an object {[key:string]:string[]}');
-      });
-    });
-    describe('when Condition has an undefined key', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': {'key': undefined}};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition key type undefined: expecting an array of strings');
-      });
-    });
-    describe('when Condition has a key of type object', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': {'key': {}}};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition key type object: expecting an array of strings');
-      });
-    });
-    describe('when Condition has values of type number', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': {'key': [12345]}};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition values type: expecting strings');
-      });
-    });
-    describe('when Condition has values of type object', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': {'key': [{}]}};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition values type: expecting strings');
-      });
-    });
-    describe('when Condition has undefined values', function() {
-      it('should throw an Error', function() {
-        const input = {'operator': {'key': [undefined, 'value']}};
-        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
-            .with.property(
-                'message',
-                'Unsupported Condition values type: expecting strings');
       });
     });
   });
