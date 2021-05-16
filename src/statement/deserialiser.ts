@@ -18,7 +18,7 @@ export class StatementJSONDeserialiser {
         return [];
       }
       if (Array.isArray(obj)) {
-        if (isArrayOfStrings(obj as [])) {
+        if (isArrayOfStrings(obj)) {
           return obj as [];
         }
         throw new Error('Unsupported type: expecting an array of strings');
@@ -26,7 +26,7 @@ export class StatementJSONDeserialiser {
       throw new Error('Unsupported type: expecting an array');
     }
 
-    function isArrayOfStrings(obj: []) {
+    function isArrayOfStrings(obj: any[]) {
       return obj.every((element) => typeof element === 'string');
     }
   }

@@ -38,20 +38,24 @@ export class ConditionJSONDeserialiser {
       Object.keys(operatorValue).forEach((key) => {
         const values = operatorValue[key];
 
-        if (!Array.isArray(values)) {
+        if (Array.isArray(values)) {
+          if (isArrayOfStrings(values)) {
+            result.push(new Condition(operator, key, values));
+          } else {
+            throw new Error('Unsupported Condition values type: expecting strings');
+          }
+        } else {
           throw new Error(
               `Unsupported Condition key type ${typeof values}: ` +
               'expecting an array of strings');
         }
-
-        if (values.filter((value) => typeof value !== 'string').length > 0) {
-          throw new Error('Unsupported Condition values type: expecting strings');
-        }
-
-        result.push(new Condition(operator, key, values));
       });
     });
 
     return result;
+
+    function isArrayOfStrings(obj: any[]) {
+      return obj.every((element) => typeof element === 'string');
+    }
   };
 }
