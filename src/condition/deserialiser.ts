@@ -2,29 +2,33 @@ import {Condition} from './condition';
 
 export class ConditionJSONDeserialiser {
   static fromJSON(input: any): Condition[] {
-    if (input === undefined) {
-      return [];
+    return parseCondition(input);
+
+    function parseCondition(input: any) {
+      if (input === undefined) {
+        return [];
+      }
+
+      if (typeof input !== 'object') {
+        throw new Error(
+            `Unsupported Condition type ${typeof input}: ` +
+            `expecting an object {[operator:string]: {[key:string]:string[]}}`);
+      }
+
+      if (Array.isArray(input)) {
+        throw new Error(
+            `Unsupported Condition type array: ` +
+            `expecting an object {[operator:string]: {[key:string]:string[]}}`);
+      }
+
+      const result: Condition[] = Object.keys(input).flatMap((operator: any) => {
+        const operatorValue = input[operator];
+
+        return parseOperator(operator, operatorValue);
+      });
+
+      return result;
     }
-
-    if (typeof input !== 'object') {
-      throw new Error(
-          `Unsupported Condition type ${typeof input}: ` +
-          `expecting an object {[operator:string]: {[key:string]:string[]}}`);
-    }
-
-    if (Array.isArray(input)) {
-      throw new Error(
-          `Unsupported Condition type array: ` +
-          `expecting an object {[operator:string]: {[key:string]:string[]}}`);
-    }
-
-    const result: Condition[] = Object.keys(input).flatMap((operator: any) => {
-      const operatorValue = input[operator];
-
-      return parseOperator(operator, operatorValue);
-    });
-
-    return result;
 
     function parseOperator(operator: string, operatorValue: any) {
       if (typeof operatorValue !== 'object') {
