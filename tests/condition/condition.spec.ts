@@ -46,7 +46,7 @@ describe('#Condition', function() {
       const condition = new Condition('StringLike', 'aws:userid', ['12345']);
       it('should return a JSON object', function() {
         const expected = {
-          'StringLike': {'aws:userid': ['12345']},
+          StringLike: {'aws:userid': ['12345']},
         };
         expect(condition.toJSON()).to.deep.equal(expected);
       });
@@ -56,7 +56,7 @@ describe('#Condition', function() {
       const condition = new Condition('StringLike', 'aws:userid', ['12345', '67890']);
       it('should return a JSON object', function() {
         const expected = {
-          'StringLike': {'aws:userid': ['12345', '67890']},
+          StringLike: {'aws:userid': ['12345', '67890']},
         };
         expect(condition.toJSON()).to.deep.equal(expected);
       });

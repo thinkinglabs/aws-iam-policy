@@ -49,7 +49,7 @@ describe('#ConditionJSONDeserialiser', function() {
       describe('and it has an operator property', function() {
         describe('and its value is undefined', function() {
           it('should throw an Error', function() {
-            const input = {'operator': undefined};
+            const input = {operator: undefined};
             expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                 .with.property(
                     'message',
@@ -58,7 +58,7 @@ describe('#ConditionJSONDeserialiser', function() {
         });
         describe('and its value is a string', function() {
           it('should throw an Error', function() {
-            const input = {'operator': 'value'};
+            const input = {operator: 'value'};
             expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                 .with.property(
                     'message',
@@ -67,7 +67,7 @@ describe('#ConditionJSONDeserialiser', function() {
         });
         describe('and its value is a number', function() {
           it('should throw an Error', function() {
-            const input = {'operator': 12345};
+            const input = {operator: 12345};
             expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                 .with.property(
                     'message',
@@ -76,7 +76,7 @@ describe('#ConditionJSONDeserialiser', function() {
         });
         describe('and its value is an array', function() {
           it('should throw an Error', function() {
-            const input = {'operator': ['value']};
+            const input = {operator: ['value']};
             expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                 .with.property(
                     'message',
@@ -86,7 +86,7 @@ describe('#ConditionJSONDeserialiser', function() {
         describe('and its value is an object', function() {
           describe('and it is empty', function() {
             it('should return an empty array', function() {
-              const input = {'operator': {}};
+              const input = {operator: {}};
               const expected: Condition[] = [];
               expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
             });
@@ -94,7 +94,7 @@ describe('#ConditionJSONDeserialiser', function() {
           describe('and it has a key property', function() {
             describe('and its value is undefined', function() {
               it('should throw an Error', function() {
-                const input = {'operator': {'key': undefined}};
+                const input = {operator: {key: undefined}};
                 expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                     .with.property(
                         'message',
@@ -103,7 +103,7 @@ describe('#ConditionJSONDeserialiser', function() {
             });
             describe('and its value is an object', function() {
               it('should throw an Error', function() {
-                const input = {'operator': {'key': {}}};
+                const input = {operator: {key: {}}};
                 expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                     .with.property(
                         'message',
@@ -113,7 +113,7 @@ describe('#ConditionJSONDeserialiser', function() {
             describe('and its value is an array', function() {
               describe('and it is empty', function() {
                 it('should throw an Error', function() {
-                  const input = {'operator': {'key': []}};
+                  const input = {operator: {key: []}};
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
@@ -122,7 +122,7 @@ describe('#ConditionJSONDeserialiser', function() {
               });
               describe('and it contains a number', function() {
                 it('should throw an Error', function() {
-                  const input = {'operator': {'key': [12345]}};
+                  const input = {operator: {key: [12345]}};
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
@@ -131,7 +131,7 @@ describe('#ConditionJSONDeserialiser', function() {
               });
               describe('and it contains an object', function() {
                 it('should throw an Error', function() {
-                  const input = {'operator': {'key': [{}]}};
+                  const input = {operator: {key: [{}]}};
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
@@ -140,7 +140,7 @@ describe('#ConditionJSONDeserialiser', function() {
               });
               describe('and it contains an undefined value', function() {
                 it('should throw an Error', function() {
-                  const input = {'operator': {'key': [undefined, 'value']}};
+                  const input = {operator: {key: [undefined, 'value']}};
                   expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                       .with.property(
                           'message',
@@ -155,7 +155,7 @@ describe('#ConditionJSONDeserialiser', function() {
     describe('when Condition has one operator, one key and one value', function() {
       it('should return one Condition', function() {
         const input = {
-          'operator': {'key': ['value']},
+          operator: {key: ['value']},
         };
         const expected = [new Condition('operator', 'key', ['value'])];
         expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
@@ -164,7 +164,7 @@ describe('#ConditionJSONDeserialiser', function() {
     describe('when Condition has one operator, one key and two values', function() {
       it('should return one Condition', function() {
         const input = {
-          'operator': {'key': ['value1', 'value2']},
+          operator: {key: ['value1', 'value2']},
         };
         const expected = [new Condition('operator', 'key', ['value1', 'value2'])];
         expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
@@ -173,7 +173,7 @@ describe('#ConditionJSONDeserialiser', function() {
     describe('when Condition has one operator, two keys each with one value', function() {
       it('should return two conditions', function() {
         const input = {
-          'operator': {'key1': ['value1'], 'key2': ['value2']},
+          operator: {key1: ['value1'], key2: ['value2']},
         };
         const expected = [
           new Condition('operator', 'key1', ['value1']),
@@ -185,8 +185,8 @@ describe('#ConditionJSONDeserialiser', function() {
     describe('when Condition has two operators each with one key and one value', function() {
       it('should return two conditions', function() {
         const input = {
-          'operator1': {'key1': ['value1']},
-          'operator2': {'key2': ['value2']},
+          operator1: {key1: ['value1']},
+          operator2: {key2: ['value2']},
         };
         const expected = [
           new Condition('operator1', 'key1', ['value1']),
@@ -198,8 +198,8 @@ describe('#ConditionJSONDeserialiser', function() {
     describe('when Condition has two operators each with two keys and two values', function() {
       it('should return two conditions', function() {
         const input = {
-          'operator1': {'key11': ['value111', 'value112'], 'key12': ['value121', 'value122']},
-          'operator2': {'key21': ['value211', 'value212'], 'key22': ['value221', 'value222']},
+          operator1: {key11: ['value111', 'value112'], key12: ['value121', 'value122']},
+          operator2: {key21: ['value211', 'value212'], key22: ['value221', 'value222']},
         };
         const expected = [
           new Condition('operator1', 'key11', ['value111', 'value112']),
