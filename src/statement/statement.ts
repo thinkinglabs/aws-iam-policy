@@ -1,4 +1,5 @@
 import {Principal} from '../principals/base';
+import {Condition} from '../condition/condition';
 import {StatementJSONDeserialiser} from './deserialiser';
 import {StatementJSONSerialiser} from './serialiser';
 
@@ -12,7 +13,7 @@ export class Statement {
   public principals: Principal[] = [];
   public actions: string[] = [];
   public resources: string[] = [];
-  public conditions: {[key:string]: any} = {};
+  public conditions: Condition[] = [];
 
   constructor(props?: StatementArgs) {
     this.sid = props?.sid;
@@ -21,9 +22,7 @@ export class Statement {
     this.addPrincipals(...props?.principals || []);
     this.addActions(...props?.actions || []);
     this.addResources(...props?.resources || []);
-    if (props?.conditions) {
-      this.addConditions(props?.conditions);
-    }
+    this.addConditions(...props?.conditions || []);
   }
 
   private addPrincipals(...principals: Principal[]) {
@@ -38,15 +37,8 @@ export class Statement {
     this.resources.push(...resources);
   };
 
-  private addConditions(conditions: any) {
-    Object.keys(conditions).map((key) => {
-      this.addCondition(key, conditions[key]);
-    });
-  }
-
-  private addCondition(key: any, value: any) {
-    const existingValue = this.conditions[key];
-    this.conditions[key] = existingValue ? {...existingValue, ...value} : value;
+  private addConditions(...conditions: Condition[]) {
+    this.conditions.push(...conditions);
   }
 
   toJSON() {
@@ -91,7 +83,5 @@ interface StatementArgs {
   readonly principals?: Principal[];
   readonly actions?: string[];
   readonly resources?: string[];
-  readonly conditions?: {
-      [key: string]: any;
-  };
+  readonly conditions?: Condition[];
 }

@@ -1,3 +1,4 @@
+import {ConditionJSONDeserialiser} from '../condition/deserialiser';
 import {PrincipalJSONDeserialiser} from '../principals/deserialiser';
 import {Statement} from '../statement/statement';
 
@@ -9,7 +10,7 @@ export class StatementJSONDeserialiser {
       principals: PrincipalJSONDeserialiser.fromJSON(obj.Principal),
       actions: parseArray(obj.Action),
       resources: parseArray(obj.Resource),
-      conditions: obj.Condition,
+      conditions: ConditionJSONDeserialiser.fromJSON(obj.Condition),
     });
 
     function parseArray(obj: any): [] {

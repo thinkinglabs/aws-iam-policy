@@ -4,6 +4,7 @@ import {ArnPrincipal} from '../../src/principals/arn';
 import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
 import {AccountPrincipal} from '../../src/principals/account';
+import {Condition} from '../../src/condition/condition';
 
 describe('#Statement', function() {
   describe('when serialising to JSON', function() {
@@ -21,15 +22,11 @@ describe('#Statement', function() {
         'arn:aws:ec2:eu-west-1:123456789000:instance/i-123456',
         'arn:aws:ec2:eu-west-1:123456789000:image/ami-123456',
       ],
-      conditions: {
-        StringEquals: {
-          'kms:CallerAccount': ['456252097346'],
-          'kms:ViaService': ['secretsmanager.eu-west-1.amazonaws.com'],
-        },
-        StringNotEquals: {
-          'aws:userid': ['anId1', 'anId2'],
-        },
-      },
+      conditions: [
+        new Condition('StringEquals', 'kms:CallerAccount', ['456252097346']),
+        new Condition('StringEquals', 'kms:ViaService', ['secretsmanager.eu-west-1.amazonaws.com']),
+        new Condition('StringNotEquals', 'aws:userid', ['anId1', 'anId2']),
+      ],
     });
 
     it('should successfully pass a JSON round trip', function() {

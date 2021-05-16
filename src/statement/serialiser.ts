@@ -1,5 +1,6 @@
 import {Statement} from './statement';
 import {normalise} from '../normaliser';
+import {ConditionJSONSerialiser} from '../condition/serialiser';
 import {PrincipalJSONSerialiser} from '../principals/serialiser';
 
 export class StatementJSONSerialiser {
@@ -10,7 +11,7 @@ export class StatementJSONSerialiser {
       Principal: PrincipalJSONSerialiser.toJSON(statement.principals),
       Action: normalise(statement.actions),
       Resource: normalise(statement.resources),
-      Condition: normalise(statement.conditions),
+      Condition: ConditionJSONSerialiser.toJSON(statement.conditions),
     };
   }
 }
