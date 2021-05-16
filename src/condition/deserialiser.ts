@@ -44,6 +44,10 @@ export class ConditionJSONDeserialiser {
               'expecting an array of strings');
         }
 
+        if (values.filter((value) => typeof value !== 'string').length > 0) {
+          throw new Error('Unsupported Condition values type: expecting strings');
+        }
+
         result.push(new Condition(operator, key, values));
       });
     });
