@@ -104,6 +104,15 @@ describe('#ConditionJSONDeserialiser', function() {
               });
             });
             describe('and its value is an array', function() {
+              describe('and it is empty', function() {
+                it('should throw an Error', function() {
+                  const input = {'operator': {'key': []}};
+                  expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+                      .with.property(
+                          'message',
+                          'values should not be empty');
+                });
+              });
               describe('and it contains a number', function() {
                 it('should throw an Error', function() {
                   const input = {'operator': {'key': [12345]}};
