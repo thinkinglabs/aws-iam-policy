@@ -47,6 +47,10 @@ export class ConditionJSONDeserialiser {
     }
 
     function parseArray(obj: any) {
+      if (obj === undefined) {
+        return [];
+      }
+
       if (Array.isArray(obj)) {
         if (isArrayOfStrings(obj)) {
           return obj as [];

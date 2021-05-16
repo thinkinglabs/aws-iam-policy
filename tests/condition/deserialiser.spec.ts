@@ -98,7 +98,7 @@ describe('#ConditionJSONDeserialiser', function() {
                 expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                     .with.property(
                         'message',
-                        'Unsupported type: expecting an array');
+                        'values should not be empty');
               });
             });
             describe('and its value is an object', function() {
