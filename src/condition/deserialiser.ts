@@ -35,11 +35,11 @@ export class ConditionJSONDeserialiser {
             'expecting an object {[key:string]:string[]}');
       }
 
-      Object.keys(operatorValue).forEach((key) => {
+      result.push(...Object.keys(operatorValue).map((key) => {
         const values = operatorValue[key];
 
-        result.push(new Condition(operator, key, parseArray(values)));
-      });
+        return new Condition(operator, key, parseArray(values));
+      }));
     });
 
     return result;
