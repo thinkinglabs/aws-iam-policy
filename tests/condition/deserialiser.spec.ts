@@ -175,5 +175,14 @@ describe('#ConditionJSONDeserialiser', function() {
                 'Unsupported Condition values type: expecting strings');
       });
     });
+    describe('when Condition has undefined values', function() {
+      it('should throw an Error', function() {
+        const input = {'operator': {'key': [undefined, 'value']}};
+        expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
+            .with.property(
+                'message',
+                'Unsupported Condition values type: expecting strings');
+      });
+    });
   });
 });
