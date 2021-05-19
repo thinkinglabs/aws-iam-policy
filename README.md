@@ -155,7 +155,3 @@ everywhere a string or an array can be passed, an array is expected.
 ```
 
 The library does not implement `NotPrincipal`, `NotAction` and `NotResource`.
-
-There is no object model for the `Condition` element. The library does not
-validate the content of the `Condition` element. It reads the content as-is and
-serialises it back as-is.
