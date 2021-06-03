@@ -1,3 +1,7 @@
+## 2.1.0 (3 June 2021)
+
+* Make `PolicyDocument.addStatement(Statement)` public
+
 ## 2.0.0 (19 May 2021)
 
 * Add support for Condition

@@ -108,6 +108,60 @@ describe('#PolicyDocument', function() {
     });
   });
 
+  describe('#addStatement', function() {
+    describe('when policy is empty', function() {
+      describe('when adding 1 statement', function() {
+        const policy = new PolicyDocument();
+        const statement = new Statement({sid: 'sid', resources: ['resource']});
+        policy.addStatements(statement);
+        it('should have one statement', function() {
+          expect(policy.statementCount).to.be.equal(1);
+          expect(policy.getStatement('sid')).to.deep.equal(statement);
+        });
+      });
+
+      describe('when adding 2 statements', function() {
+        const policy = new PolicyDocument();
+        const statement1 = new Statement({sid: 'sid1', resources: ['resource1']});
+        const statement2 = new Statement({sid: 'sid2', resources: ['resource2']});
+        policy.addStatements(statement1, statement2);
+        it('should have two statements', function() {
+          expect(policy.statementCount).to.be.equal(2);
+          expect(policy.getStatement('sid1')).to.deep.equal(statement1);
+          expect(policy.getStatement('sid2')).to.deep.equal(statement2);
+        });
+      });
+    });
+
+    describe('when policy is not empty', function() {
+      describe('when adding 1 statement', function() {
+        const policy = new PolicyDocument([
+          new Statement({sid: 'sid1', resources: ['resource1']}),
+        ]);
+        const statement = new Statement({sid: 'sid2', resources: ['resource2']});
+        policy.addStatements(statement);
+        it('should have one statement', function() {
+          expect(policy.statementCount).to.be.equal(2);
+          expect(policy.getStatement('sid2')).to.deep.equal(statement);
+        });
+      });
+
+      describe('when adding 2 statements', function() {
+        const policy = new PolicyDocument([
+          new Statement({sid: 'sid1', resources: ['resource1']}),
+        ]);
+        const statement2 = new Statement({sid: 'sid2', resources: ['resource2']});
+        const statement3 = new Statement({sid: 'sid3', resources: ['resource3']});
+        policy.addStatements(statement2, statement3);
+        it('should have one statement', function() {
+          expect(policy.statementCount).to.be.equal(3);
+          expect(policy.getStatement('sid2')).to.deep.equal(statement2);
+          expect(policy.getStatement('sid3')).to.deep.equal(statement3);
+        });
+      });
+    });
+  });
+
   describe('identity-based policy', function() {
     const policy = new PolicyDocument([
       new Statement({sid: '1st', actions: ['action'], resources: ['resource']}),

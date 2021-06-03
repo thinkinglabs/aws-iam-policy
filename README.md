@@ -68,6 +68,19 @@ function kmsKeyPolicyDocument(accountId: string, keyAdminArns: string[], keyUser
 });
 ```
 
+Add a `Statement` to an existing policy document.
+
+```typescript
+const policy = new PolicyDocument();
+policy.addStatement(new Statement({
+    sid: 'Enable IAM User Permissions',
+    effect: 'Allow',
+    principals: [new RootAccountPrincipal(accountId)],
+    actions: ['kms:*'],
+    resources: ['*'],
+  });
+```
+
 Unit testing a statement from a policy document. You can retrieve a single
 statement using the Sid of that statement.
 
@@ -134,7 +147,7 @@ everywhere a string or an array can be passed, an array is expected.
 
 ```json
 {
-  "Statament": [
+  "Statement": [
     {
       "Sid": "EC2ReadOnly",
       "Effect": "Allow",

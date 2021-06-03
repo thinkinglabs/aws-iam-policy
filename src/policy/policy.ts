@@ -17,7 +17,7 @@ export class PolicyDocument {
     return this.statements.length;
   }
 
-  private addStatements(...statements: Statement[]) {
+  public addStatements(...statements: Statement[]) {
     statements.forEach((statement) => {
       if (!new SidUniquenessValidator(this.statements).validate(statement)) {
         throw new Error(`Non-unique Sid "${statement.sid}"`);
