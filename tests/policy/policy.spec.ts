@@ -101,7 +101,7 @@ describe('#PolicyDocument', function() {
       });
 
       describe('when Sid doesn\'t exist', function() {
-        it('should return the statement having the given Sid', function() {
+        it('should return undefined', function() {
           expect(policy.getStatement('an sid')).to.be.undefined;
         });
       });
