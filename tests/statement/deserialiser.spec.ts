@@ -18,7 +18,7 @@ describe('#StatementDeserialiser', function() {
       };
       it('should throw an Error', function() {
         expect(() => StatementJSONDeserialiser.fromJSON(json)).to.throw(Error)
-            .with.property('message', 'Unsupported type: expecting an array');
+            .with.property('message', 'Unsupported type: expecting an array or a string');
       });
     });
 
