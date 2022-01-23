@@ -26,9 +26,12 @@ describe('#StatementDeserialiser', function() {
       const json = {
         Action: 'action',
       };
-      it('should throw an Error', function() {
-        expect(() => StatementJSONDeserialiser.fromJSON(json)).to.throw(Error)
-            .with.property('message', 'Unsupported type: expecting an array');
+      it('should return a Statement with actions', function() {
+        const actual = StatementJSONDeserialiser.fromJSON(json);
+        const expected = new Statement({
+          actions: ['action'],
+        });
+        expect(actual).to.deep.equal(expected);
       });
     });
 
