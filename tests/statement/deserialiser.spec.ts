@@ -66,5 +66,18 @@ describe('#StatementDeserialiser', function() {
             .with.property('message', 'Unsupported type: expecting an array or a string');
       });
     });
+
+    describe('and its value is a string', function() {
+      const json = {
+        Resource: 'resource',
+      };
+      it('should return a Statement with resources', function() {
+        const actual = StatementJSONDeserialiser.fromJSON(json);
+        const expected = new Statement({
+          resources: ['resource'],
+        });
+        expect(actual).to.deep.equal(expected);
+      });
+    });
   });
 });
