@@ -142,8 +142,9 @@ Supports different principals.
 
 ## Limitations
 
-The library only supports the canonical form of IAM Policy JSON documents, i.e.
-everywhere a string or an array can be passed, an array is expected.
+The library now supports a single string as `Action` and `Resource` value, though it does not yet support this for `Principal` and `Condition` key values.
+
+For `Principal` and `Condition` it still expects the canonical form of an IAM Policy JSON document, i.e. everywhere a string or an array can be passed, an array is expected.
 
 ```json
 {
@@ -154,8 +155,8 @@ everywhere a string or an array can be passed, an array is expected.
       "Principal": {
         "AWS": ["arn:aws:iam::123456789012:user/user-name"]
       },
-      "Action": ["ec2:Describe*"],
-      "Resource": ["*"],
+      "Action": "ec2:Describe*",
+      "Resource": "*",
       "Condition": {
         "StringEquals": {
           "kms:CallerAccount": ["123456789012"]
