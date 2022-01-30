@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import { normalise } from '../src/normaliser';
+import {normalise} from '../src/normaliser';
 
 describe('#normalise', function() {
   describe('when an object is undefined', function() {
