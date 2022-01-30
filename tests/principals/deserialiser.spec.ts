@@ -15,28 +15,6 @@ describe('#PrincipalJSONDeserialise', function() {
       });
     });
 
-    describe('when having an AWS principal having one arn', function() {
-      it('should return one ArnPrincipal', function() {
-        const arn = 'arn:aws:iam::012345678900:user/aUser';
-        const input = {AWS: [arn]};
-        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ArnPrincipal(arn)]);
-      });
-    });
-
-    describe('when having an AWS anonymous user principal', function() {
-      it('should return one AnonymousUserPrincipal', function() {
-        const input = {AWS: ['*']};
-        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new AnonymousUserPrincipal()]);
-      });
-    });
-
-    describe('when having a Service principal having one service', function() {
-      it('should return one ServicePrincipal', function() {
-        const input = {Service: ['aService']};
-        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ServicePrincipal('aService')]);
-      });
-    });
-
     describe('when having an unknown principal', function() {
       it('should throw an error', function() {
         const input = {Unknown: ['unknown']};
@@ -45,23 +23,72 @@ describe('#PrincipalJSONDeserialise', function() {
       });
     });
 
-    describe('when having an AWS principal having two arns', function() {
-      it('should return a list having two ArnPrincipal', function() {
-        const role1Arn = 'arn:aws:iam::111122223333:role/role1';
-        const role2Arn = 'arn:aws:iam::111122223333:role/role2';
-        const input = {AWS: [role1Arn, role2Arn]};
-        const expected = [new ArnPrincipal(role1Arn), new ArnPrincipal(role2Arn)];
-        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+    describe('when having an AWS principal', function() {
+      describe('with one ARN', function() {
+        it('should return one ArnPrincipal', function() {
+          const arn = 'arn:aws:iam::012345678900:user/aUser';
+          const input = {AWS: [arn]};
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ArnPrincipal(arn)]);
+        });
+      });
+
+      describe('with an anonymous user principal', function() {
+        it('should return one AnonymousUserPrincipal', function() {
+          const input = {AWS: ['*']};
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new AnonymousUserPrincipal()]);
+        });
+      });
+
+      describe('with two ARNs', function() {
+        it('should return a list having two ArnPrincipal', function() {
+          const role1Arn = 'arn:aws:iam::111122223333:role/role1';
+          const role2Arn = 'arn:aws:iam::111122223333:role/role2';
+          const input = {AWS: [role1Arn, role2Arn]};
+          const expected = [new ArnPrincipal(role1Arn), new ArnPrincipal(role2Arn)];
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+        });
+      });
+
+      describe('with an IAM user, a root user and an account ID', function() {
+        it('should return a list having an ArnPrincipal and a ServicePrincipal', function() {
+          const accountID = '012345678900';
+          const userArn = `arn:aws:iam::${accountID}:user/aUser`;
+          const rootAccountArn = `arn:aws:iam::${accountID}:root`;
+          const input = {AWS: [userArn, rootAccountArn, accountID]};
+          const expected = [
+            new ArnPrincipal(userArn),
+            new RootAccountPrincipal(accountID),
+            new AccountPrincipal(accountID),
+          ];
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+        });
+      });
+
+      describe('with an unsupported ARN', function() {
+        it('should throw an error', function() {
+          expect(() => PrincipalJSONDeserialiser.fromJSON({AWS: ['anArn']})).to.throw(Error)
+              .with.property('message', 'Unsupported AWS principal value "anArn"');
+        });
       });
     });
 
-    describe('when having a Service principal having two services', function() {
-      it('should return a list having two ServicePrincipal', function() {
-        const input = {Service: ['service1', 'service2']};
-        const expected = [new ServicePrincipal('service1'), new ServicePrincipal('service2')];
-        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+    describe('when having a Service principal', function() {
+      describe('with one service', function() {
+        it('should return one ServicePrincipal', function() {
+          const input = {Service: ['aService']};
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ServicePrincipal('aService')]);
+        });
+      });
+
+      describe('with two services', function() {
+        it('should return a list having two ServicePrincipal', function() {
+          const input = {Service: ['service1', 'service2']};
+          const expected = [new ServicePrincipal('service1'), new ServicePrincipal('service2')];
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+        });
       });
     });
+
 
     describe('when having both an AWS and Service principal', function() {
       it('should return a list having an ArnPrincipal and a ServicePrincipal', function() {
@@ -69,28 +96,6 @@ describe('#PrincipalJSONDeserialise', function() {
         const input = {AWS: [arn], Service: ['aService']};
         const expected = [new ArnPrincipal(arn), new ServicePrincipal('aService')];
         expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
-      });
-    });
-
-    describe('when having both an AWS principal having an IAM user, a root account and an account ID', function() {
-      it('should return a list having an ArnPrincipal and a ServicePrincipal', function() {
-        const accountID = '012345678900';
-        const userArn = `arn:aws:iam::${accountID}:user/aUser`;
-        const rootAccountArn = `arn:aws:iam::${accountID}:root`;
-        const input = {AWS: [userArn, rootAccountArn, accountID]};
-        const expected = [
-          new ArnPrincipal(userArn),
-          new RootAccountPrincipal(accountID),
-          new AccountPrincipal(accountID),
-        ];
-        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
-      });
-    });
-
-    describe('when having an AWS principal with an unsupported ARN', function() {
-      it('should throw an error', function() {
-        expect(() => PrincipalJSONDeserialiser.fromJSON({AWS: ['anArn']})).to.throw(Error)
-            .with.property('message', 'Unsupported AWS principal value "anArn"');
       });
     });
   });
