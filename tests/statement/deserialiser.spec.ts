@@ -1,4 +1,6 @@
 import {expect} from 'chai';
+import {AccountPrincipal} from '../../src/principals/account';
+import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
 import {Statement} from '../../src/statement/statement';
 
@@ -77,6 +79,55 @@ describe('#StatementDeserialiser', function() {
           resources: ['resource'],
         });
         expect(actual).to.deep.equal(expected);
+      });
+    });
+  });
+
+  describe('when JSON has a Principal', function() {
+    describe('with an AWS principal type', function() {
+      describe('and its value is a string', function() {
+        it('should return a Statement with principals', function() {
+          const json = {
+            Principal: {AWS: '123456789012'},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            principals: [new AccountPrincipal('123456789012')],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+
+      describe('and its value is a 1-length array', function() {
+        it('should return a Statement with principals', function() {
+          const json = {
+            Principal: {AWS: ['123456789012']},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            principals: [new AccountPrincipal('123456789012')],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+
+      describe('and its value is a 2-length array', function() {
+        it('should return a Statement with principals', function() {
+          const json = {
+            Principal: {AWS: [
+              '123456789012',
+              'arn:aws:iam::123456789012:user/foo',
+            ]},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            principals: [
+              new AccountPrincipal('123456789012'),
+              new ArnPrincipal('arn:aws:iam::123456789012:user/foo'),
+            ],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
       });
     });
   });

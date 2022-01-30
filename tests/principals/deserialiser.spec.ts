@@ -24,10 +24,18 @@ describe('#PrincipalJSONDeserialise', function() {
     });
 
     describe('when having an AWS principal', function() {
-      describe('with one ARN', function() {
+      describe('with one ARN as 1-length array', function() {
         it('should return one ArnPrincipal', function() {
           const arn = 'arn:aws:iam::012345678900:user/aUser';
           const input = {AWS: [arn]};
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ArnPrincipal(arn)]);
+        });
+      });
+
+      describe('with one ARN as a single string', function() {
+        it('should return one ArnPrincipal', function() {
+          const arn = 'arn:aws:iam::012345678900:user/aUser';
+          const input = {AWS: arn};
           expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ArnPrincipal(arn)]);
         });
       });

@@ -4,22 +4,26 @@ import {ArnPrincipal} from './arn';
 import {RootAccountPrincipal} from './root-account';
 import {AccountPrincipal} from './account';
 import {ServicePrincipal} from './service';
+import {parseArray} from '../arrays';
 
 class PrincipalJSONDeserialiser {
-  static fromJSON(input: {[key:string]: string[]} | undefined): Principal[] {
+  static fromJSON(input: {[key:string]: string[] | string} | undefined): Principal[] {
     if (input === undefined) {
       return [];
     }
 
-    const obj = input as {[key:string]: string[]};
     const result: Principal[] = [];
-    Object.keys(obj).forEach((principalType) => {
+
+    const principals = input as {[key:string]: string[] | string};
+    const principalTypes = Object.keys(principals);
+    principalTypes.forEach((principalType) => {
+      const principalValues = parseArray(principals[principalType]);
       switch (principalType) {
         case 'AWS':
-          result.push(...obj[principalType].map(parseAWS));
+          result.push(...principalValues.map(parseAWS));
           break;
         case 'Service':
-          result.push(...obj[principalType].map(parseService));
+          result.push(...principalValues.map(parseService));
           break;
         default:
           throw new Error(`Unsupported principal "${principalType}"`);
