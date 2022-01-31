@@ -142,30 +142,4 @@ Supports different principals.
 
 ## Limitations
 
-The library now supports a single string as `Action` and `Resource` value, though it does not yet support this for `Principal` and `Condition` key values.
-
-For `Principal` and `Condition` it still expects the canonical form of an IAM Policy JSON document, i.e. everywhere a string or an array can be passed, an array is expected.
-
-```json
-{
-  "Statement": [
-    {
-      "Sid": "EC2ReadOnly",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": ["arn:aws:iam::123456789012:user/user-name"]
-      },
-      "Action": "ec2:Describe*",
-      "Resource": "*",
-      "Condition": {
-        "StringEquals": {
-          "kms:CallerAccount": ["123456789012"]
-        }
-      }
-    }
-  ],
-  "Version": "2012-10-17",
-}
-```
-
 The library does not implement `NotPrincipal`, `NotAction` and `NotResource`.
