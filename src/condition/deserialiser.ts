@@ -1,4 +1,5 @@
 import {Condition} from './condition';
+import {parseArray} from '../arrays';
 
 export class ConditionJSONDeserialiser {
   static fromJSON(input: any): Condition[] {
@@ -48,26 +49,6 @@ export class ConditionJSONDeserialiser {
 
         return new Condition(operator, key, parseArray(values));
       });
-    }
-
-    function parseArray(obj: any) {
-      if (obj === undefined) {
-        return [];
-      }
-
-      if (Array.isArray(obj)) {
-        if (isArrayOfStrings(obj)) {
-          return obj as [];
-        } else {
-          throw new Error('Unsupported type: expecting an array of strings');
-        }
-      } else {
-        throw new Error('Unsupported type: expecting an array');
-      }
-    }
-
-    function isArrayOfStrings(obj: any[]) {
-      return obj.every((element) => typeof element === 'string');
     }
   };
 }

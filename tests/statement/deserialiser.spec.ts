@@ -1,4 +1,5 @@
 import {expect} from 'chai';
+import {Condition} from '../../src/condition/condition';
 import {AccountPrincipal} from '../../src/principals/account';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
@@ -127,6 +128,51 @@ describe('#StatementDeserialiser', function() {
             ],
           });
           expect(actual).to.deep.equal(expected);
+        });
+      });
+    });
+  });
+
+  describe('when JSON has a Condition', function() {
+    describe('with one operator', function() {
+      describe('and one key', function() {
+        describe('and its key value is a string', function() {
+          it('should return a Statement with conditions', function() {
+            const json = {
+              Condition: {StringEquals: {'aws:username': 'johndoe'}},
+            };
+            const actual = StatementJSONDeserialiser.fromJSON(json);
+            const expected = new Statement({
+              conditions: [new Condition('StringEquals', 'aws:username', ['johndoe'])],
+            });
+            expect(actual).to.deep.equal(expected);
+          });
+        });
+
+        describe('and its value is a 1-length array', function() {
+          it('should return a Statement with conditions', function() {
+            const json = {
+              Condition: {StringEquals: {'aws:username': ['johndoe']}},
+            };
+            const actual = StatementJSONDeserialiser.fromJSON(json);
+            const expected = new Statement({
+              conditions: [new Condition('StringEquals', 'aws:username', ['johndoe'])],
+            });
+            expect(actual).to.deep.equal(expected);
+          });
+        });
+
+        describe('and its value is a 2-length array', function() {
+          it('should return a Statement with principals', function() {
+            const json = {
+              Condition: {StringEquals: {'aws:username': ['johndoe', 'joesixpack']}},
+            };
+            const actual = StatementJSONDeserialiser.fromJSON(json);
+            const expected = new Statement({
+              conditions: [new Condition('StringEquals', 'aws:username', ['johndoe', 'joesixpack'])],
+            });
+            expect(actual).to.deep.equal(expected);
+          });
         });
       });
     });

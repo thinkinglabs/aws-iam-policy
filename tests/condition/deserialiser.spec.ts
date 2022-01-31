@@ -107,7 +107,14 @@ describe('#ConditionJSONDeserialiser', function() {
                 expect(() => ConditionJSONDeserialiser.fromJSON(input)).to.throw(Error)
                     .with.property(
                         'message',
-                        'Unsupported type: expecting an array');
+                        'Unsupported type: expecting an array or a string');
+              });
+            });
+            describe('and its value is a string', function() {
+              it('should return a 1-length Condition array', function() {
+                const input = {operator: {key: 'value'}};
+                const expected = [new Condition('operator', 'key', ['value'])];
+                expect(ConditionJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
               });
             });
             describe('and its value is an array', function() {
