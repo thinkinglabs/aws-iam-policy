@@ -1,6 +1,11 @@
+## 2.3.0 (1 February 2022)
+
+* Add support for string value for `Condition` key values ([#9](https://github.com/thinkinglabs/aws-iam-policy/issues/9))
+* Add support for string value for `Principal` type values ([#10](https://github.com/thinkinglabs/aws-iam-policy/issues/10))
+
 ## 2.2.0 (23 January 2022)
 
-* Add support for `Statement` `Action` and `Resource` to have a string value instead of an array ([#7](https://github.com/thinkinglabs/aws-iam-policy/issues/7) [@danopia](https://github.com/danopia))
+* Add support for string value for `Action` and `Resource` ([#7](https://github.com/thinkinglabs/aws-iam-policy/issues/7) [@danopia](https://github.com/danopia))
 
 ## 2.1.0 (3 June 2021)
 
