@@ -25,7 +25,10 @@
   "license": "MIT",
   "engineStrict": true,
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
+  },
+  "volta": {
+    "node": "16.14.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
