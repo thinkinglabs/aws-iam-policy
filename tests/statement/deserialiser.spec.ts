@@ -84,6 +84,31 @@ describe('#StatementDeserialiser', function() {
     });
   });
 
+  describe('when JSON has a NotResource', function() {
+    describe('and its value is an object', function() {
+      const json = {
+        NotResource: {property: 'value'},
+      };
+      it('should throw an Error', function() {
+        expect(() => StatementJSONDeserialiser.fromJSON(json)).to.throw(Error)
+            .with.property('message', 'Unsupported type: expecting an array or a string');
+      });
+    });
+
+    describe('and its value is a string', function() {
+      const json = {
+        NotResource: 'resource',
+      };
+      it('should return a Statement with notresources', function() {
+        const actual = StatementJSONDeserialiser.fromJSON(json);
+        const expected = new Statement({
+          notresources: ['resource'],
+        });
+        expect(actual).to.deep.equal(expected);
+      });
+    });
+  });
+
   describe('when JSON has a Principal', function() {
     describe('with an AWS principal type', function() {
       describe('and its value is a string', function() {

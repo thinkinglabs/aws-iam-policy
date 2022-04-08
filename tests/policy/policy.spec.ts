@@ -108,7 +108,7 @@ describe('#PolicyDocument', function() {
     });
   });
 
-  describe('#addStatement', function() {
+  describe('#addStatements', function() {
     describe('when policy is empty', function() {
       describe('when adding 1 statement', function() {
         const policy = new PolicyDocument();
@@ -195,9 +195,9 @@ describe('#PolicyDocument', function() {
       const errors = policy.validateForIdentityPolicy();
       expect(errors).to.deep.equal([
         'Statement(1st) cannot specify any IAM principals.',
-        'Statement(1st) must specify at least one resource.',
+        'Statement(1st) must specify at least one resource or notresource.',
         'Statement(2nd) cannot specify any IAM principals.',
-        'Statement(2nd) must specify at least one resource.',
+        'Statement(2nd) must specify at least one resource or notresource.',
       ]);
     });
   });
@@ -230,9 +230,9 @@ describe('#PolicyDocument', function() {
       const errors = policy.validateForIdentityPolicy();
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\'.',
-        'Statement(1st) must specify at least one resource.',
+        'Statement(1st) must specify at least one resource or notresource.',
         'Statement(2nd) must specify at least one \'action\'.',
-        'Statement(2nd) must specify at least one resource.',
+        'Statement(2nd) must specify at least one resource or notresource.',
       ]);
     });
   });

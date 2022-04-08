@@ -13,6 +13,7 @@ export class Statement {
   public principals: Principal[] = [];
   public actions: string[] = [];
   public resources: string[] = [];
+  public notresources: string[] = [];
   public conditions: Condition[] = [];
 
   constructor(props?: StatementArgs) {
@@ -22,6 +23,7 @@ export class Statement {
     this.addPrincipals(props?.principals || []);
     this.addActions(props?.actions || []);
     this.addResources(props?.resources || []);
+    this.addNotResources(props?.notresources || []);
     this.addConditions(props?.conditions || []);
   }
 
@@ -35,6 +37,10 @@ export class Statement {
 
   private addResources(resources: string[]) {
     this.resources.push(...resources);
+  };
+
+  private addNotResources(resources: string[]) {
+    this.notresources.push(...resources);
   };
 
   private addConditions(conditions: Condition[]) {
@@ -65,13 +71,21 @@ export class Statement {
     return errors;
   }
 
+  validateForNotResourcePolicy() {
+    const errors = this.validateForAnyPolicy();
+    if (Object.keys(this.principals).length === 0) {
+      errors.push(`Statement(${this.sid}) must specify at least one IAM principal.`);
+    }
+    return errors;
+  }
+
   validateForIdentityPolicy() {
     const errors = this.validateForAnyPolicy();
     if (Object.keys(this.principals).length > 0) {
       errors.push(`Statement(${this.sid}) cannot specify any IAM principals.`);
     }
-    if (Object.keys(this.resources).length === 0) {
-      errors.push(`Statement(${this.sid}) must specify at least one resource.`);
+    if ((Object.keys(this.resources).length === 0) && (Object.keys(this.notresources).length === 0)) {
+      errors.push(`Statement(${this.sid}) must specify at least one resource or notresource.`);
     }
     return errors;
   }
@@ -83,5 +97,6 @@ interface StatementArgs {
   readonly principals?: Principal[];
   readonly actions?: string[];
   readonly resources?: string[];
+  readonly notresources?: string[];
   readonly conditions?: Condition[];
 }
