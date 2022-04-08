@@ -72,7 +72,7 @@ Add a `Statement` to an existing policy document.
 
 ```typescript
 const policy = new PolicyDocument();
-policy.addStatement(new Statement({
+policy.addStatements(new Statement({
     sid: 'Enable IAM User Permissions',
     effect: 'Allow',
     principals: [new RootAccountPrincipal(accountId)],

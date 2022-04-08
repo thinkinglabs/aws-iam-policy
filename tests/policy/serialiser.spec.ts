@@ -22,6 +22,7 @@ describe('#PolicyDocumentJSONSerialiser', function() {
             Principal: undefined,
             Action: undefined,
             Resource: undefined,
+            NotResource: undefined,
             Condition: undefined,
           }],
           Version: '2012-10-17',

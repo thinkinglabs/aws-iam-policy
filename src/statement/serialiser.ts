@@ -11,6 +11,7 @@ export class StatementJSONSerialiser {
       Principal: PrincipalJSONSerialiser.toJSON(statement.principals),
       Action: normalise(statement.actions),
       Resource: normalise(statement.resources),
+      NotResource: normalise(statement.notresources),
       Condition: ConditionJSONSerialiser.toJSON(statement.conditions),
     };
   }

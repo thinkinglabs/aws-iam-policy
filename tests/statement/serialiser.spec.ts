@@ -14,6 +14,7 @@ describe('#StatementJSONSerialiser', function() {
         Principal: undefined,
         Action: undefined,
         Resource: undefined,
+        NotResource: undefined,
         Condition: undefined,
       };
       expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
@@ -29,6 +30,7 @@ describe('#StatementJSONSerialiser', function() {
         Principal: undefined,
         Action: undefined,
         Resource: undefined,
+        NotResource: undefined,
         Condition: undefined,
       };
       expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
@@ -44,13 +46,14 @@ describe('#StatementJSONSerialiser', function() {
         Principal: undefined,
         Action: undefined,
         Resource: undefined,
+        NotResource: undefined,
         Condition: undefined,
       };
       expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
     });
   });
 
-  describe('when statement is non empty', function() {
+  describe('when statement has a resource', function() {
     const statement = new Statement({
       principals: [new ArnPrincipal('arn:aws:iam::98765432100:user/user1')],
       actions: ['action1'],
@@ -64,6 +67,28 @@ describe('#StatementJSONSerialiser', function() {
         Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
         Action: ['action1'],
         Resource: ['resource1'],
+        NotResource: undefined,
+        Condition: {operator: {key: ['value']}},
+      };
+      expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
+    });
+  });
+
+  describe('when statement has a notresource', function() {
+    const statement = new Statement({
+      principals: [new ArnPrincipal('arn:aws:iam::98765432100:user/user1')],
+      actions: ['action1'],
+      notresources: ['resource1'],
+      conditions: [new Condition('operator', 'key', ['value'])],
+    });
+    it('should return a JSON object', function() {
+      const expected = {
+        Sid: undefined,
+        Effect: 'Allow',
+        Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
+        Action: ['action1'],
+        Resource: undefined,
+        NotResource: ['resource1'],
         Condition: {operator: {key: ['value']}},
       };
       expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
