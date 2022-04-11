@@ -13,6 +13,7 @@ export class Statement {
   public principals: Principal[] = [];
   public notprincipals: Principal[] = [];
   public actions: string[] = [];
+  public notactions: string[] = [];
   public resources: string[] = [];
   public notresources: string[] = [];
   public conditions: Condition[] = [];
@@ -24,6 +25,7 @@ export class Statement {
     this.addPrincipals(props?.principals || []);
     this.addNotPrincipals(props?.notprincipals || []);
     this.addActions(props?.actions || []);
+    this.addNotActions(props?.notactions || []);
     this.addResources(props?.resources || []);
     this.addNotResources(props?.notresources || []);
     this.addConditions(props?.conditions || []);
@@ -39,6 +41,10 @@ export class Statement {
 
   private addActions(actions: string[]) {
     this.actions.push(...actions);
+  };
+
+  private addNotActions(actions: string[]) {
+    this.notactions.push(...actions);
   };
 
   private addResources(resources: string[]) {
@@ -63,8 +69,8 @@ export class Statement {
 
   validateForAnyPolicy() {
     const errors: string[] = [];
-    if (this.actions.length === 0) {
-      errors.push(`Statement(${this.sid}) must specify at least one 'action'.`);
+    if ((this.actions.length === 0) && (this.notactions.length === 0)) {
+      errors.push(`Statement(${this.sid}) must specify at least one 'action' or 'notaction'.`);
     }
     return errors;
   }
@@ -103,6 +109,7 @@ interface StatementArgs {
   readonly principals?: Principal[];
   readonly notprincipals?: Principal[];
   readonly actions?: string[];
+  readonly notactions?: string[];
   readonly resources?: string[];
   readonly notresources?: string[];
   readonly conditions?: Condition[];
