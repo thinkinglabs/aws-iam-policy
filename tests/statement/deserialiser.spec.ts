@@ -158,6 +158,55 @@ describe('#StatementDeserialiser', function() {
     });
   });
 
+  describe('when JSON has a NotPrincipal', function() {
+    describe('with an AWS principal type', function() {
+      describe('and its value is a string', function() {
+        it('should return a Statement with principals', function() {
+          const json = {
+            NotPrincipal: {AWS: '123456789012'},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            notprincipals: [new AccountPrincipal('123456789012')],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+
+      describe('and its value is a 1-length array', function() {
+        it('should return a Statement with principals', function() {
+          const json = {
+            NotPrincipal: {AWS: ['123456789012']},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            notprincipals: [new AccountPrincipal('123456789012')],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+
+      describe('and its value is a 2-length array', function() {
+        it('should return a Statement with principals', function() {
+          const json = {
+            NotPrincipal: {AWS: [
+              '123456789012',
+              'arn:aws:iam::123456789012:user/foo',
+            ]},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            notprincipals: [
+              new AccountPrincipal('123456789012'),
+              new ArnPrincipal('arn:aws:iam::123456789012:user/foo'),
+            ],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+    });
+  });
+
   describe('when JSON has a Condition', function() {
     describe('with one operator', function() {
       describe('and one key', function() {

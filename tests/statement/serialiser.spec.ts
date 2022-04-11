@@ -12,6 +12,7 @@ describe('#StatementJSONSerialiser', function() {
         Sid: undefined,
         Effect: 'Allow',
         Principal: undefined,
+        NotPrincipal: undefined,
         Action: undefined,
         Resource: undefined,
         NotResource: undefined,
@@ -28,6 +29,7 @@ describe('#StatementJSONSerialiser', function() {
         Sid: 'an sid',
         Effect: 'Allow',
         Principal: undefined,
+        NotPrincipal: undefined,
         Action: undefined,
         Resource: undefined,
         NotResource: undefined,
@@ -37,13 +39,14 @@ describe('#StatementJSONSerialiser', function() {
     });
   });
 
-  describe('when statement has an empty array for Principal, Action and Resource', function() {
-    const statement = new Statement({principals: [], actions: [], resources: []});
-    it('should return a JSON object with undefined Principal, Action and Resource', function() {
+  describe('when statement has an empty array for Principal, NotPrincipal, Action and Resource', function() {
+    const statement = new Statement({principals: [], notprincipals: [], actions: [], resources: []});
+    it('should return a JSON object with undefined Principal, NotPrincipal, Action and Resource', function() {
       const expected = {
         Sid: undefined,
         Effect: 'Allow',
         Principal: undefined,
+        NotPrincipal: undefined,
         Action: undefined,
         Resource: undefined,
         NotResource: undefined,
@@ -65,6 +68,7 @@ describe('#StatementJSONSerialiser', function() {
         Sid: undefined,
         Effect: 'Allow',
         Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
+        NotPrincipal: undefined,
         Action: ['action1'],
         Resource: ['resource1'],
         NotResource: undefined,
@@ -86,6 +90,7 @@ describe('#StatementJSONSerialiser', function() {
         Sid: undefined,
         Effect: 'Allow',
         Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
+        NotPrincipal: undefined,
         Action: ['action1'],
         Resource: undefined,
         NotResource: ['resource1'],
