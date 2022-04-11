@@ -9,6 +9,7 @@ export class StatementJSONSerialiser {
       Sid: normalise(statement.sid),
       Effect: normalise(statement.effect),
       Principal: PrincipalJSONSerialiser.toJSON(statement.principals),
+      NotPrincipal: PrincipalJSONSerialiser.toJSON(statement.notprincipals),
       Action: normalise(statement.actions),
       Resource: normalise(statement.resources),
       NotResource: normalise(statement.notresources),

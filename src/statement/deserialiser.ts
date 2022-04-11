@@ -9,6 +9,7 @@ export class StatementJSONDeserialiser {
       sid: obj.Sid,
       effect: obj.Effect,
       principals: PrincipalJSONDeserialiser.fromJSON(obj.Principal),
+      notprincipals: PrincipalJSONDeserialiser.fromJSON(obj.NotPrincipal),
       actions: parseArray(obj.Action),
       resources: parseArray(obj.Resource),
       notresources: parseArray(obj.NotResource),

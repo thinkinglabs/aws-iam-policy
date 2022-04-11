@@ -11,6 +11,7 @@ export class Statement {
   public sid: string | undefined;
   public effect: Effect;
   public principals: Principal[] = [];
+  public notprincipals: Principal[] = [];
   public actions: string[] = [];
   public resources: string[] = [];
   public notresources: string[] = [];
@@ -21,6 +22,7 @@ export class Statement {
     this.effect = props?.effect || 'Allow';
 
     this.addPrincipals(props?.principals || []);
+    this.addNotPrincipals(props?.notprincipals || []);
     this.addActions(props?.actions || []);
     this.addResources(props?.resources || []);
     this.addNotResources(props?.notresources || []);
@@ -29,6 +31,10 @@ export class Statement {
 
   private addPrincipals(principals: Principal[]) {
     this.principals.push(...principals);
+  }
+
+  private addNotPrincipals(principals: Principal[]) {
+    this.notprincipals.push(...principals);
   }
 
   private addActions(actions: string[]) {
@@ -95,6 +101,7 @@ interface StatementArgs {
   readonly sid?: string;
   readonly effect?: Effect;
   readonly principals?: Principal[];
+  readonly notprincipals?: Principal[];
   readonly actions?: string[];
   readonly resources?: string[];
   readonly notresources?: string[];
