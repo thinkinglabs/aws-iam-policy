@@ -81,30 +81,6 @@ describe('#Statement', function() {
     });
   });
 
-  describe('for notresource-based policies', function() {
-    const statement = new Statement({
-      sid: 'NotValidForResource',
-      effect: 'Deny',
-      principals: [new ServicePrincipal('aservice.amazonaws.com')],
-      actions: ['ec2:*'],
-    });
-
-    it('should be valid for notresource-based policies', function() {
-      expect(statement.validateForNotResourcePolicy()).to.have.empty;
-    });
-
-    it('should be invalid for identity-based policies', function() {
-      const errors = statement.validateForIdentityPolicy();
-      expect(errors).to.have.length(2);
-      expect(errors[0]).to.equal(
-          'Statement(NotValidForResource) cannot specify any IAM principals.',
-      );
-      expect(errors[1]).to.equal(
-          'Statement(NotValidForResource) must specify at least one resource or notresource.',
-      );
-    });
-  });
-
   describe('without actions', function() {
     const statement = new Statement({
       sid: 'Invalid',

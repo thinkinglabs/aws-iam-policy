@@ -83,14 +83,6 @@ export class Statement {
     return errors;
   }
 
-  validateForNotResourcePolicy() {
-    const errors = this.validateForAnyPolicy();
-    if (Object.keys(this.principals).length === 0) {
-      errors.push(`Statement(${this.sid}) must specify at least one IAM principal.`);
-    }
-    return errors;
-  }
-
   validateForIdentityPolicy() {
     const errors = this.validateForAnyPolicy();
     if (Object.keys(this.principals).length > 0) {
