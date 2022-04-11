@@ -117,7 +117,7 @@ describe('#Statement', function() {
       const errors = statement.validateForAnyPolicy();
       expect(errors).to.have.length(1);
       expect(errors[0]).to.equal(
-          'Statement(Invalid) must specify at least one \'action\'.',
+          'Statement(Invalid) must specify at least one \'action\' or \'notaction\'.',
       );
     });
   });

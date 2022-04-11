@@ -11,6 +11,7 @@ export class StatementJSONDeserialiser {
       principals: PrincipalJSONDeserialiser.fromJSON(obj.Principal),
       notprincipals: PrincipalJSONDeserialiser.fromJSON(obj.NotPrincipal),
       actions: parseArray(obj.Action),
+      notactions: parseArray(obj.NotAction),
       resources: parseArray(obj.Resource),
       notresources: parseArray(obj.NotResource),
       conditions: ConditionJSONDeserialiser.fromJSON(obj.Condition),

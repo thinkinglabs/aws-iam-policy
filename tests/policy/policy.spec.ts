@@ -211,17 +211,17 @@ describe('#PolicyDocument', function() {
     it('should be invalid for any policy', function() {
       const errors = policy.validateForAnyPolicy();
       expect(errors).to.deep.equal([
-        'Statement(1st) must specify at least one \'action\'.',
-        'Statement(2nd) must specify at least one \'action\'.',
+        'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
       ]);
     });
 
     it('should be invalid for resource-based policy', function() {
       const errors = policy.validateForResourcePolicy();
       expect(errors).to.deep.equal([
-        'Statement(1st) must specify at least one \'action\'.',
+        'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(1st) must specify at least one IAM principal.',
-        'Statement(2nd) must specify at least one \'action\'.',
+        'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one IAM principal.',
       ]);
     });
@@ -229,9 +229,9 @@ describe('#PolicyDocument', function() {
     it('should be invalid for identity-based policy', function() {
       const errors = policy.validateForIdentityPolicy();
       expect(errors).to.deep.equal([
-        'Statement(1st) must specify at least one \'action\'.',
+        'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(1st) must specify at least one resource or notresource.',
-        'Statement(2nd) must specify at least one \'action\'.',
+        'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one resource or notresource.',
       ]);
     });
