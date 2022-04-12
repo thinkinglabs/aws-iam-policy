@@ -1,6 +1,6 @@
 {
   "name": "@thinkinglabs/aws-iam-policy",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "TypeScript library for handling AWS IAM Policy documents",
   "homepage": "https://github.com/thinkinglabs/aws-iam-policy",
   "repository": "git://github.com/thinkinglabs/aws-iam-policy.git",
@@ -9,7 +9,7 @@
   "scripts": {
     "lint": "eslint ./src/**/* ./tests/**/*",
     "test": "npm run lint && mocha",
-    "prepublishOnly": "tsc"
+    "prepublishOnly": "npm test && tsc"
   },
   "files": [
     "dist",

@@ -12,7 +12,7 @@ The primary reasons for creating the library were:
 
 ## Requirements
 
-Node.js lts/erbium (12.x)
+Node.js lts/gallium (16.x)
 
 ## Features
 
@@ -139,7 +139,3 @@ Supports different principals.
   // "Principal": {"AWS": ["*"]}
   const anonymousUserPrincipal = new AnonymousUserPrincipal();
 ```
-
-## Limitations
-
-The library does not implement `NotPrincipal`, `NotAction` and `NotResource`.
