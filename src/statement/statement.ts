@@ -77,7 +77,7 @@ export class Statement {
 
   validateForResourcePolicy() {
     const errors = this.validateForAnyPolicy();
-    if (Object.keys(this.principals).length === 0) {
+    if (Object.keys(this.principals).length === 0 && Object.keys(this.notprincipals).length === 0) {
       errors.push(`Statement(${this.sid}) must specify at least one IAM principal.`);
     }
     return errors;
@@ -85,7 +85,7 @@ export class Statement {
 
   validateForIdentityPolicy() {
     const errors = this.validateForAnyPolicy();
-    if (Object.keys(this.principals).length > 0) {
+    if (Object.keys(this.principals).length > 0 || Object.keys(this.notprincipals).length > 0) {
       errors.push(`Statement(${this.sid}) cannot specify any IAM principals.`);
     }
     if ((Object.keys(this.resources).length === 0) && (Object.keys(this.notresources).length === 0)) {
