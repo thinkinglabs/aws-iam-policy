@@ -5,6 +5,7 @@ import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
 import {AccountPrincipal} from '../../src/principals/account';
 import {AnonymousUserPrincipal} from '../../src/principals/anonymous';
+import {FederatedPrincipal} from '../../src/principals/federated';
 
 describe('#PrincipalJSONDeserialise', function() {
   describe('#fromJSON', function() {
@@ -97,6 +98,13 @@ describe('#PrincipalJSONDeserialise', function() {
       });
     });
 
+
+    describe('when having a Federated principal', function() {
+      it('should return one FederatedPrincipal', function() {
+        const input = {Federated: ['www.amazon.com']};
+        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new FederatedPrincipal('www.amazon.com')]);
+      });
+    });
 
     describe('when having both an AWS and Service principal', function() {
       it('should return a list having an ArnPrincipal and a ServicePrincipal', function() {

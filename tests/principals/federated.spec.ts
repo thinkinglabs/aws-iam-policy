@@ -1,0 +1,16 @@
+import {expect} from 'chai';
+import {FederatedPrincipal} from '../../src/principals/federated';
+
+describe('#ServicePrincipal', function() {
+  describe('#toJSON', function() {
+    const identityProvider = 'www.amazon.com';
+    const policy = new FederatedPrincipal(identityProvider);
+
+    it('should return the AWS principal JSON fragment', function() {
+      const expected = {
+        'Federated': [identityProvider],
+      };
+      expect(policy.toJSON()).to.deep.equal(expected);
+    });
+  });
+});
