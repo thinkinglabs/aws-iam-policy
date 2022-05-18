@@ -1,10 +1,11 @@
+type PrincipalValues = string | string[];
 
 interface Principal {
-  toJSON(): {[key: string]: string[]};
+  toJSON(): {[key: string]: PrincipalValues};
 }
 
 abstract class AbstractBasePrincipal implements Principal {
-  abstract toJSON(): {[key: string]: string[]};
+  abstract toJSON(): {[key: string]: PrincipalValues};
 }
 
 export {Principal, AbstractBasePrincipal};
