@@ -6,4 +6,5 @@ export * from './principals/arn';
 export * from './principals/service';
 export * from './principals/account';
 export * from './principals/root-account';
+export * from './principals/federated';
 export * from './condition/condition';
