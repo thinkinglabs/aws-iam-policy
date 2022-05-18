@@ -8,7 +8,7 @@ describe('#ServicePrincipal', function() {
 
     it('should return the AWS principal JSON fragment', function() {
       const expected = {
-        'Federated': [identityProvider],
+        'Federated': identityProvider,
       };
       expect(policy.toJSON()).to.deep.equal(expected);
     });
