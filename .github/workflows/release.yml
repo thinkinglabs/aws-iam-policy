@@ -4,10 +4,6 @@ on:
   push:
     tags: ['v[0-9]+.[0-9]+.[0-9]+*'] # only a valid semver tag
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: '${{ github.repository_owner }}/terraform'
-
 jobs:
   publish-package:
     runs-on: ubuntu-latest
