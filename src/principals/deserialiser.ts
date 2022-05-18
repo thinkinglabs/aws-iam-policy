@@ -4,6 +4,7 @@ import {ArnPrincipal} from './arn';
 import {RootAccountPrincipal} from './root-account';
 import {AccountPrincipal} from './account';
 import {ServicePrincipal} from './service';
+import {FederatedPrincipal} from './federated';
 import {parseArray} from '../arrays';
 
 class PrincipalJSONDeserialiser {
@@ -24,6 +25,9 @@ class PrincipalJSONDeserialiser {
           break;
         case 'Service':
           result.push(...principalValues.map(parseService));
+          break;
+        case 'Federated':
+          result.push(...principalValues.map(parseFederated));
           break;
         default:
           throw new Error(`Unsupported principal "${principalType}"`);
@@ -52,6 +56,9 @@ class PrincipalJSONDeserialiser {
     }
     function parseService(value: string) {
       return new ServicePrincipal(value);
+    }
+    function parseFederated(value: string) {
+      return new FederatedPrincipal(value);
     }
   }
 }

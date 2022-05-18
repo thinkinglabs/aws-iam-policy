@@ -6,6 +6,7 @@ import {ArnPrincipal} from '../../src/principals/arn';
 import {Principal} from '../../src/principals/base';
 import {PrincipalJSONSerialiser} from '../../src/principals/serialiser';
 import {ServicePrincipal} from '../../src/principals/service';
+import {FederatedPrincipal} from '../../src/principals/federated';
 
 describe('#PrincipalJSONSerialiser', function() {
   describe('#toJSON', function() {
@@ -29,6 +30,14 @@ describe('#PrincipalJSONSerialiser', function() {
       const principals = [new ServicePrincipal(service)];
       it('should return a JSON object having a Service property having a one item string array', function() {
         expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({Service: [service]});
+      });
+    });
+
+    describe('when having one Federated principal', function() {
+      const identityProvider = 'www.amazon.com';
+      const principals = [new FederatedPrincipal(identityProvider)];
+      it('should return a JSON object having a Federated property having a one item string array', function() {
+        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({Federated: [identityProvider]});
       });
     });
 
