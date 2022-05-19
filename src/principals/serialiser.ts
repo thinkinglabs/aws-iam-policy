@@ -38,16 +38,3 @@ class PrincipalJSONSerialiser {
 
 export {PrincipalJSONSerialiser};
 
-
-// if (!Array.isArray(value)) {
-//   if (currentResult) {
-//     if (typeof(currentResult) === 'string') {
-//       currentResult = [currentResult, value];
-//     } else if (Array.isArray(currentResult)) {
-//       currentResult.push(value);
-//     }
-//   } else {
-//     currentResult = value;
-//   };
-// }
-// result[key] = currentResult;
