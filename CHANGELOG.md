@@ -1,3 +1,7 @@
+## 2.5.0 (19 May 2022)
+
+* Add support for Federated principals ([#14](https://github.com/thinkinglabs/aws-iam-policy/issues/14)) by [@ringods](https://github.com/ringods)
+
 ## 2.4.0 (12 April 2022)
 
 * Add support for `NotAction` ([#2](https://github.com/thinkinglabs/aws-iam-policy/issues/2)), `NotPrincipal` ([#3](https://github.com/thinkinglabs/aws-iam-policy/issues/3)), `NotResource` ([#4](https://github.com/thinkinglabs/aws-iam-policy/issues/4)) by [@ringods](https://github.com/ringods)
