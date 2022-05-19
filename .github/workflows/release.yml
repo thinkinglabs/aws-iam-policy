@@ -19,6 +19,6 @@ jobs:
       - name: Install dependencies
         run: npm ci --ignore-scripts
       - name: Publish package
-        run: npm publish --access public --ignore-scripts
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
