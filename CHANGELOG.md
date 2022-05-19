@@ -1,4 +1,8 @@
-## 2.5.0 (19 May 2022)
+## 2.5.1 (19 May 2022)
+
+* Fix the GitHub Action that publishes the npm package to include the prepublish typescript compilation
+
+## 2.5.0 (19 May 2022) [unusable!!]
 
 * Add support for Federated principals ([#14](https://github.com/thinkinglabs/aws-iam-policy/issues/14)) by [@ringods](https://github.com/ringods)
 
