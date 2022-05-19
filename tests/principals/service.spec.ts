@@ -6,7 +6,7 @@ describe('#ServicePrincipal', function() {
     const service = 'aservice.amazonaws.com';
     const policy = new ServicePrincipal(service);
 
-    it('should return the AWS principal JSON fragment', function() {
+    it('should return the AWS service principal JSON fragment', function() {
       const expected = {
         'Service': service,
       };
