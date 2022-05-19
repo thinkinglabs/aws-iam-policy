@@ -6,7 +6,7 @@ describe('#ServicePrincipal', function() {
     const identityProvider = 'www.amazon.com';
     const policy = new FederatedPrincipal(identityProvider);
 
-    it('should return the AWS principal JSON fragment', function() {
+    it('should return the AWS federated principal JSON fragment', function() {
       const expected = {
         'Federated': identityProvider,
       };
