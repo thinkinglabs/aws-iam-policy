@@ -8,6 +8,6 @@ export class ServicePrincipal extends AbstractBasePrincipal {
   }
 
   toJSON() {
-    return {Service: [this.service]};
+    return {Service: this.service};
   }
 }

@@ -1,4 +1,4 @@
-type PrincipalValues = string | string[];
+export type PrincipalValues = string | string[];
 
 interface Principal {
   toJSON(): {[key: string]: PrincipalValues};

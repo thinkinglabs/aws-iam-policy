@@ -70,7 +70,7 @@ describe('#StatementJSONSerialiser', function() {
       const expected = {
         Sid: undefined,
         Effect: 'Allow',
-        Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
+        Principal: {AWS: 'arn:aws:iam::98765432100:user/user1'},
         NotPrincipal: undefined,
         Action: ['action1'],
         NotAction: undefined,
@@ -93,7 +93,7 @@ describe('#StatementJSONSerialiser', function() {
       const expected = {
         Sid: undefined,
         Effect: 'Allow',
-        Principal: {AWS: ['arn:aws:iam::98765432100:user/user1']},
+        Principal: {AWS: 'arn:aws:iam::98765432100:user/user1'},
         NotPrincipal: undefined,
         Action: ['action1'],
         NotAction: undefined,

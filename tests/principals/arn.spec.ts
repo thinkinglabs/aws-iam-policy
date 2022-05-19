@@ -8,7 +8,7 @@ describe('#ArnPrincipal', function() {
 
     it('should return the AWS principal JSON fragment', function() {
       const expected = {
-        'AWS': [arn],
+        'AWS': arn,
       };
       expect(principal.toJSON()).to.deep.equal(expected);
     });

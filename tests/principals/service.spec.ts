@@ -8,7 +8,7 @@ describe('#ServicePrincipal', function() {
 
     it('should return the AWS principal JSON fragment', function() {
       const expected = {
-        'Service': [service],
+        'Service': service,
       };
       expect(policy.toJSON()).to.deep.equal(expected);
     });

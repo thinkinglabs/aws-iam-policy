@@ -8,7 +8,7 @@ class ArnPrincipal extends AbstractBasePrincipal {
   }
 
   toJSON() {
-    return {AWS: [this.arn]};
+    return {AWS: this.arn};
   }
 
   static validate(input: string): string | undefined {
