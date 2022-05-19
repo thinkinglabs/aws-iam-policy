@@ -7,7 +7,7 @@ describe('#AnonymousUserPrincipal', function() {
 
     it('should return the AWS principal JSON fragment', function() {
       const expected = {
-        'AWS': ['*'],
+        'AWS': '*',
       };
       expect(principle.toJSON()).to.deep.equal(expected);
     });
@@ -35,4 +35,3 @@ describe('#AnonymousUserPrincipal', function() {
     });
   });
 });
-

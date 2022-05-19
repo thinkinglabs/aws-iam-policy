@@ -20,24 +20,24 @@ describe('#PrincipalJSONSerialiser', function() {
     describe('when having one AWS principal', function() {
       const arn = 'arn:aws:iam::012345678900:user/aUser';
       const principals = [new ArnPrincipal(arn)];
-      it('should return a JSON object having an AWS property having a one item string array', function() {
-        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: [arn]});
+      it('should return a JSON object having an AWS property having one string', function() {
+        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: arn});
       });
     });
 
     describe('when having one Service principal', function() {
       const service = 'aservice.amazonaws.com';
       const principals = [new ServicePrincipal(service)];
-      it('should return a JSON object having a Service property having a one item string array', function() {
-        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({Service: [service]});
+      it('should return a JSON object having a Service property having one string', function() {
+        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({Service: service});
       });
     });
 
     describe('when having one Federated principal', function() {
       const identityProvider = 'www.amazon.com';
       const principals = [new FederatedPrincipal(identityProvider)];
-      it('should return a JSON object having a Federated property having a one item string array', function() {
-        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({Federated: [identityProvider]});
+      it('should return a JSON object having a Federated property having one string', function() {
+        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({Federated: identityProvider});
       });
     });
 
@@ -45,9 +45,9 @@ describe('#PrincipalJSONSerialiser', function() {
       const arn = 'arn:aws:iam::012345678900:user/aUser';
       const service = 'aservice.amazonaws.com';
       const principals = [new ArnPrincipal(arn), new ServicePrincipal(service)];
-      it('should return a JSON object having an AWS and Service property each having a one item string array',
+      it('should return a JSON object having an AWS and Service property each having one string',
           function() {
-            expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: [arn], Service: [service]});
+            expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: arn, Service: service});
           });
     });
 

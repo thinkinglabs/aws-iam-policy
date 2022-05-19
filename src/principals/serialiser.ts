@@ -1,4 +1,4 @@
-import {Principal} from './base';
+import {Principal, PrincipalValues} from './base';
 import {normalise} from '../normaliser';
 
 class PrincipalJSONSerialiser {
@@ -6,17 +6,29 @@ class PrincipalJSONSerialiser {
     return normalise(merge(principals));
 
     function merge(principals: Principal[]) {
-      const result: {[key: string]: string[];} = {};
+      const result: {[key: string]: PrincipalValues;} = {};
 
       principals.forEach((principal) => {
         const json = principal.toJSON();
         Object.keys(json).forEach((key) =>{
-          result[key] = result[key] || [];
-          let value = json[key];
-          if (!Array.isArray(value)) {
-            value = [value];
+          let intermediateResult = result[key];
+          const value = json[key]; // string, string[]
+          if (intermediateResult === undefined) { // undefined
+            intermediateResult = value;
+          } else if (typeof(intermediateResult) === 'string') { // string
+            if (!Array.isArray(value)) {
+              intermediateResult = [intermediateResult, value];
+            } else {
+              intermediateResult = [intermediateResult, ...value];
+            }
+          } else { // string[]
+            if (!Array.isArray(value)) {
+              intermediateResult.push(value);
+            } else {
+              intermediateResult.push(...value);
+            }
           }
-          result[key].push(...value);
+          result[key] = intermediateResult;
         });
       });
       return result;
@@ -25,3 +37,17 @@ class PrincipalJSONSerialiser {
 }
 
 export {PrincipalJSONSerialiser};
+
+
+// if (!Array.isArray(value)) {
+//   if (currentResult) {
+//     if (typeof(currentResult) === 'string') {
+//       currentResult = [currentResult, value];
+//     } else if (Array.isArray(currentResult)) {
+//       currentResult.push(value);
+//     }
+//   } else {
+//     currentResult = value;
+//   };
+// }
+// result[key] = currentResult;
