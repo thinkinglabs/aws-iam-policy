@@ -12,7 +12,7 @@ class ArnPrincipal extends AbstractBasePrincipal {
   }
 
   static validate(input: string): string | undefined {
-    const regex = new RegExp('^arn:aws:iam::[0-9]{12}:(user|role)/.*$');
+    const regex = new RegExp('^arn:aws:iam::[0-9]{12}:((user|role)/.*|root)$');
     const result = regex.exec(input) as RegExpExecArray;
     return result ? result[0] : undefined;
   }

@@ -29,8 +29,9 @@ describe('#ArnPrincipal', function() {
     });
 
     describe('when given a valid root account arn', function() {
-      it('should return undefined', function() {
-        expect(ArnPrincipal.validate('arn:aws:iam::012345678900:root')).to.be.undefined;
+      it('should return the root account arn', function() {
+        const arn = 'arn:aws:iam::012345678900:root';
+        expect(ArnPrincipal.validate(arn)).to.equal(arn);
       });
     });
   });

@@ -4,8 +4,9 @@ import {RootAccountPrincipal} from '../../src/principals/root-account';
 describe('#RootAccountPrincipal', function() {
   describe('#validate', function() {
     describe('when given a valid root account arn', function() {
-      it('should return the AWS account ID', function() {
-        expect(RootAccountPrincipal.validate('arn:aws:iam::012345678900:root')).to.equal('012345678900');
+      it('should return the AWS account arn', function() {
+        const arn = 'arn:aws:iam::012345678900:root';
+        expect(RootAccountPrincipal.validate(arn)).to.equal('arn:aws:iam::012345678900:root');
       });
     });
 

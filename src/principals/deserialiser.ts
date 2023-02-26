@@ -1,7 +1,6 @@
 import {Principal} from './base';
 import {AnonymousUserPrincipal} from './anonymous';
 import {ArnPrincipal} from './arn';
-import {RootAccountPrincipal} from './root-account';
 import {AccountPrincipal} from './account';
 import {ServicePrincipal} from './service';
 import {FederatedPrincipal} from './federated';
@@ -39,10 +38,6 @@ class PrincipalJSONDeserialiser {
       let validation = ArnPrincipal.validate(value);
       if (validation) {
         return new ArnPrincipal(validation);
-      }
-      validation = RootAccountPrincipal.validate(value);
-      if (validation) {
-        return new RootAccountPrincipal(validation);
       }
       validation = AccountPrincipal.validate(value);
       if (validation) {
