@@ -7,6 +7,7 @@ import {AccountPrincipal} from '../../src/principals/account';
 import {AnonymousUserPrincipal} from '../../src/principals/anonymous';
 import {FederatedPrincipal} from '../../src/principals/federated';
 import {UserPrincipal} from '../../src/principals/user';
+import {RolePrincipal} from '../../src/principals/role';
 
 describe('#PrincipalJSONDeserialise', function() {
   describe('#fromJSON', function() {
@@ -51,6 +52,16 @@ describe('#PrincipalJSONDeserialise', function() {
           });
         });
 
+        describe('with an IAM role arn', function() {
+          it('should return one RolePrincipal', function() {
+            const arn = 'arn:aws:iam::012345678900:role/aRole';
+            const input = {AWS: arn};
+            expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([
+              new RolePrincipal('012345678900', 'aRole'),
+            ]);
+          });
+        });
+
         describe('with one arn', function() {
           it('should return one ArnPrincipal', function() {
             const arn = 'arn:aws:iam::012345678900:role/aRole';
@@ -85,6 +96,16 @@ describe('#PrincipalJSONDeserialise', function() {
           });
         });
 
+        describe('with an IAM role arn', function() {
+          it('should return one RolePrincipal', function() {
+            const arn = 'arn:aws:iam::012345678900:role/aRole';
+            const input = {AWS: [arn]};
+            expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([
+              new RolePrincipal('012345678900', 'aRole'),
+            ]);
+          });
+        });
+
         describe('with one arn', function() {
           it('should return one ArnPrincipal', function() {
             const arn = 'arn:aws:iam::012345678900:role/aRole';
@@ -96,28 +117,33 @@ describe('#PrincipalJSONDeserialise', function() {
     });
 
     describe('when having two AWS principals', function() {
-      describe('with two IAM roles', function() {
-        it('should return a list of two ArnPrincipal', function() {
-          const role1Arn = 'arn:aws:iam::111122223333:role/role1';
-          const role2Arn = 'arn:aws:iam::111122223333:role/role2';
-          const input = {AWS: [role1Arn, role2Arn]};
-          const expected = [new ArnPrincipal(role1Arn), new ArnPrincipal(role2Arn)];
+      describe('with one IAM user and one IAM role', function() {
+        it('should return a list of one UserPrincipal and one RolePrincipal', function() {
+          const accountId = '111122223333';
+          const userArn = `arn:aws:iam::${accountId}:user/aUser`;
+          const roleArn = `arn:aws:iam::${accountId}:role/aRole`;
+          const input = {AWS: [userArn, roleArn]};
+          const expected = [
+            new UserPrincipal(accountId, 'aUser'),
+            new RolePrincipal(accountId, 'aRole')];
           expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
         });
       });
     });
 
-    describe('when having three AWS principals', function() {
-      describe('with an IAM user, a root user and an account ID', function() {
+    describe('when having four AWS principals', function() {
+      describe('with an IAM user, an IAM Role, a root user and an account ID', function() {
         it('should return a list having UserPrincipal, RootAccountPrincipal and AccountPrincipal', function() {
-          const accountID = '012345678900';
-          const userArn = `arn:aws:iam::${accountID}:user/aUser`;
-          const rootAccountArn = `arn:aws:iam::${accountID}:root`;
-          const input = {AWS: [userArn, rootAccountArn, accountID]};
+          const accountId = '012345678900';
+          const userArn = `arn:aws:iam::${accountId}:user/aUser`;
+          const roleArn = `arn:aws:iam::${accountId}:role/aRole`;
+          const rootAccountArn = `arn:aws:iam::${accountId}:root`;
+          const input = {AWS: [userArn, roleArn, rootAccountArn, accountId]};
           const expected = [
-            new ArnPrincipal(userArn),
-            new RootAccountPrincipal(accountID),
-            new AccountPrincipal(accountID),
+            new UserPrincipal(accountId, 'aUser'),
+            new RolePrincipal(accountId, 'aRole'),
+            new RootAccountPrincipal(accountId),
+            new AccountPrincipal(accountId),
           ];
           expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
         });
