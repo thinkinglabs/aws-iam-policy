@@ -1,0 +1,5 @@
+
+class WildcardPrincipal {
+}
+
+export {WildcardPrincipal};
