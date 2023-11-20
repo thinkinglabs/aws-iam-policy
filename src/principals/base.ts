@@ -1,7 +1,8 @@
 export type PrincipalValues = string | string[];
+export type AnonymousValue = string;
 
 interface Principal {
-  toJSON(): {[key: string]: PrincipalValues};
+  toJSON(): {[key: string]: PrincipalValues} | AnonymousValue;
 }
 
 abstract class AbstractBasePrincipal implements Principal {

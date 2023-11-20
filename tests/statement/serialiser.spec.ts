@@ -3,6 +3,7 @@ import {Condition} from '../../src/condition/condition';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONSerialiser} from '../../src/statement/serialiser';
 import {Statement} from '../../src/statement/statement';
+import {WildcardPrincipal} from '../../src/principals/wildcard';
 
 describe('#StatementJSONSerialiser', function() {
   describe('when statement is empty', function() {
@@ -100,6 +101,26 @@ describe('#StatementJSONSerialiser', function() {
         Resource: undefined,
         NotResource: ['resource1'],
         Condition: {operator: {key: ['value']}},
+      };
+      expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
+    });
+  });
+
+  describe('when statement has an WildcardPrincipal', function() {
+    const statement = new Statement({
+      principals: [new WildcardPrincipal()],
+    });
+    it('should return a JSON object having the wild card principal', function() {
+      const expected = {
+        Sid: undefined,
+        Effect: 'Allow',
+        Principal: '*',
+        NotPrincipal: undefined,
+        Action: undefined,
+        NotAction: undefined,
+        Resource: undefined,
+        NotResource: undefined,
+        Condition: undefined,
       };
       expect(StatementJSONSerialiser.toJSON(statement)).to.deep.equal(expected);
     });
