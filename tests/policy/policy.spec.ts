@@ -6,6 +6,7 @@ import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
 import {AccountPrincipal} from '../../src/principals/account';
 import {Condition} from '../../src/condition/condition';
+import {WildcardPrincipal} from '../../src/principals/wildcard';
 
 describe('#PolicyDocument', function() {
   describe('when serialising to JSON', function() {
@@ -36,6 +37,10 @@ describe('#PolicyDocument', function() {
         principals: [new ArnPrincipal('arn:aws:iam::123456789000:role/aRole')],
         actions: ['ec2:TerminateInstance'],
         resources: ['arn:aws:ec2:eu-west-1:123456789000:instance/i-123456'],
+      }),
+      new Statement({
+        sid: 'anSID3',
+        principals: [new WildcardPrincipal()],
       }),
     ]);
 
