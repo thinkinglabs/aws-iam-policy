@@ -1,5 +1,6 @@
-import {Principal} from './base';
+import {AnonymousValue, Principal, PrincipalValues} from './base';
 import {AnonymousUserPrincipal} from './anonymous';
+import {WildcardPrincipal} from './wildcard';
 import {ArnPrincipal} from './arn';
 import {AccountPrincipal} from './account';
 import {ServicePrincipal} from './service';
@@ -7,9 +8,13 @@ import {FederatedPrincipal} from './federated';
 import {parseArray} from '../arrays';
 
 class PrincipalJSONDeserialiser {
-  static fromJSON(input: {[key:string]: string[] | string} | undefined): Principal[] {
+  static fromJSON(input: {[key:string]: PrincipalValues} | AnonymousValue | undefined): Principal[] {
     if (input === undefined) {
       return [];
+    }
+
+    if (input === '*') {
+      return [new WildcardPrincipal()];
     }
 
     const result: Principal[] = [];

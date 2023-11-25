@@ -5,6 +5,7 @@ import {ServicePrincipal} from '../../src/principals/service';
 import {RootAccountPrincipal} from '../../src/principals/root-account';
 import {AccountPrincipal} from '../../src/principals/account';
 import {AnonymousUserPrincipal} from '../../src/principals/anonymous';
+import {WildcardPrincipal} from '../../src/principals/wildcard';
 import {FederatedPrincipal} from '../../src/principals/federated';
 
 describe('#PrincipalJSONDeserialise', function() {
@@ -111,6 +112,14 @@ describe('#PrincipalJSONDeserialise', function() {
         const arn = 'arn:aws:iam::123456789012:user/aUser';
         const input = {AWS: [arn], Service: ['aService']};
         const expected = [new ArnPrincipal(arn), new ServicePrincipal('aService')];
+        expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+      });
+    });
+
+    describe('when having an anonymous principal', function() {
+      it('should return an AnonymousPrincipal', function() {
+        const input = '*';
+        const expected = [new WildcardPrincipal()];
         expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
       });
     });

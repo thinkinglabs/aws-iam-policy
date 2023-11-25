@@ -4,6 +4,7 @@ import {AccountPrincipal} from '../../src/principals/account';
 import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
 import {Statement} from '../../src/statement/statement';
+import {WildcardPrincipal} from '../../src/principals/wildcard';
 
 describe('#StatementDeserialiser', function() {
   describe('when JSON is empty', function() {
@@ -154,6 +155,19 @@ describe('#StatementDeserialiser', function() {
           });
           expect(actual).to.deep.equal(expected);
         });
+      });
+    });
+
+    describe('with a wildcard principal', function() {
+      it('should return a Statement with an AnonymousPrincipal', function() {
+        const json = {
+          Principal: '*',
+        };
+        const actual = StatementJSONDeserialiser.fromJSON(json);
+        const expected = new Statement({
+          principals: [new WildcardPrincipal()],
+        });
+        expect(actual).to.deep.equal(expected);
       });
     });
   });
