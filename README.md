@@ -138,4 +138,7 @@ Supports different principals.
 
   // "Principal": {"AWS": ["*"]}
   const anonymousUserPrincipal = new AnonymousUserPrincipal();
+
+  // "Principal" : "*"
+  const wildcardPrincipal = new WildcardPrincipal();
 ```
