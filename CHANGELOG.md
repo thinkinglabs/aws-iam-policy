@@ -1,3 +1,7 @@
+## 2.6.0 (26 Nov 2023)
+
+* Add support for the wildcard principal ([#22](https://github.com/thinkinglabs/aws-iam-policy/issues/22) reported by [@gabegorelick](https://github.com/gabegorelick)).
+
 ## 2.5.1 (19 May 2022)
 
 * Fix the GitHub Action that publishes the npm package to include the prepublish typescript compilation
