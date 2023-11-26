@@ -124,4 +124,18 @@ describe('#Statement', function() {
           .with.property('message', 'In case of the AnonymousPrincipal there can only be one principal');
     });
   });
+
+  describe('when notprincipal contains a wildcard principal together with another principal', function() {
+    it('should throw an Error', function() {
+      expect(() => new Statement({
+        notprincipals: [
+          new WildcardPrincipal(),
+          new ArnPrincipal('arn:aws:iam::123456789000:user/aUser'),
+        ],
+        actions: ['*'],
+        resources: ['*'],
+      })).to.throw(Error)
+          .with.property('message', 'In case of the AnonymousPrincipal there can only be one principal');
+    });
+  });
 });

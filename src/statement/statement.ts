@@ -38,6 +38,7 @@ export class Statement {
   }
 
   private addNotPrincipals(principals: Principal[]) {
+    this.onlyHasOneWildCardPrincipalOrNone(principals);
     this.notprincipals.push(...principals);
   }
 
