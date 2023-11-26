@@ -121,6 +121,21 @@ describe('#Statement', function() {
     });
   });
 
+  describe('when principal contains non-wildcard principals', function() {
+    it('should not throw an Error', function() {
+      expect(() => new Statement({
+        principals: [
+          new ArnPrincipal('arn:aws:iam::123456789000:user/aUser'),
+          new RootAccountPrincipal('123456789000'),
+          new AccountPrincipal('123456789000'),
+          new ServicePrincipal('aservice.amazonaws.com'),
+        ],
+        actions: ['*'],
+        resources: ['*'],
+      })).to.not.throw(Error);
+    });
+  });
+
   describe('when principal contains a wildcard principal together with another principal', function() {
     it('should throw an Error', function() {
       expect(() => new Statement({
