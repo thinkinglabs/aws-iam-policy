@@ -4,7 +4,7 @@
 version=$(shell cat package.json | jq -r '.version')
 
 tag: ## Tag git repo
-	git tag -a ${version} -m "Bump ${version}"
+	git tag -a v${version} -m "Bump v${version}"
 	git push origin main --follow-tags
 
 install: ## Install dependencies
