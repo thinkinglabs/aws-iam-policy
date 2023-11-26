@@ -33,6 +33,15 @@ export class Statement {
   }
 
   private addPrincipals(principals: Principal[]) {
+    this.onlyHasOneWildCardPrincipalOrNone(principals);
+    this.principals.push(...principals);
+  }
+
+  private addNotPrincipals(principals: Principal[]) {
+    this.notprincipals.push(...principals);
+  }
+
+  private onlyHasOneWildCardPrincipalOrNone(principals: Principal[]) {
     if (principals.length > 1) {
       const anonymousPrincipal = principals.find((principal) => principal instanceof WildcardPrincipal);
       const hasAnonymousPrincipal = (anonymousPrincipal !== undefined);
@@ -40,11 +49,6 @@ export class Statement {
         throw new Error('In case of the AnonymousPrincipal there can only be one principal');
       }
     }
-    this.principals.push(...principals);
-  }
-
-  private addNotPrincipals(principals: Principal[]) {
-    this.notprincipals.push(...principals);
   }
 
   private addActions(actions: string[]) {
