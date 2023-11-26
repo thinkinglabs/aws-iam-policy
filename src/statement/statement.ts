@@ -2,6 +2,7 @@ import {Principal} from '../principals/base';
 import {Condition} from '../condition/condition';
 import {StatementJSONDeserialiser} from './deserialiser';
 import {StatementJSONSerialiser} from './serialiser';
+import {WildcardPrincipal} from '../principals/wildcard';
 
 /* eslint-disable no-unused-vars */
 export type Effect = 'Allow' | 'Deny'
@@ -32,6 +33,13 @@ export class Statement {
   }
 
   private addPrincipals(principals: Principal[]) {
+    if (principals.length > 1) {
+      const anonymousPrincipal = principals.find((principal) => principal instanceof WildcardPrincipal);
+      const hasAnonymousPrincipal = (anonymousPrincipal !== undefined);
+      if (hasAnonymousPrincipal) {
+        throw new Error('In case of the AnonymousPrincipal there can only be one principal');
+      }
+    }
     this.principals.push(...principals);
   }
 
