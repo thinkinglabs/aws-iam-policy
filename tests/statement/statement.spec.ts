@@ -135,6 +135,16 @@ describe('#Statement', function() {
     });
   });
 
+  describe('when notprincipal contains only a wildcard principal', function() {
+    it('should not throw an Error', function() {
+      expect(() => new Statement({
+        notprincipals: [new WildcardPrincipal()],
+        actions: ['*'],
+        resources: ['*'],
+      })).to.not.throw(Error);
+    });
+  });
+
   describe('when notprincipal contains a wildcard principal together with another principal', function() {
     it('should throw an Error', function() {
       expect(() => new Statement({
