@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {WildcardPrincipal} from '../../src/principals/wildcard';
+import {WildcardPrincipal} from '../../src';
 
 describe('#WildcardPrincipal', function() {
   describe('#toJSON', function() {
