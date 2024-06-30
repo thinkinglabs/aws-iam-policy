@@ -1,6 +1,6 @@
 {
   "name": "@thinkinglabs/aws-iam-policy",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "TypeScript library for handling AWS IAM Policy documents",
   "homepage": "https://github.com/thinkinglabs/aws-iam-policy",
   "repository": "git://github.com/thinkinglabs/aws-iam-policy.git",

@@ -1,4 +1,8 @@
-## 2.6.0 (26 Nov 2023)
+## 2.6.1 (30 June 2023)
+
+* Export the `WildcardPrincipal` ([#23](https://github.com/thinkinglabs/aws-iam-policy/pull/23) by [@gabegorelick](https://github.com/gabegorelick)).
+
+## 2.6.0 (26 November 2023)
 
 * Add support for the wildcard principal ([#22](https://github.com/thinkinglabs/aws-iam-policy/issues/22) reported by [@gabegorelick](https://github.com/gabegorelick)).
 
