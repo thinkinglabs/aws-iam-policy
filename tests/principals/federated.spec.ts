@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {FederatedPrincipal} from '../../src/principals/federated';
+import {FederatedPrincipal} from '../../src';
 
 describe('#ServicePrincipal', function() {
   describe('#toJSON', function() {

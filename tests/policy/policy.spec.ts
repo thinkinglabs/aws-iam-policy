@@ -1,12 +1,14 @@
 import {expect} from 'chai';
-import {PolicyDocument} from '../../src/policy/policy';
-import {Statement} from '../../src/statement/statement';
-import {ArnPrincipal} from '../../src/principals/arn';
-import {ServicePrincipal} from '../../src/principals/service';
-import {RootAccountPrincipal} from '../../src/principals/root-account';
-import {AccountPrincipal} from '../../src/principals/account';
-import {Condition} from '../../src/condition/condition';
-import {WildcardPrincipal} from '../../src/principals/wildcard';
+import {
+  PolicyDocument,
+  Statement,
+  ArnPrincipal,
+  ServicePrincipal,
+  RootAccountPrincipal,
+  AccountPrincipal,
+  WildcardPrincipal,
+  Condition,
+} from '../../src';
 
 describe('#PolicyDocument', function() {
   describe('when serialising to JSON', function() {

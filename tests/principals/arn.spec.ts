@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {ArnPrincipal} from '../../src/principals/arn';
+import {ArnPrincipal} from '../../src';
 
 describe('#ArnPrincipal', function() {
   describe('#toJSON', function() {

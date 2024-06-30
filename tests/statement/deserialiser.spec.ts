@@ -1,10 +1,12 @@
 import {expect} from 'chai';
-import {Condition} from '../../src/condition/condition';
-import {AccountPrincipal} from '../../src/principals/account';
-import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
-import {Statement} from '../../src/statement/statement';
-import {WildcardPrincipal} from '../../src/principals/wildcard';
+import {
+  Statement,
+  AccountPrincipal,
+  ArnPrincipal,
+  WildcardPrincipal,
+  Condition,
+} from '../../src';
 
 describe('#StatementDeserialiser', function() {
   describe('when JSON is empty', function() {

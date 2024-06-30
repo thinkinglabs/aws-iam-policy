@@ -1,8 +1,9 @@
 import {expect} from 'chai';
 import {PolicyDocumentJSONDeserialiser} from '../../src/policy/deserialiser';
-import {PolicyDocument} from '../../src/policy/policy';
-import {Statement} from '../../src/statement/statement';
-
+import {
+  PolicyDocument,
+  Statement,
+} from '../../src';
 
 describe('#PolicyDocumentJSONDeserialiser', function() {
   describe('#fromJSON', function() {

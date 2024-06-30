@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {RootAccountPrincipal} from '../../src/principals/root-account';
+import {RootAccountPrincipal} from '../../src';
 
 describe('#RootAccountPrincipal', function() {
   describe('#toJSON', function() {

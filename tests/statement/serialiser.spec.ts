@@ -1,9 +1,11 @@
 import {expect} from 'chai';
-import {Condition} from '../../src/condition/condition';
-import {ArnPrincipal} from '../../src/principals/arn';
 import {StatementJSONSerialiser} from '../../src/statement/serialiser';
-import {Statement} from '../../src/statement/statement';
-import {WildcardPrincipal} from '../../src/principals/wildcard';
+import {
+  Statement,
+  ArnPrincipal,
+  WildcardPrincipal,
+  Condition,
+} from '../../src';
 
 describe('#StatementJSONSerialiser', function() {
   describe('when statement is empty', function() {

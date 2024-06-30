@@ -1,7 +1,9 @@
 import {expect} from 'chai';
-import {PolicyDocument} from '../../src/policy/policy';
 import {PolicyDocumentJSONSerialiser} from '../../src/policy/serialiser';
-import {Statement} from '../../src/statement/statement';
+import {
+  PolicyDocument,
+  Statement,
+} from '../../src';
 
 describe('#PolicyDocumentJSONSerialiser', function() {
   describe('#toJSON', function() {

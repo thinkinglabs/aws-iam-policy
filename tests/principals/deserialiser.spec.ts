@@ -1,12 +1,14 @@
 import {expect} from 'chai';
 import {PrincipalJSONDeserialiser} from '../../src/principals/deserialiser';
-import {ArnPrincipal} from '../../src/principals/arn';
-import {ServicePrincipal} from '../../src/principals/service';
-import {RootAccountPrincipal} from '../../src/principals/root-account';
-import {AccountPrincipal} from '../../src/principals/account';
-import {AnonymousUserPrincipal} from '../../src/principals/anonymous';
-import {WildcardPrincipal} from '../../src/principals/wildcard';
-import {FederatedPrincipal} from '../../src/principals/federated';
+import {
+  ArnPrincipal,
+  ServicePrincipal,
+  RootAccountPrincipal,
+  AccountPrincipal,
+  AnonymousUserPrincipal,
+  WildcardPrincipal,
+  FederatedPrincipal,
+} from '../../src';
 
 describe('#PrincipalJSONDeserialise', function() {
   describe('#fromJSON', function() {

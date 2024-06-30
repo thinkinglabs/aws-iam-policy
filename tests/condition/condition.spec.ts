@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {Condition} from '../../src/condition/condition';
+import {Condition} from '../../src';
 
 describe('#Condition', function() {
   describe('constructor', function() {

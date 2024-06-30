@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {AnonymousUserPrincipal} from '../../src/principals/anonymous';
+import {AnonymousUserPrincipal} from '../../src';
 
 describe('#AnonymousUserPrincipal', function() {
   describe('#toJSON', function() {

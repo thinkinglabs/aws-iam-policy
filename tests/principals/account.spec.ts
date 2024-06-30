@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {AccountPrincipal} from '../../src/principals/account';
+import {AccountPrincipal} from '../../src';
 
 describe('#AccountPrincipal', function() {
   describe('#validate', function() {

@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {ServicePrincipal} from '../../src/principals/service';
+import {ServicePrincipal} from '../../src';
 
 describe('#ServicePrincipal', function() {
   describe('#toJSON', function() {

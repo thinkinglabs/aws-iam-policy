@@ -1,12 +1,14 @@
 // import {expect} from 'chai';
 
 import {expect} from 'chai';
-import {AccountPrincipal} from '../../src/principals/account';
-import {ArnPrincipal} from '../../src/principals/arn';
-import {Principal} from '../../src/principals/base';
 import {PrincipalJSONSerialiser} from '../../src/principals/serialiser';
-import {ServicePrincipal} from '../../src/principals/service';
-import {FederatedPrincipal} from '../../src/principals/federated';
+import {
+  AccountPrincipal,
+  ArnPrincipal,
+  Principal,
+  ServicePrincipal,
+  FederatedPrincipal,
+} from '../../src';
 
 describe('#PrincipalJSONSerialiser', function() {
   describe('#toJSON', function() {

@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {Condition} from '../../src/condition/condition';
 import {ConditionJSONDeserialiser} from '../../src/condition/deserialiser';
+import {Condition} from '../../src';
 
 describe('#ConditionJSONDeserialiser', function() {
   describe('#fromJSON', function() {

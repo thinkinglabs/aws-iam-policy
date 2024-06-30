@@ -1,6 +1,6 @@
 import {expect} from 'chai';
-import {Condition} from '../../src/condition/condition';
 import {ConditionJSONSerialiser} from '../../src/condition/serialiser';
+import {Condition} from '../../src';
 
 describe('#ConditionJSONSerialiser', function() {
   describe('#toJSON', function() {
