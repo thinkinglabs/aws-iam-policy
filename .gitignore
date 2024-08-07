@@ -3,3 +3,6 @@
 
 #Visual Studio Code settings
 /.vscode/
+
+#Jetbrains settings
+.idea

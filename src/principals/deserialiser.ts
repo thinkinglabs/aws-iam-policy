@@ -6,9 +6,10 @@ import {AccountPrincipal} from './account';
 import {ServicePrincipal} from './service';
 import {FederatedPrincipal} from './federated';
 import {parseArray} from '../arrays';
+import {CloudFrontPrincipal} from './cloudfront';
 
 class PrincipalJSONDeserialiser {
-  static fromJSON(input: {[key:string]: PrincipalValues} | AnonymousValue | undefined): Principal[] {
+  static fromJSON(input: { [key: string]: PrincipalValues } | AnonymousValue | undefined): Principal[] {
     if (input === undefined) {
       return [];
     }
@@ -19,7 +20,7 @@ class PrincipalJSONDeserialiser {
 
     const result: Principal[] = [];
 
-    const principals = input as {[key:string]: string[] | string};
+    const principals = input as { [key: string]: string[] | string };
     const principalTypes = Object.keys(principals);
     principalTypes.forEach((principalType) => {
       const principalValues = parseArray(principals[principalType]);
@@ -52,11 +53,17 @@ class PrincipalJSONDeserialiser {
       if (validation) {
         return new AnonymousUserPrincipal();
       }
+      validation = CloudFrontPrincipal.validate(value);
+      if (validation) {
+        return new CloudFrontPrincipal(value);
+      }
       throw new Error(`Unsupported AWS principal value "${value}"`);
     }
+
     function parseService(value: string) {
       return new ServicePrincipal(value);
     }
+
     function parseFederated(value: string) {
       return new FederatedPrincipal(value);
     }

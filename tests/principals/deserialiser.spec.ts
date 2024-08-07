@@ -1,13 +1,14 @@
 import {expect} from 'chai';
 import {PrincipalJSONDeserialiser} from '../../src/principals/deserialiser';
 import {
-  ArnPrincipal,
-  ServicePrincipal,
-  RootAccountPrincipal,
   AccountPrincipal,
   AnonymousUserPrincipal,
-  WildcardPrincipal,
+  ArnPrincipal,
+  CloudFrontPrincipal,
   FederatedPrincipal,
+  RootAccountPrincipal,
+  ServicePrincipal,
+  WildcardPrincipal,
 } from '../../src';
 
 describe('#PrincipalJSONDeserialise', function() {
@@ -73,6 +74,45 @@ describe('#PrincipalJSONDeserialise', function() {
             new AccountPrincipal(accountID),
           ];
           expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+        });
+      });
+
+      describe('with an CloudFront user', function() {
+        it('should return a CloudFrontPrincipal', function() {
+          const validCloudFrontIds = [
+            'E1ABCDEFGHIJ',
+            'E12345ABCDE',
+            'EABCD1234567',
+            'E1A2B3C4D5E6F',
+            'E12345678ABCDE',
+          ];
+          for (const validCloudFrontId of validCloudFrontIds) {
+            const arn = `arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${validCloudFrontId}`;
+            const input = {AWS: arn};
+            expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new CloudFrontPrincipal(arn)]);
+          }
+        });
+        it('should fail with invalid cloud front ids', function() {
+          const invalidCloudFrontIds = [
+            'EABCDEFGHIJKL',
+            'E123456789',
+            'EABCDEFGHIJKLMNO',
+            '1EABC1234567',
+            'EFGHJKLMNOP',
+          ];
+          let arn: string | undefined;
+          for (const invalidCloudFrontId of invalidCloudFrontIds) {
+            arn = `arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${invalidCloudFrontId}`;
+            const input = {AWS: arn};
+            try {
+              PrincipalJSONDeserialiser.fromJSON(input);
+            } catch (error) {
+              const error_ = error as Error;
+              if (error_.message !== `Unsupported AWS principal value "${arn}"`) {
+                throw error;
+              }
+            }
+          }
         });
       });
 
