@@ -77,7 +77,7 @@ describe('#PrincipalJSONDeserialise', function() {
         });
       });
 
-      describe('with an CloudFront user', function() {
+      describe('with a CloudFront user', function() {
         it('should return a CloudFrontPrincipal', function() {
           const validCloudFrontIds = [
             'E1ABCDEFGHIJ',
@@ -92,7 +92,7 @@ describe('#PrincipalJSONDeserialise', function() {
             expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new CloudFrontPrincipal(arn)]);
           }
         });
-        it('should fail with invalid cloud front ids', function() {
+        it('should fail with invalid CloudFront ids', function() {
           const invalidCloudFrontIds = [
             'EABCDEFGHIJKL',
             'E123456789',
