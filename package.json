@@ -9,6 +9,8 @@
   "scripts": {
     "lint": "eslint ./src/**/* ./tests/**/*",
     "test": "npm run lint && mocha",
+    "preversion": "npm test",
+    "postversion": "git push origin main --follow-tags",
     "prepublishOnly": "npm test && tsc"
   },
   "files": [

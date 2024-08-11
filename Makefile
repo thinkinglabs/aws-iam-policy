@@ -1,11 +1,8 @@
 .DEFAULT_GOAL := help
 .PHONY: tag install test
 
-version=$(shell cat package.json | jq -r '.version')
-
-tag: ## Tag git repo
-	git tag -a v${version} -m "Bump v${version}"
-	git push origin main --follow-tags
+release: ## Release a version
+	npm version ${version} -m "Bump v${version}"
 
 install: ## Install dependencies
 	npm install
