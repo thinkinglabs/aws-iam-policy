@@ -1,3 +1,7 @@
+## 2.7.0 (11 August 2023)
+
+* Add support for the CloudFront principal [#24](https://github.com/thinkinglabs/aws-iam-policy/issues/36) reported and fixed ([#25](https://github.com/thinkinglabs/aws-iam-policy/pull/25)) by [@araguacaima](https://github.com/araguacaima)
+
 ## 2.6.1 (30 June 2023)
 
 * Export the `WildcardPrincipal` ([#23](https://github.com/thinkinglabs/aws-iam-policy/pull/23) by [@gabegorelick](https://github.com/gabegorelick)).
