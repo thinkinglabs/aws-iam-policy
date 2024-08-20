@@ -5,6 +5,7 @@ import {PrincipalJSONSerialiser} from '../../src/principals/serialiser';
 import {
   AccountPrincipal,
   ArnPrincipal,
+  UserPrincipal,
   Principal,
   ServicePrincipal,
   FederatedPrincipal,
@@ -22,6 +23,16 @@ describe('#PrincipalJSONSerialiser', function() {
     describe('when having one AWS principal', function() {
       const arn = 'arn:aws:iam::012345678900:user/aUser';
       const principals = [new ArnPrincipal(arn)];
+      it('should return a JSON object having an AWS property having one string', function() {
+        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: arn});
+      });
+    });
+
+    describe('when having one IAM User as AWS principal', function() {
+      const accountId = '012345678900';
+      const userName ='aUser';
+      const arn = `arn:aws:iam::${accountId}:user/${userName}`;
+      const principals = [new UserPrincipal(accountId, userName)];
       it('should return a JSON object having an AWS property having one string', function() {
         expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: arn});
       });
