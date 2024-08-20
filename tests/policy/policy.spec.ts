@@ -3,6 +3,7 @@ import {
   PolicyDocument,
   Statement,
   ArnPrincipal,
+  UserPrincipal,
   ServicePrincipal,
   RootAccountPrincipal,
   AccountPrincipal,
@@ -17,7 +18,7 @@ describe('#PolicyDocument', function() {
         sid: 'anSID',
         effect: 'Allow',
         principals: [
-          new ArnPrincipal('arn:aws:iam::123456789000:user/aUser'),
+          new UserPrincipal('123456789000', 'aUser'),
           new RootAccountPrincipal('123456789000'),
           new AccountPrincipal('123456789000'),
           new ServicePrincipal('aservice.amazonaws.com'),
