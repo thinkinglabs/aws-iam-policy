@@ -127,8 +127,11 @@ Supports different principals.
   // "Principal": {"Service": ["ec2.amazonaws.com"]}
   const servicePrincipal = new ServicePrincipal('ec2.amazonaws.com');
 
-  // "Principal": {"AWS": ["arn:aws:iam::123456789012:user/user-name"]}
-  const arnPrincipal = new ArnPrincipal('arn:aws:iam::123456789012:user/user-name');
+  // "Principal": {"AWS": ["arn:aws:iam::123456789012:role/role-name"]}
+  const arnPrincipal = new ArnPrincipal('arn:aws:iam::123456789012:role/role-name');
+
+  // "Principal": {"AWS": ["arn:aws:iam::123456789012:user/a/path/user-name"]}
+  const userPrincipal = new UserPrincipal('123456789012', 'user-name', '/a/path')
 
   // "Principal": {"AWS": ["arn:aws:iam::123456789012:root"]}
   const rootAccountPrincipal = new RootAccountPrincipal('123456789012');
