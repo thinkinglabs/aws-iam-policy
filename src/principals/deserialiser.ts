@@ -1,7 +1,8 @@
 import {AnonymousValue, Principal, PrincipalValues} from './base';
+import {UserPrincipal} from './user';
+import {ArnPrincipal} from './arn';
 import {AnonymousUserPrincipal} from './anonymous';
 import {WildcardPrincipal} from './wildcard';
-import {ArnPrincipal} from './arn';
 import {AccountPrincipal} from './account';
 import {ServicePrincipal} from './service';
 import {FederatedPrincipal} from './federated';
@@ -41,6 +42,10 @@ class PrincipalJSONDeserialiser {
     return result;
 
     function parseAWS(value: string) {
+      const result = UserPrincipal.validate2(value);
+      if (result) {
+        return result;
+      }
       let validation = ArnPrincipal.validate(value);
       if (validation) {
         return new ArnPrincipal(validation);

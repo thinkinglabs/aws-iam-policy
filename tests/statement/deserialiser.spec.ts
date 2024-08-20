@@ -3,7 +3,7 @@ import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
 import {
   Statement,
   AccountPrincipal,
-  ArnPrincipal,
+  UserPrincipal,
   WildcardPrincipal,
   Condition,
 } from '../../src';
@@ -152,7 +152,7 @@ describe('#StatementDeserialiser', function() {
           const expected = new Statement({
             principals: [
               new AccountPrincipal('123456789012'),
-              new ArnPrincipal('arn:aws:iam::123456789012:user/foo'),
+              new UserPrincipal('123456789012', 'foo'),
             ],
           });
           expect(actual).to.deep.equal(expected);
@@ -214,7 +214,7 @@ describe('#StatementDeserialiser', function() {
           const expected = new Statement({
             notprincipals: [
               new AccountPrincipal('123456789012'),
-              new ArnPrincipal('arn:aws:iam::123456789012:user/foo'),
+              new UserPrincipal('123456789012', 'foo'),
             ],
           });
           expect(actual).to.deep.equal(expected);

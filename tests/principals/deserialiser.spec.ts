@@ -4,6 +4,7 @@ import {
   AccountPrincipal,
   AnonymousUserPrincipal,
   ArnPrincipal,
+  UserPrincipal,
   CloudFrontPrincipal,
   FederatedPrincipal,
   RootAccountPrincipal,
@@ -29,19 +30,19 @@ describe('#PrincipalJSONDeserialise', function() {
     });
 
     describe('when having an AWS principal', function() {
-      describe('with one ARN as 1-length array', function() {
-        it('should return one ArnPrincipal', function() {
+      describe('with one IAM User arn as a 1-length array', function() {
+        it('should return one UserPrincipal', function() {
           const arn = 'arn:aws:iam::012345678900:user/aUser';
           const input = {AWS: [arn]};
-          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ArnPrincipal(arn)]);
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new UserPrincipal('012345678900', 'aUser')]);
         });
       });
 
-      describe('with one ARN as a single string', function() {
-        it('should return one ArnPrincipal', function() {
+      describe('with one IAM User arn as a single string', function() {
+        it('should return one UserPrincipal', function() {
           const arn = 'arn:aws:iam::012345678900:user/aUser';
           const input = {AWS: arn};
-          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new ArnPrincipal(arn)]);
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new UserPrincipal('012345678900', 'aUser')]);
         });
       });
 
@@ -69,7 +70,7 @@ describe('#PrincipalJSONDeserialise', function() {
           const rootAccountArn = `arn:aws:iam::${accountID}:root`;
           const input = {AWS: [userArn, rootAccountArn, accountID]};
           const expected = [
-            new ArnPrincipal(userArn),
+            new UserPrincipal(accountID, 'aUser'),
             new RootAccountPrincipal(accountID),
             new AccountPrincipal(accountID),
           ];
@@ -153,7 +154,7 @@ describe('#PrincipalJSONDeserialise', function() {
       it('should return a list having an ArnPrincipal and a ServicePrincipal', function() {
         const arn = 'arn:aws:iam::123456789012:user/aUser';
         const input = {AWS: [arn], Service: ['aService']};
-        const expected = [new ArnPrincipal(arn), new ServicePrincipal('aService')];
+        const expected = [new UserPrincipal('123456789012', 'aUser'), new ServicePrincipal('aService')];
         expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
       });
     });
