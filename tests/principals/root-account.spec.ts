@@ -18,7 +18,8 @@ describe('#RootAccountPrincipal', function() {
     describe('when given a valid root account arn', function() {
       it('should return the AWS account arn', function() {
         const arn = 'arn:aws:iam::012345678900:root';
-        expect(RootAccountPrincipal.validate(arn)).to.equal('arn:aws:iam::012345678900:root');
+        expect(RootAccountPrincipal.validate(arn))
+            .to.deep.equal(new RootAccountPrincipal('012345678900'));
       });
     });
 
