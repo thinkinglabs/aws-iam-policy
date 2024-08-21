@@ -27,7 +27,7 @@ class PrincipalJSONDeserialiser {
       const principalValues = parseArray(principals[principalType]);
       switch (principalType) {
         case 'AWS':
-          result.push(...principalValues.map(parseAWS));
+          result.push(...principalValues.map(parseAWSPrincipal));
           break;
         case 'Service':
           result.push(...principalValues.map(parseService));
@@ -41,7 +41,7 @@ class PrincipalJSONDeserialiser {
     });
     return result;
 
-    function parseAWS(value: string) {
+    function parseAWSPrincipal(value: string) {
       let result : Principal | undefined = UserPrincipal.validate(value);
       if (result) {
         return result;

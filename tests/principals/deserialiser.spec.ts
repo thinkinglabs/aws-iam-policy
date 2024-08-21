@@ -64,7 +64,7 @@ describe('#PrincipalJSONDeserialise', function() {
       });
 
       describe('with an IAM user, a root user and an account ID', function() {
-        it('should return a list having an ArnPrincipal and a ServicePrincipal', function() {
+        it('should return a list having a UserPrincipal, RootAccountPrincipal and AccountPrincipal', function() {
           const accountID = '012345678900';
           const userArn = `arn:aws:iam::${accountID}:user/aUser`;
           const rootAccountArn = `arn:aws:iam::${accountID}:root`;
