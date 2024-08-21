@@ -158,6 +158,21 @@ describe('#StatementDeserialiser', function() {
           expect(actual).to.deep.equal(expected);
         });
       });
+
+      describe('and its value is an IAM role arn', function() {
+        it('should return a Statement with UserPrincipal', function() {
+          const json = {
+            Principal: {AWS: 'arn:aws:iam::123456789012:user/aUser'},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            principals: [
+              new UserPrincipal('123456789012', 'aUser'),
+            ],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
     });
 
     describe('with a wildcard principal', function() {
