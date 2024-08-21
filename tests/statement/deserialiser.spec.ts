@@ -2,8 +2,9 @@ import {expect} from 'chai';
 import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
 import {
   Statement,
-  AccountPrincipal,
   UserPrincipal,
+  AccountPrincipal,
+  RootAccountPrincipal,
   WildcardPrincipal,
   Condition,
 } from '../../src';
@@ -168,6 +169,21 @@ describe('#StatementDeserialiser', function() {
           const expected = new Statement({
             principals: [
               new UserPrincipal('123456789012', 'aUser'),
+            ],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+
+      describe('and its value is an AWS root account user arn', function() {
+        it('should return a Statement with RootAccountPrincipal', function() {
+          const json = {
+            Principal: {AWS: 'arn:aws:iam::123456789012:root'},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            principals: [
+              new RootAccountPrincipal('123456789012'),
             ],
           });
           expect(actual).to.deep.equal(expected);
