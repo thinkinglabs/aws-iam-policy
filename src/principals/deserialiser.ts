@@ -42,15 +42,15 @@ class PrincipalJSONDeserialiser {
     return result;
 
     function parseAWS(value: string) {
-      const result = UserPrincipal.validate2(value);
+      let result : Principal | undefined = UserPrincipal.validate2(value);
       if (result) {
         return result;
       }
-      let validation = ArnPrincipal.validate(value);
-      if (validation) {
-        return new ArnPrincipal(validation);
+      result = ArnPrincipal.validate2(value);
+      if (result) {
+        return result;
       }
-      validation = AccountPrincipal.validate(value);
+      let validation = AccountPrincipal.validate(value);
       if (validation) {
         return new AccountPrincipal(validation);
       }

@@ -11,7 +11,7 @@ class UserPrincipal extends ArnPrincipal {
     this.path = path;
   }
 
-  static validate2(arn: string) {
+  static validate2(arn: string): UserPrincipal | undefined {
     const regex = new RegExp(
         '^arn:aws:iam::([0-9]{12}):user((/[/a-zA-Z\+=\.@_-]{1,510})?/)([a-zA-Z0-9\+=\.@_-]{1,64})$',
     );
