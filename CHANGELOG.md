@@ -3,19 +3,19 @@
 
 * Add support for the role principal [#16](https://github.com/thinkinglabs/aws-iam-policy/issues/16)
 
-  Replaces `ArnPrincipal` used for IAM users with ARN `arn:aws:iam::123456789000:user/aPath/aUser`.
+  Replaces `ArnPrincipal` used for an IAM Role with ARN `arn:aws:iam::123456789000:role/a/path/a_role`.
 
-  Serialising `ArnPrincipal` will still produce a valid AWS principal JSON `{"AWS": "arn:aws:iam::123456789000:user/aPath/aUser"}`.
+  Serialising `ArnPrincipal` will still produce a valid IAM Policy Statement AWS Principal JSON fragment `{"AWS": "arn:aws:iam::123456789000:role/a/path/a_role"}`.
 
-  Deserialising an AWS principal `{ "AWS": "arn:aws:iam::123456789000:user/aPath/aUser" }` will now produce a `UserPrincipal` instead of an `ArnPrincipal`.
+  Deserialising an AWS Principal JSON fragment `{ "AWS": "arn:aws:iam::123456789000:role/a/path/a_role" }` will now produce a `RolePrincipal` instead of an `ArnPrincipal`.
 
 * Add support for the user principal [#16](https://github.com/thinkinglabs/aws-iam-policy/issues/16)
 
-  Replaces `ArnPrincipal` used for IAM users with ARN `arn:aws:iam::123456789000:user/aPath/aUser`.
+  Replaces `ArnPrincipal` used for an IAM User with ARN `arn:aws:iam::123456789000:user/a/path/a_user`.
 
-  Serialising `ArnPrincipal` will still produce a valid AWS principal JSON `{"AWS": "arn:aws:iam::123456789000:user/aPath/aUser"}`.
+  Serialising `ArnPrincipal` will still produce a valid IAM Policy Statement AWS Principal JSON fragment `{"AWS": "arn:aws:iam::123456789000:user/a/path/a_user"}`.
 
-  Deserialising an AWS principal `{ "AWS": "arn:aws:iam::123456789000:user/aPath/aUser" }` will now produce a `UserPrincipal` instead of an `ArnPrincipal`.
+  Deserialising an AWS Principal JSON fragment `{ "AWS": "arn:aws:iam::123456789000:user/a/path/a_user" }` will now produce a `UserPrincipal` instead of an `ArnPrincipal`.
 
 * Fix a bug where the root account principal was deserialised as an `ArnPrincipal` ([#26](https://github.com/thinkinglabs/aws-iam-policy/issues/26)). 
 
