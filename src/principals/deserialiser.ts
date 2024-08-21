@@ -54,11 +54,11 @@ class PrincipalJSONDeserialiser {
       if (result) {
         return result;
       }
-      let validation = AnonymousUserPrincipal.validate(value);
-      if (validation) {
-        return new AnonymousUserPrincipal();
+      result = AnonymousUserPrincipal.validate2(value);
+      if (result) {
+        return result;
       }
-      validation = CloudFrontPrincipal.validate(value);
+      const validation = CloudFrontPrincipal.validate(value);
       if (validation) {
         return new CloudFrontPrincipal(value);
       }
