@@ -4,9 +4,9 @@ A Node.js package for working with AWS IAM Policy documents.
 
 The primary reasons for creating the library were:
 
-- simplify the coding of S3 Bucket policies, KMS Key policies or Secrets Manager
-  secret policies programmatically that are created with the provisioning tool
-  [Pulumi](https://www.pulumi.com/).
+- simplify the coding of resource policies for S3 Bucket, KMS Keys or Secrets
+  Manager secrets as well as IAM identity policies programmatically that are
+  created with the provisioning tool [Pulumi](https://www.pulumi.com/).
 - simplify the unit testing of those policies and more specifically testing of
   single policy statements.
 
@@ -17,9 +17,10 @@ Node.js lts/gallium (16.x)
 ## Features
 
 - Reading/writing AWS IAM Policy JSON documents.
-- An object model for building an IAM Policy.
-- Validating an IAM Policy for identity- or resource-based policies.
-- Checks for the uniqueness of `Sid` when adding Statements.
+- An object model for building an IAM Policy document.
+- Validating an IAM Policy document for identity- or resource-based policies.
+- Validating the uniqueness of `Sid` within the scope of an IAM Policy document
+  when adding Statements.
 - Retrieval of Policy Statements by `Sid`.
 
 ## Documentation
