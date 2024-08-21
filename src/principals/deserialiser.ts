@@ -30,7 +30,7 @@ class PrincipalJSONDeserialiser {
           result.push(...principalValues.map(parseAWSPrincipal));
           break;
         case 'Service':
-          result.push(...principalValues.map(parseService));
+          result.push(...principalValues.map(parseServicePrincipal));
           break;
         case 'Federated':
           result.push(...principalValues.map(parseFederated));
@@ -65,7 +65,7 @@ class PrincipalJSONDeserialiser {
       throw new Error(`Unsupported AWS principal value "${value}"`);
     }
 
-    function parseService(value: string) {
+    function parseServicePrincipal(value: string) {
       return new ServicePrincipal(value);
     }
 
