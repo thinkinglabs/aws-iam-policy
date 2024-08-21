@@ -50,11 +50,11 @@ class PrincipalJSONDeserialiser {
       if (result) {
         return result;
       }
-      let validation = AccountPrincipal.validate(value);
-      if (validation) {
-        return new AccountPrincipal(validation);
+      result = AccountPrincipal.validate2(value);
+      if (result) {
+        return result;
       }
-      validation = AnonymousUserPrincipal.validate(value);
+      let validation = AnonymousUserPrincipal.validate(value);
       if (validation) {
         return new AnonymousUserPrincipal();
       }
