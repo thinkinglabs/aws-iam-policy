@@ -33,7 +33,7 @@ class PrincipalJSONDeserialiser {
           result.push(...principalValues.map(parseServicePrincipal));
           break;
         case 'Federated':
-          result.push(...principalValues.map(parseFederated));
+          result.push(...principalValues.map(parseFederatedPrincipal));
           break;
         default:
           throw new Error(`Unsupported principal "${principalType}"`);
@@ -69,7 +69,7 @@ class PrincipalJSONDeserialiser {
       return new ServicePrincipal(value);
     }
 
-    function parseFederated(value: string) {
+    function parseFederatedPrincipal(value: string) {
       return new FederatedPrincipal(value);
     }
   }
