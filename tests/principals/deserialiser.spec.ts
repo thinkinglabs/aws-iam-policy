@@ -3,8 +3,8 @@ import {PrincipalJSONDeserialiser} from '../../src/principals/deserialiser';
 import {
   AccountPrincipal,
   AnonymousUserPrincipal,
-  ArnPrincipal,
   UserPrincipal,
+  RolePrincipal,
   CloudFrontPrincipal,
   FederatedPrincipal,
   RootAccountPrincipal,
@@ -46,19 +46,12 @@ describe('#PrincipalJSONDeserialise', function() {
         });
       });
 
-      describe('with an anonymous user principal', function() {
-        it('should return one AnonymousUserPrincipal', function() {
-          const input = {AWS: ['*']};
-          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new AnonymousUserPrincipal()]);
-        });
-      });
-
       describe('with two ARNs', function() {
         it('should return a list having two ArnPrincipal', function() {
           const role1Arn = 'arn:aws:iam::111122223333:role/role1';
           const role2Arn = 'arn:aws:iam::111122223333:role/role2';
           const input = {AWS: [role1Arn, role2Arn]};
-          const expected = [new ArnPrincipal(role1Arn), new ArnPrincipal(role2Arn)];
+          const expected = [new RolePrincipal('111122223333', 'role1'), new RolePrincipal('111122223333', 'role2')];
           expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
         });
       });
@@ -75,6 +68,20 @@ describe('#PrincipalJSONDeserialise', function() {
             new AccountPrincipal(accountID),
           ];
           expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal(expected);
+        });
+      });
+
+      describe('with an IAM Role arn', function() {
+        it('should return one AnonymousUserPrincipal', function() {
+          const input = {AWS: ['arn:aws:iam::123456789000:role/aRole']};
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new RolePrincipal('123456789000', 'aRole')]);
+        });
+      });
+
+      describe('with an anonymous user principal', function() {
+        it('should return one AnonymousUserPrincipal', function() {
+          const input = {AWS: ['*']};
+          expect(PrincipalJSONDeserialiser.fromJSON(input)).to.deep.equal([new AnonymousUserPrincipal()]);
         });
       });
 

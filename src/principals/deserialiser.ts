@@ -1,5 +1,6 @@
 import {AnonymousValue, Principal, PrincipalValues} from './base';
 import {UserPrincipal} from './user';
+import {RolePrincipal} from './role';
 import {RootAccountPrincipal} from './root-account';
 import {ArnPrincipal} from './arn';
 import {AnonymousUserPrincipal} from './anonymous';
@@ -44,6 +45,10 @@ class PrincipalJSONDeserialiser {
 
     function parseAWSPrincipal(value: string) {
       let result : Principal | undefined = UserPrincipal.validate(value);
+      if (result) {
+        return result;
+      }
+      result = RolePrincipal.validate(value);
       if (result) {
         return result;
       }
