@@ -3,6 +3,7 @@ import {StatementJSONDeserialiser} from '../../src/statement/deserialiser';
 import {
   Statement,
   UserPrincipal,
+  RolePrincipal,
   AccountPrincipal,
   RootAccountPrincipal,
   WildcardPrincipal,
@@ -184,6 +185,21 @@ describe('#StatementDeserialiser', function() {
           const expected = new Statement({
             principals: [
               new RootAccountPrincipal('123456789012'),
+            ],
+          });
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+
+      describe('and its value is an IAM role arn', function() {
+        it('should return a Statement with RolePrincipal', function() {
+          const json = {
+            Principal: {AWS: 'arn:aws:iam::123456789012:role/aRole'},
+          };
+          const actual = StatementJSONDeserialiser.fromJSON(json);
+          const expected = new Statement({
+            principals: [
+              new RolePrincipal('123456789012', 'aRole'),
             ],
           });
           expect(actual).to.deep.equal(expected);
