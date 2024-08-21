@@ -2,8 +2,8 @@ import {expect} from 'chai';
 import {
   PolicyDocument,
   Statement,
-  ArnPrincipal,
   UserPrincipal,
+  RolePrincipal,
   ServicePrincipal,
   RootAccountPrincipal,
   AccountPrincipal,
@@ -37,7 +37,7 @@ describe('#PolicyDocument', function() {
       new Statement({
         sid: 'anSID2',
         effect: 'Deny',
-        principals: [new ArnPrincipal('arn:aws:iam::123456789000:role/aRole')],
+        principals: [new RolePrincipal('123456789000', 'aRole')],
         actions: ['ec2:TerminateInstance'],
         resources: ['arn:aws:ec2:eu-west-1:123456789000:instance/i-123456'],
       }),
