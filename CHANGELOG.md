@@ -1,6 +1,14 @@
 
 :rotating_light: **BREAKING CHANGE**
 
+* Add support for the role principal [#16](https://github.com/thinkinglabs/aws-iam-policy/issues/16)
+
+  Replaces `ArnPrincipal` used for IAM users with ARN `arn:aws:iam::123456789000:user/aPath/aUser`.
+
+  Serialising `ArnPrincipal` will still produce a valid AWS principal JSON `{"AWS": "arn:aws:iam::123456789000:user/aPath/aUser"}`.
+
+  Deserialising an AWS principal `{ "AWS": "arn:aws:iam::123456789000:user/aPath/aUser" }` will now produce a `UserPrincipal` instead of an `ArnPrincipal`.
+
 * Add support for the user principal [#16](https://github.com/thinkinglabs/aws-iam-policy/issues/16)
 
   Replaces `ArnPrincipal` used for IAM users with ARN `arn:aws:iam::123456789000:user/aPath/aUser`.
