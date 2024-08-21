@@ -8,15 +8,15 @@ class CloudFrontPrincipal extends AbstractBasePrincipal {
       this.arn = arn;
     }
 
-    static validate(input: string): string | undefined {
+    toJSON() {
+      return {AWS: this.arn};
+    }
+
+    static validate2(input: string): CloudFrontPrincipal | undefined {
       const regex = new RegExp(
           '^arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E(?=.*[A-Z])(?=.*[0-9])[A-Z0-9]{6,14}$');
       const result = regex.exec(input) as RegExpExecArray;
-      return result ? result[0] : undefined;
-    }
-
-    toJSON() {
-      return {AWS: this.arn};
+      return result ? new CloudFrontPrincipal(result[0]) : undefined;
     }
 }
 

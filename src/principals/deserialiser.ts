@@ -58,9 +58,9 @@ class PrincipalJSONDeserialiser {
       if (result) {
         return result;
       }
-      const validation = CloudFrontPrincipal.validate(value);
-      if (validation) {
-        return new CloudFrontPrincipal(value);
+      result = CloudFrontPrincipal.validate2(value);
+      if (result) {
+        return result;
       }
       throw new Error(`Unsupported AWS principal value "${value}"`);
     }

@@ -18,21 +18,21 @@ describe('#CloudFrontPrincipal', function() {
     describe('when given a valid CloudFront user arn', function() {
       it('should return the IAM user arn', function() {
         const arn = 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E1ABCDEFGHIJ';
-        expect(CloudFrontPrincipal.validate(arn)).to.equal(arn);
+        expect(CloudFrontPrincipal.validate2(arn)).to.deep.equal(new CloudFrontPrincipal(arn));
       });
     });
 
     describe('when given an invalid arn with a valid CloudFront id', function() {
       it('should return undefined', function() {
         const arn = 'arn:aws:iam::cloudfront:user/World Origin Access Identity E1A2B3C4D5E6F';
-        expect(CloudFrontPrincipal.validate(arn)).to.be.undefined;
+        expect(CloudFrontPrincipal.validate2(arn)).to.be.undefined;
       });
     });
 
     describe('when given an valid arn with an invalid CloudFront id', function() {
       it('should return the root account arn', function() {
         const arn = 'arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity EABCDEFGHIJKLMNO';
-        expect(CloudFrontPrincipal.validate(arn)).to.be.undefined;
+        expect(CloudFrontPrincipal.validate2(arn)).to.be.undefined;
       });
     });
   });
