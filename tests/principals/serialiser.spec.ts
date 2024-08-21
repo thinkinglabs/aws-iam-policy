@@ -6,6 +6,7 @@ import {
   AccountPrincipal,
   ArnPrincipal,
   UserPrincipal,
+  RolePrincipal,
   Principal,
   ServicePrincipal,
   FederatedPrincipal,
@@ -33,6 +34,16 @@ describe('#PrincipalJSONSerialiser', function() {
       const userName ='aUser';
       const arn = `arn:aws:iam::${accountId}:user/${userName}`;
       const principals = [new UserPrincipal(accountId, userName)];
+      it('should return a JSON object having an AWS property having one string', function() {
+        expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: arn});
+      });
+    });
+
+    describe('when having one IAM Role as AWS principal', function() {
+      const accountId = '012345678900';
+      const userName ='aUser';
+      const arn = `arn:aws:iam::${accountId}:role/${userName}`;
+      const principals = [new RolePrincipal(accountId, userName)];
       it('should return a JSON object having an AWS property having one string', function() {
         expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: arn});
       });
