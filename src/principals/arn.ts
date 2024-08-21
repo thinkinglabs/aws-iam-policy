@@ -11,7 +11,7 @@ class ArnPrincipal extends AbstractBasePrincipal {
     return {AWS: this.arn};
   }
 
-  static validate2(input: string): ArnPrincipal | undefined {
+  static validate(input: string): ArnPrincipal | undefined {
     const regex = new RegExp('^arn:aws:iam::[0-9]{12}:((user|role)/.*|root)$');
     const result = regex.exec(input) as RegExpExecArray;
     return result ? new ArnPrincipal(result[0]) : undefined;

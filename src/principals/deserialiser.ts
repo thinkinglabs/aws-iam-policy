@@ -42,23 +42,23 @@ class PrincipalJSONDeserialiser {
     return result;
 
     function parseAWS(value: string) {
-      let result : Principal | undefined = UserPrincipal.validate2(value);
+      let result : Principal | undefined = UserPrincipal.validate(value);
       if (result) {
         return result;
       }
-      result = ArnPrincipal.validate2(value);
+      result = ArnPrincipal.validate(value);
       if (result) {
         return result;
       }
-      result = AccountPrincipal.validate2(value);
+      result = AccountPrincipal.validate(value);
       if (result) {
         return result;
       }
-      result = AnonymousUserPrincipal.validate2(value);
+      result = AnonymousUserPrincipal.validate(value);
       if (result) {
         return result;
       }
-      result = CloudFrontPrincipal.validate2(value);
+      result = CloudFrontPrincipal.validate(value);
       if (result) {
         return result;
       }

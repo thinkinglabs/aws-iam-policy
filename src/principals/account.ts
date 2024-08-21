@@ -11,7 +11,7 @@ class AccountPrincipal extends AbstractBasePrincipal {
     return {AWS: [this.accountId]};
   }
 
-  static validate2(input: string): AccountPrincipal | undefined {
+  static validate(input: string): AccountPrincipal | undefined {
     const regexp = new RegExp('^[0-9]{12}$');
     const result = regexp.exec(input) as RegExpExecArray;
     return result ? new AccountPrincipal(result[0]) : undefined;

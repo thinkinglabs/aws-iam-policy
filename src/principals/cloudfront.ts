@@ -12,7 +12,7 @@ class CloudFrontPrincipal extends AbstractBasePrincipal {
       return {AWS: this.arn};
     }
 
-    static validate2(input: string): CloudFrontPrincipal | undefined {
+    static validate(input: string): CloudFrontPrincipal | undefined {
       const regex = new RegExp(
           '^arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E(?=.*[A-Z])(?=.*[0-9])[A-Z0-9]{6,14}$');
       const result = regex.exec(input) as RegExpExecArray;

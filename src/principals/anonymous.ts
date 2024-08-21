@@ -5,7 +5,7 @@ class AnonymousUserPrincipal extends ArnPrincipal {
     super('*');
   }
 
-  static validate2(input: string): AnonymousUserPrincipal | undefined {
+  static validate(input: string): AnonymousUserPrincipal | undefined {
     const regex = new RegExp('^\\*$');
     const result = regex.exec(input) as RegExpExecArray;
     return result ? new AnonymousUserPrincipal() : undefined;
