@@ -10,6 +10,7 @@ import {
   WildcardPrincipal,
   Condition,
   PolicyType,
+  AnonymousUserPrincipal,
 } from '../../src';
 
 describe('#PolicyDocument', function() {
@@ -273,6 +274,24 @@ describe('#PolicyDocument', function() {
       const errors = policy.validate(PolicyType.IAM);
       expect(errors).to.deep.equal([
         'The size of an IAM policy document (6171) should not exceed 6.144 characters.',
+      ]);
+    });
+  });
+
+  describe('KMS key policy document longer than 32kB', function() {
+    const policy = new PolicyDocument();
+    for (let i = 1; i < 245; i++) {
+      policy.addStatements(new Statement({
+        sid: '' + i,
+        principals: [new RolePrincipal('123456789000', 'a_role')],
+        actions: ['action'],
+        resources: ['resource'],
+      }));
+    }
+    it('should be invalid', function() {
+      const errors = policy.validate(PolicyType.KMS);
+      expect(errors).to.deep.equal([
+        'The size of a KMS key policy document (32870) should not exceed 32kB.',
       ]);
     });
   });

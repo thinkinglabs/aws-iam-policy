@@ -72,6 +72,10 @@ export class PolicyDocument {
       this.statements.forEach((stmt) => {
         errors.push(...stmt.validateForResourcePolicy());
       });
+      const doc = this.json;
+      if (policyType === PolicyType.KMS && doc.length > 32*1024) {
+        errors.push(`The size of a KMS key policy document (${doc.length}) should not exceed 32kB.`);
+      }
     }
     return errors;
   }
