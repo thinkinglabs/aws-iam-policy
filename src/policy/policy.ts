@@ -54,6 +54,9 @@ export class PolicyDocument {
     this.statements.forEach((stmt) => {
       errors.push(...stmt.validateForAnyPolicy());
     });
+    if (policyType === undefined) {
+      return errors;
+    }
     if (policyType === PolicyType.IAM) {
       this.statements.forEach((stmt) => {
         errors.push(...stmt.validateForIdentityPolicy());
@@ -63,14 +66,13 @@ export class PolicyDocument {
         errors.push(`The size of an IAM policy document (${doc.length}) should not exceed 6.144 characters.`);
       }
     }
-    return errors;
-  }
-
-  validateForResourcePolicy() {
-    const errors: string[] = [];
-    this.statements.forEach((stmt) => {
-      errors.push(...stmt.validateForResourcePolicy());
-    });
+    if (policyType === PolicyType.KMS ||
+        policyType === PolicyType.S3 ||
+        policyType === PolicyType.SecretsManager) {
+      this.statements.forEach((stmt) => {
+        errors.push(...stmt.validateForResourcePolicy());
+      });
+    }
     return errors;
   }
 }

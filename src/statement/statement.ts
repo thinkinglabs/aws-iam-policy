@@ -89,7 +89,7 @@ export class Statement {
   }
 
   validateForResourcePolicy() {
-    const errors = this.validateForAnyPolicy();
+    const errors: string[] = [];
     if (Object.keys(this.principals).length === 0 && Object.keys(this.notprincipals).length === 0) {
       errors.push(`Statement(${this.sid}) must specify at least one IAM principal.`);
     }

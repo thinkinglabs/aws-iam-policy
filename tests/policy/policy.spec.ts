@@ -182,7 +182,7 @@ describe('#PolicyDocument', function() {
     });
 
     it('should be invalid for resource-based policy', function() {
-      const errors = policy.validateForResourcePolicy();
+      const errors = policy.validate(PolicyType.S3);
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one IAM principal.',
         'Statement(2nd) must specify at least one IAM principal.',
@@ -197,7 +197,7 @@ describe('#PolicyDocument', function() {
     ]);
 
     it('should be valid for resource-based policy', function() {
-      expect(policy.validateForResourcePolicy()).to.have.empty;
+      expect(policy.validate(PolicyType.S3)).to.have.empty;
     });
 
     it('should be invalid for identity-based policy', function() {
@@ -225,12 +225,30 @@ describe('#PolicyDocument', function() {
       ]);
     });
 
-    it('should be invalid for resource-based policy', function() {
-      const errors = policy.validateForResourcePolicy();
+    it('should be invalid for S3 bucket policy', function() {
+      const errors = policy.validate(PolicyType.S3);
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
-        'Statement(1st) must specify at least one IAM principal.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(1st) must specify at least one IAM principal.',
+        'Statement(2nd) must specify at least one IAM principal.',
+      ]);
+    });
+    it('should be invalid for KMS key policy', function() {
+      const errors = policy.validate(PolicyType.KMS);
+      expect(errors).to.deep.equal([
+        'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(1st) must specify at least one IAM principal.',
+        'Statement(2nd) must specify at least one IAM principal.',
+      ]);
+    });
+    it('should be invalid for SecretsManager secret policy', function() {
+      const errors = policy.validate(PolicyType.SecretsManager);
+      expect(errors).to.deep.equal([
+        'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(1st) must specify at least one IAM principal.',
         'Statement(2nd) must specify at least one IAM principal.',
       ]);
     });
