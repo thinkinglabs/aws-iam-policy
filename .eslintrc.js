@@ -21,5 +21,6 @@ module.exports = {
     'max-len': ['error', {'code': 120}],
     'no-multi-str': 'off',
     'require-jsdoc': 'off',
+    'no-unused-vars': 'off',
   },
 };

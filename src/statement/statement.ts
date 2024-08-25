@@ -97,7 +97,7 @@ export class Statement {
   }
 
   validateForIdentityPolicy() {
-    const errors = this.validateForAnyPolicy();
+    const errors: string[] = [];
     if (Object.keys(this.principals).length > 0 || Object.keys(this.notprincipals).length > 0) {
       errors.push(`Statement(${this.sid}) cannot specify any IAM principals.`);
     }

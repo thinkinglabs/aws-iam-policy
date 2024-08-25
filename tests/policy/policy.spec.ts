@@ -9,6 +9,7 @@ import {
   AccountPrincipal,
   WildcardPrincipal,
   Condition,
+  PolicyType,
 } from '../../src';
 
 describe('#PolicyDocument', function() {
@@ -177,7 +178,7 @@ describe('#PolicyDocument', function() {
     ]);
 
     it('should be valid for identity-based policy', function() {
-      expect(policy.validateForIdentityPolicy()).to.have.empty;
+      expect(policy.validate(PolicyType.IAM)).to.have.empty;
     });
 
     it('should be invalid for resource-based policy', function() {
@@ -200,7 +201,7 @@ describe('#PolicyDocument', function() {
     });
 
     it('should be invalid for identity-based policy', function() {
-      const errors = policy.validateForIdentityPolicy();
+      const errors = policy.validate(PolicyType.IAM);
       expect(errors).to.deep.equal([
         'Statement(1st) cannot specify any IAM principals.',
         'Statement(1st) must specify at least one resource or notresource.',
@@ -217,7 +218,7 @@ describe('#PolicyDocument', function() {
     ]);
 
     it('should be invalid for any policy', function() {
-      const errors = policy.validateForAnyPolicy();
+      const errors = policy.validate();
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
@@ -235,11 +236,11 @@ describe('#PolicyDocument', function() {
     });
 
     it('should be invalid for identity-based policy', function() {
-      const errors = policy.validateForIdentityPolicy();
+      const errors = policy.validate(PolicyType.IAM);
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
-        'Statement(1st) must specify at least one resource or notresource.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
+        'Statement(1st) must specify at least one resource or notresource.',
         'Statement(2nd) must specify at least one resource or notresource.',
       ]);
     });
@@ -251,7 +252,7 @@ describe('#PolicyDocument', function() {
       policy.addStatements(new Statement({sid: '' + i, actions: ['action'], resources: ['resource']}));
     }
     it('should be invalid', function() {
-      const errors = policy.validateForIdentityPolicy();
+      const errors = policy.validate(PolicyType.IAM);
       expect(errors).to.deep.equal([
         'The size of an IAM policy document (6171) should not exceed 6.144 characters.',
       ]);

@@ -49,11 +49,20 @@ export class PolicyDocument {
     return result;
   }
 
-  validateForAnyPolicy() {
+  validate(policyType?: PolicyType) {
     const errors: string[] = [];
     this.statements.forEach((stmt) => {
       errors.push(...stmt.validateForAnyPolicy());
     });
+    if (policyType === PolicyType.IAM) {
+      this.statements.forEach((stmt) => {
+        errors.push(...stmt.validateForIdentityPolicy());
+      });
+      const doc = this.json;
+      if (doc.length > 6144) {
+        errors.push(`The size of an IAM policy document (${doc.length}) should not exceed 6.144 characters.`);
+      }
+    }
     return errors;
   }
 
@@ -64,16 +73,11 @@ export class PolicyDocument {
     });
     return errors;
   }
+}
 
-  validateForIdentityPolicy() {
-    const errors: string[] = [];
-    this.statements.forEach((stmt) => {
-      errors.push(...stmt.validateForIdentityPolicy());
-    });
-    const doc = this.json;
-    if (doc.length > 6144) {
-      errors.push(`The size of an IAM policy document (${doc.length}) should not exceed 6.144 characters.`);
-    }
-    return errors;
-  }
+export enum PolicyType {
+  IAM,
+  KMS,
+  S3,
+  SecretsManager,
 }
