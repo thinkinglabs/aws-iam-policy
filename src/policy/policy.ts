@@ -79,6 +79,9 @@ export class PolicyDocument {
       if (policyType === PolicyType.S3 && doc.length > 20*1024) {
         errors.push(`The size of an S3 bucket policy document (${doc.length}) should not exceed 20kB.`);
       }
+      if (policyType === PolicyType.SecretsManager && doc.length > 20*1024) {
+        errors.push(`The size of a SecretsManager secret policy document (${doc.length}) should not exceed 20kB.`);
+      }
     }
     return errors;
   }

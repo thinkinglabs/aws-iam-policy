@@ -313,4 +313,22 @@ describe('#PolicyDocument', function() {
       ]);
     });
   });
+
+  describe('SecretsManager secret policy document longer than 20kB', function() {
+    const policy = new PolicyDocument();
+    for (let i = 1; i < 154; i++) {
+      policy.addStatements(new Statement({
+        sid: '' + i,
+        principals: [new RolePrincipal('123456789000', 'a_role')],
+        actions: ['action'],
+        resources: ['resource'],
+      }));
+    }
+    it('should be invalid', function() {
+      const errors = policy.validate(PolicyType.SecretsManager);
+      expect(errors).to.deep.equal([
+        'The size of a SecretsManager secret policy document (20585) should not exceed 20kB.',
+      ]);
+    });
+  });
 });
