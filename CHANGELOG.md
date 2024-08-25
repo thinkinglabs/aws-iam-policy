@@ -1,4 +1,6 @@
 
+* Consolidate `PolicyDocument.validateForAnyPolicy`, `PolicyDocument.validateForIndentityPolicy` and `PolicyDocument.validateForResourcePolicy` into `PolicyDocument.validate(PolicyType)` where `PolicyType` accepts `IAM`, `KMS`, `S3` and `SecretsManager`. Additionally, extend the validation to the allowed policy document size ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
+
 :rotating_light: **BREAKING CHANGE**
 
 * Add support for the role principal [#16](https://github.com/thinkinglabs/aws-iam-policy/issues/16)
