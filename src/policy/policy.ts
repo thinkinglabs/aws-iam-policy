@@ -76,6 +76,9 @@ export class PolicyDocument {
       if (policyType === PolicyType.KMS && doc.length > 32*1024) {
         errors.push(`The size of a KMS key policy document (${doc.length}) should not exceed 32kB.`);
       }
+      if (policyType === PolicyType.S3 && doc.length > 20*1024) {
+        errors.push(`The size of an S3 bucket policy document (${doc.length}) should not exceed 20kB.`);
+      }
     }
     return errors;
   }

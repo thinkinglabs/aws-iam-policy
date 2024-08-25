@@ -295,4 +295,22 @@ describe('#PolicyDocument', function() {
       ]);
     });
   });
+
+  describe('S3 bucket policy document longer than 20kB', function() {
+    const policy = new PolicyDocument();
+    for (let i = 1; i < 154; i++) {
+      policy.addStatements(new Statement({
+        sid: '' + i,
+        principals: [new RolePrincipal('123456789000', 'a_role')],
+        actions: ['action'],
+        resources: ['resource'],
+      }));
+    }
+    it('should be invalid', function() {
+      const errors = policy.validate(PolicyType.S3);
+      expect(errors).to.deep.equal([
+        'The size of an S3 bucket policy document (20585) should not exceed 20kB.',
+      ]);
+    });
+  });
 });
