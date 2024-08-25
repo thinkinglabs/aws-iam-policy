@@ -149,3 +149,39 @@ Supports different principals.
   // "Principal" : "*"
   const wildcardPrincipal = new WildcardPrincipal();
 ```
+
+Validate a policy document.
+
+```typescript
+  // validate any policy
+  // when valid returns an empty list
+  // when invalid returns a list of errors
+  const errors = policy.validate();
+  if (errors) {
+    throw errors;
+  }
+
+  // validate an IAM policy document
+  const errors = policy.validate(PolicyType.IAM);
+  if (errors) {
+    throw errors;
+  }
+
+  //validate a KMS key policy document.
+  const errors = policy.validate(PolicyType.KMS);
+  if (errors) {
+    throw errors;
+  }
+
+  //validate an S3 bucket policy document.
+  const errors = policy.validate(PolicyType.S3);
+  if (errors) {
+    throw errors;
+  }
+
+  //validate a SecretsManager secret policy document.
+  const errors = policy.validate(PolicyType.SecretsManager);
+  if (errors) {
+    throw errors;
+  }
+```
