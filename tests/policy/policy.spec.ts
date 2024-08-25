@@ -244,4 +244,17 @@ describe('#PolicyDocument', function() {
       ]);
     });
   });
+
+  describe('IAM policy document longer than 6144 characters', function() {
+    const policy = new PolicyDocument();
+    for (let i = 1; i < 84; i++) {
+      policy.addStatements(new Statement({sid: '' + i, actions: ['action'], resources: ['resource']}));
+    }
+    it('should be invalid', function() {
+      const errors = policy.validateForIdentityPolicy();
+      expect(errors).to.deep.equal([
+        'The size of an IAM policy document (6171) should not exceed 6.144 characters.',
+      ]);
+    });
+  });
 });

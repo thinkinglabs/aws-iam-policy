@@ -70,6 +70,10 @@ export class PolicyDocument {
     this.statements.forEach((stmt) => {
       errors.push(...stmt.validateForIdentityPolicy());
     });
+    const doc = this.json;
+    if (doc.length > 6144) {
+      errors.push(`The size of an IAM policy document (${doc.length}) should not exceed 6.144 characters.`);
+    }
     return errors;
   }
 }
