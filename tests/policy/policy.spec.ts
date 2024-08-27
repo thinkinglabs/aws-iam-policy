@@ -10,7 +10,6 @@ import {
   WildcardPrincipal,
   Condition,
   PolicyType,
-  AnonymousUserPrincipal,
 } from '../../src';
 
 describe('#PolicyDocument', function() {
