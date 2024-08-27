@@ -4,9 +4,9 @@ A Node.js package for working with AWS IAM Policy documents.
 
 The primary reasons for creating the library were:
 
-- simplify the coding of resource policies for S3 Bucket, KMS Keys or Secrets
-  Manager secrets as well as IAM identity policies programmatically that are
-  created with the provisioning tool [Pulumi](https://www.pulumi.com/).
+- simplify the declaration of IAM identity policies as well as resource
+  policies for S3 Bucket, KMS Keys or Secrets Manager secrets via coding that
+  are created with the [Pulumi](https://www.pulumi.com/) provisioning tool.
 - simplify the unit testing of those policies and more specifically testing of
   single policy statements.
 
@@ -34,28 +34,28 @@ npm install --save-dev @thinkinglabs/aws-iam-policy
 Create a policy document.
 
 ```typescript
-import {PolicyDocument, Statement, ArnPrincipal, RootAccountPrincipal} from '@thinkinglabs/aws-iam-policy';
+import * as iam from '@thinkinglabs/aws-iam-policy';
 
-function kmsKeyPolicyDocument(accountId: string, keyAdminArns: string[], keyUserArns: string[]) {
-  return new PolicyDocument([
-    new Statement({
+function kmsKeyPolicy(accountId: string, keyAdminArns: string[], keyUserArns: string[]) {
+  return new iam.PolicyDocument([
+    new iam.Statement({
       sid: 'Enable IAM User Permissions',
       effect: 'Allow',
-      principals: [new RootAccountPrincipal(accountId)],
+      principals: [new iam.RootAccountPrincipal(accountId)],
       actions: ['kms:*'],
       resources: ['*'],
     }),
-    new Statement({
+    new iam.Statement({
       sid: 'Allow access for Key Administrators',
       effect: 'Allow',
-      principals: keyAdminArns.map((arn) => new ArnPrincipal(arn)),
+      principals: keyAdminArns.map((arn) => new iam.ArnPrincipal(arn)),
       actions: ['kms:*'],
       resources: ['*'],
     }),
-    new Statement({
+    new iam.Statement({
       sid: 'Allow use of the key',
       effect: 'Allow',
-      principals: keyUserArns.map((arn) => new ArnPrincipal(arn)),
+      principals: keyUserArns.map((arn) => new iam.ArnPrincipal(arn)),
       actions: [
         'kms:Encrypt',
         'kms:Decrypt',
@@ -72,11 +72,11 @@ function kmsKeyPolicyDocument(accountId: string, keyAdminArns: string[], keyUser
 Add a `Statement` to an existing policy document.
 
 ```typescript
-const policy = new PolicyDocument();
-policy.addStatements(new Statement({
+const policy = new iam.PolicyDocument();
+policy.addStatements(new iam.Statement({
     sid: 'Enable IAM User Permissions',
     effect: 'Allow',
-    principals: [new RootAccountPrincipal(accountId)],
+    principals: [new iam.RootAccountPrincipal(accountId)],
     actions: ['kms:*'],
     resources: ['*'],
   });
@@ -87,7 +87,7 @@ statement using the Sid of that statement.
 
 ```typescript
 import {expect} from 'chai';
-import {PolicyDocument, Statement, ArnPrincipal, RootAccountPrincipal} from 'aws-iam-policy';
+import * as iam from '@thinkinglabs/aws-iam-policy';
 
 describe('kms key policy', function() {
 const accountId = '123456789012';
@@ -98,15 +98,15 @@ const accountId = '123456789012';
   const keyUsers = [
     `arn:aws:iam::${accountId}:role/user1`,
   ];
-  const policy = sut.kmsKeyPolicyDocument(accountId, keyAdminArns, keyUserArns);
+  const policy = sut.kmsKeyPolicy(accountId, keyAdminArns, keyUserArns);
 
   it('should enable IAM User permissions', function() {
     const statement = policy.getStatement('Enable IAM User Permissions');
 
-    expect(statement).to.deep.equal(new Statement({
+    expect(statement).to.deep.equal(new iam.Statement({
       actions: ['kms:*'],
       effect: 'Allow',
-      principals: [new RootAccountPrincipal('123456789012')],
+      principals: [new iam.RootAccountPrincipal('123456789012')],
       resources: ['*'],
       sid: 'Enable IAM User Permissions',
     }));
@@ -117,37 +117,37 @@ const accountId = '123456789012';
 Serialising to and from JSON.
 
 ```typescript
-  const policy = new PolicyDocument();
+  const policy = new iam.PolicyDocument();
   const json = policy.json;
-  const newPolicy = PolicyDocument.fromJson(json);
+  const newPolicy = iam.PolicyDocument.fromJson(json);
 ```
 
 Supports different principals.
 
 ```typescript
   // "Principal": {"Service": ["ec2.amazonaws.com"]}
-  const servicePrincipal = new ServicePrincipal('ec2.amazonaws.com');
+  const servicePrincipal = new iam.ServicePrincipal('ec2.amazonaws.com');
 
   // "Principal": {"AWS": ["arn:aws:iam::123456789012:user/a/path/user-name"]}
-  const userPrincipal = new UserPrincipal('123456789012', 'user-name', '/a/path/')
+  const userPrincipal = new iam.UserPrincipal('123456789012', 'user-name', '/a/path/')
 
     // "Principal": {"AWS": ["arn:aws:iam::123456789012:role/a/path/role-name"]}
-  const rolePrincipal = new RolePrincipal('123456789012', 'role-name', '/a/path/')
+  const rolePrincipal = new iam.RolePrincipal('123456789012', 'role-name', '/a/path/')
 
   // "Principal": {"AWS": ["arn:aws:iam::123456789012:role/role-name"]}
-  const arnPrincipal = new ArnPrincipal('arn:aws:iam::123456789012:role/role-name');
+  const arnPrincipal = new iam.ArnPrincipal('arn:aws:iam::123456789012:role/role-name');
 
   // "Principal": {"AWS": ["arn:aws:iam::123456789012:root"]}
-  const rootAccountPrincipal = new RootAccountPrincipal('123456789012');
+  const rootAccountPrincipal = new iam.RootAccountPrincipal('123456789012');
 
   // "Principal": {"AWS": ["123456789012"]}
-  const accountPrincipal = new AccountPrincipal('123456789012');
+  const accountPrincipal = new iam.AccountPrincipal('123456789012');
 
   // "Principal": {"AWS": ["*"]}
-  const anonymousUserPrincipal = new AnonymousUserPrincipal();
+  const anonymousUserPrincipal = new iam.AnonymousUserPrincipal();
 
   // "Principal" : "*"
-  const wildcardPrincipal = new WildcardPrincipal();
+  const wildcardPrincipal = new iam.WildcardPrincipal();
 ```
 
 Validate a policy document.
