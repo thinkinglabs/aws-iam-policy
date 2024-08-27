@@ -27,7 +27,7 @@
   "license": "MIT",
   "engineStrict": true,
   "engines": {
-    "node": ">=16"
+    "node": "^16"
   },
   "volta": {
     "node": "16.14.1"
