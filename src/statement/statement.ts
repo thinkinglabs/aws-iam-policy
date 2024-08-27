@@ -104,6 +104,15 @@ export class Statement {
     if ((Object.keys(this.resources).length === 0) && (Object.keys(this.notresources).length === 0)) {
       errors.push(`Statement(${this.sid}) must specify at least one 'resource' or 'notresource'.`);
     }
+    if (this.sid) {
+      const sidRegEx = new RegExp('^[a-zA-Z0-9]*$');
+      if (!sidRegEx.test(this.sid)) {
+        errors.push(
+            `Statement(${this.sid}) should only accept alphanumeric characters for 'sid'` +
+            ' in the case of an IAM policy.',
+        );
+      }
+    }
     return errors;
   }
 };

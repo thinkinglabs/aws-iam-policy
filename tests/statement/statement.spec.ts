@@ -114,6 +114,33 @@ describe('#Statement', function() {
     });
   });
 
+  describe('when Sid has alphanumeric characters', function() {
+    it('should be valid for an identity based policies', function() {
+      const statement = new Statement({
+        sid: 'ValidForIdentity',
+        effect: 'Allow',
+        actions: ['ec2:*'],
+        resources: ['*'],
+      });
+      expect(statement.validateForIdentityPolicy()).to.be.empty;
+    });
+  });
+
+  describe('when Sid has non-alphanumeric characters', function() {
+    it('should be invalid for an identity based policies', function() {
+      const statement = new Statement({
+        sid: 'Invalid for Identity',
+        effect: 'Allow',
+        actions: ['ec2:*'],
+        resources: ['*'],
+      });
+      expect(statement.validateForIdentityPolicy()).to.deep.equal([
+        'Statement(Invalid for Identity) should only accept alphanumeric characters for \'sid\'' +
+        ' in the case of an IAM policy.',
+      ]);
+    });
+  });
+
   describe('when principal contains only a wildcard principal', function() {
     it('should not throw an Error', function() {
       expect(() => new Statement({

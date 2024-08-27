@@ -264,15 +264,42 @@ describe('#PolicyDocument', function() {
     });
   });
 
-  describe('IAM policy document longer than 6144 characters', function() {
-    const policy = new PolicyDocument();
-    for (let i = 1; i < 84; i++) {
-      policy.addStatements(new Statement({sid: '' + i, actions: ['action'], resources: ['resource']}));
-    }
-    it('should be invalid', function() {
+  describe('#IAM policy', function() {
+    describe('longer than 6144 characters', function() {
+      const policy = new PolicyDocument();
+      for (let i = 1; i < 84; i++) {
+        policy.addStatements(new Statement({sid: '' + i, actions: ['action'], resources: ['resource']}));
+      }
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.IAM);
+        expect(errors).to.deep.equal([
+          'The size of an IAM policy document (6171) should not exceed 6.144 characters.',
+        ]);
+      });
+    });
+    describe('having a Statement with alpha-numerical Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe1234',
+          effect: 'Allow',
+          actions: ['iam:GetRole'],
+          resources: ['*'],
+        }),
+      ]);
+      expect(policy.validate(PolicyType.IAM)).to.be.empty;
+    });
+    describe('having a Statement with non alpha-numerical Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe 1234',
+          effect: 'Allow',
+          actions: ['iam:GetRole'],
+          resources: ['*'],
+        }),
+      ]);
       const errors = policy.validate(PolicyType.IAM);
       expect(errors).to.deep.equal([
-        'The size of an IAM policy document (6171) should not exceed 6.144 characters.',
+        'Statement(aBcDe 1234) should only accept alphanumeric characters for \'sid\' in the case of an IAM policy.',
       ]);
     });
   });
