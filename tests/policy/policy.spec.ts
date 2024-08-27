@@ -185,8 +185,8 @@ describe('#PolicyDocument', function() {
     it('should be invalid for resource-based policy', function() {
       const errors = policy.validate(PolicyType.S3);
       expect(errors).to.deep.equal([
-        'Statement(1st) must specify at least one IAM principal.',
-        'Statement(2nd) must specify at least one IAM principal.',
+        'Statement(1st) must specify at least one \'principal\' or \'notprincipal\'.',
+        'Statement(2nd) must specify at least one \'principal\' or \'notprincipal\'.',
       ]);
     });
   });
@@ -204,10 +204,10 @@ describe('#PolicyDocument', function() {
     it('should be invalid for identity-based policy', function() {
       const errors = policy.validate(PolicyType.IAM);
       expect(errors).to.deep.equal([
-        'Statement(1st) cannot specify any IAM principals.',
-        'Statement(1st) must specify at least one resource or notresource.',
-        'Statement(2nd) cannot specify any IAM principals.',
-        'Statement(2nd) must specify at least one resource or notresource.',
+        'Statement(1st) cannot specify any \'principal\' or \'notprincipal\'.',
+        'Statement(1st) must specify at least one \'resource\' or \'notresource\'.',
+        'Statement(2nd) cannot specify any \'principal\' or \'notprincipal\'.',
+        'Statement(2nd) must specify at least one \'resource\' or \'notresource\'.',
       ]);
     });
   });
@@ -231,8 +231,8 @@ describe('#PolicyDocument', function() {
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
-        'Statement(1st) must specify at least one IAM principal.',
-        'Statement(2nd) must specify at least one IAM principal.',
+        'Statement(1st) must specify at least one \'principal\' or \'notprincipal\'.',
+        'Statement(2nd) must specify at least one \'principal\' or \'notprincipal\'.',
       ]);
     });
     it('should be invalid for KMS key policy', function() {
@@ -240,8 +240,8 @@ describe('#PolicyDocument', function() {
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
-        'Statement(1st) must specify at least one IAM principal.',
-        'Statement(2nd) must specify at least one IAM principal.',
+        'Statement(1st) must specify at least one \'principal\' or \'notprincipal\'.',
+        'Statement(2nd) must specify at least one \'principal\' or \'notprincipal\'.',
       ]);
     });
     it('should be invalid for SecretsManager secret policy', function() {
@@ -249,8 +249,8 @@ describe('#PolicyDocument', function() {
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
-        'Statement(1st) must specify at least one IAM principal.',
-        'Statement(2nd) must specify at least one IAM principal.',
+        'Statement(1st) must specify at least one \'principal\' or \'notprincipal\'.',
+        'Statement(2nd) must specify at least one \'principal\' or \'notprincipal\'.',
       ]);
     });
 
@@ -259,8 +259,8 @@ describe('#PolicyDocument', function() {
       expect(errors).to.deep.equal([
         'Statement(1st) must specify at least one \'action\' or \'notaction\'.',
         'Statement(2nd) must specify at least one \'action\' or \'notaction\'.',
-        'Statement(1st) must specify at least one resource or notresource.',
-        'Statement(2nd) must specify at least one resource or notresource.',
+        'Statement(1st) must specify at least one \'resource\' or \'notresource\'.',
+        'Statement(2nd) must specify at least one \'resource\' or \'notresource\'.',
       ]);
     });
   });

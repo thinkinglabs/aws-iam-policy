@@ -91,7 +91,7 @@ export class Statement {
   validateForResourcePolicy() {
     const errors: string[] = [];
     if (Object.keys(this.principals).length === 0 && Object.keys(this.notprincipals).length === 0) {
-      errors.push(`Statement(${this.sid}) must specify at least one IAM principal.`);
+      errors.push(`Statement(${this.sid}) must specify at least one 'principal' or 'notprincipal'.`);
     }
     return errors;
   }
@@ -99,10 +99,10 @@ export class Statement {
   validateForIdentityPolicy() {
     const errors: string[] = [];
     if (Object.keys(this.principals).length > 0 || Object.keys(this.notprincipals).length > 0) {
-      errors.push(`Statement(${this.sid}) cannot specify any IAM principals.`);
+      errors.push(`Statement(${this.sid}) cannot specify any 'principal' or 'notprincipal'.`);
     }
     if ((Object.keys(this.resources).length === 0) && (Object.keys(this.notresources).length === 0)) {
-      errors.push(`Statement(${this.sid}) must specify at least one resource or notresource.`);
+      errors.push(`Statement(${this.sid}) must specify at least one 'resource' or 'notresource'.`);
     }
     return errors;
   }

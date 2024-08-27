@@ -56,7 +56,7 @@ describe('#Statement', function() {
       const errors = statement.validateForResourcePolicy();
       expect(errors).to.have.length(1);
       expect(errors[0]).to.equal(
-          'Statement(ValidForIdentity) must specify at least one IAM principal.',
+          'Statement(ValidForIdentity) must specify at least one \'principal\' or \'notprincipal\'.',
       );
     });
   });
@@ -77,10 +77,10 @@ describe('#Statement', function() {
       const errors = statement.validateForIdentityPolicy();
       expect(errors).to.have.length(2);
       expect(errors[0]).to.equal(
-          'Statement(ValidForResource) cannot specify any IAM principals.',
+          'Statement(ValidForResource) cannot specify any \'principal\' or \'notprincipal\'.',
       );
       expect(errors[1]).to.equal(
-          'Statement(ValidForResource) must specify at least one resource or notresource.',
+          'Statement(ValidForResource) must specify at least one \'resource\' or \'notresource\'.',
       );
     });
   });
