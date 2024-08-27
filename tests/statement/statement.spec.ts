@@ -134,9 +134,18 @@ describe('#Statement', function() {
       });
       expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.be.empty;
     });
+    it('should be valid for an S3 bucket policy', function() {
+      const statement = new Statement({
+        sid: 'ValidForBucket',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['s3:GetObject'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.S3)).to.be.empty;
+    });
   });
 
-  describe('when Sid has non-alphanumeric characters', function() {
+  describe('when Sid has alphanumeric characters with spaces', function() {
     it('should be invalid for an identity based policies', function() {
       const statement = new Statement({
         sid: 'Invalid for Identity',
@@ -158,6 +167,53 @@ describe('#Statement', function() {
       });
       expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.deep.equal([
         'Statement(Invalid for Secret) should only accept alphanumeric characters for \'sid\'' +
+        ' in the case of a SecretsManager secret policy.',
+      ]);
+    });
+    it('should be valid for an S3 bucket policy', function() {
+      const statement = new Statement({
+        sid: 'Valid for Bucket',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['s3:GetObject'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.S3)).to.be.empty;
+    });
+  });
+  describe('when Sid has non-alphanumeric characters', function() {
+    it('should be invalid for an identity based policies', function() {
+      const statement = new Statement({
+        sid: 'Invalid for Identity!',
+        effect: 'Allow',
+        actions: ['ec2:*'],
+        resources: ['*'],
+      });
+      expect(statement.validateForIdentityPolicy()).to.deep.equal([
+        'Statement(Invalid for Identity!) should only accept alphanumeric characters for \'sid\'' +
+        ' in the case of an IAM policy.',
+      ]);
+    });
+    it('should be invalid for a SecretsManager secret policy', function() {
+      const statement = new Statement({
+        sid: 'Invalid for Secret!',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['secretsmanager:GetSecretValue'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.deep.equal([
+        'Statement(Invalid for Secret!) should only accept alphanumeric characters for \'sid\'' +
+        ' in the case of a SecretsManager secret policy.',
+      ]);
+    });
+    it('should be invalid for an S3 bucket policy', function() {
+      const statement = new Statement({
+        sid: 'Invalid for Bucket!',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['s3:GetObject'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.deep.equal([
+        'Statement(Invalid for Bucket!) should only accept alphanumeric characters for \'sid\'' +
         ' in the case of a SecretsManager secret policy.',
       ]);
     });

@@ -277,7 +277,7 @@ describe('#PolicyDocument', function() {
         ]);
       });
     });
-    describe('having a Statement with alpha-numerical Sid', function() {
+    describe('having a Statement with alphanumeric Sid', function() {
       const policy = new PolicyDocument([
         new Statement({
           sid: 'aBcDe1234',
@@ -290,7 +290,7 @@ describe('#PolicyDocument', function() {
         expect(policy.validate(PolicyType.IAM)).to.be.empty;
       });
     });
-    describe('having a Statement with non alpha-numerical Sid', function() {
+    describe('having a Statement with non alphanumeric Sid with spaces', function() {
       const policy = new PolicyDocument([
         new Statement({
           sid: 'aBcDe 1234',
@@ -326,21 +326,70 @@ describe('#PolicyDocument', function() {
     });
   });
 
-  describe('S3 bucket policy document longer than 20kB', function() {
-    const policy = new PolicyDocument();
-    for (let i = 1; i < 154; i++) {
-      policy.addStatements(new Statement({
-        sid: '' + i,
-        principals: [new RolePrincipal('123456789000', 'a_role')],
-        actions: ['action'],
-        resources: ['resource'],
-      }));
-    }
-    it('should be invalid', function() {
-      const errors = policy.validate(PolicyType.S3);
-      expect(errors).to.deep.equal([
-        'The size of an S3 bucket policy document (20585) should not exceed 20kB.',
+  describe('#S3 bucket policy', function() {
+    describe('document longer than 20kB', function() {
+      const policy = new PolicyDocument();
+      for (let i = 1; i < 154; i++) {
+        policy.addStatements(new Statement({
+          sid: '' + i,
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }));
+      }
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.S3);
+        expect(errors).to.deep.equal([
+          'The size of an S3 bucket policy document (20585) should not exceed 20kB.',
+        ]);
+      });
+    });
+    describe('having a Statement with alphanumeric Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe1234',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
       ]);
+      it('should be valid', function() {
+        expect(policy.validate(PolicyType.S3)).to.be.empty;
+      });
+    });
+    describe('having a Statement with alphanumeric Sid with spaces', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe 1234',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
+      ]);
+      it('should be valid', function() {
+        const errors = policy.validate(PolicyType.S3);
+        expect(errors).to.be.empty;
+      });
+    });
+    describe('having a Statement with non-alphanumeric Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe1234*',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
+      ]);
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.S3);
+        expect(errors).to.deep.equal([
+          'Statement(aBcDe1234*) should only accept alphanumeric characters and spaces for \'sid\'' +
+          ' in the case of an S3 bucket policy.',
+        ]);
+      });
     });
   });
 
@@ -362,7 +411,7 @@ describe('#PolicyDocument', function() {
         ]);
       });
     });
-    describe('having a Statement with alpha-numerical Sid', function() {
+    describe('having a Statement with alphanumeric Sid', function() {
       const policy = new PolicyDocument([
         new Statement({
           sid: 'aBcDe1234',
@@ -376,7 +425,7 @@ describe('#PolicyDocument', function() {
         expect(policy.validate(PolicyType.SecretsManager)).to.be.empty;
       });
     });
-    describe('having a Statement with non alpha-numerical Sid', function() {
+    describe('having a Statement with alphanumeric Sid with spaces', function() {
       const policy = new PolicyDocument([
         new Statement({
           sid: 'aBcDe 1234',
