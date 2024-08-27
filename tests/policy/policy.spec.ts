@@ -308,21 +308,70 @@ describe('#PolicyDocument', function() {
     });
   });
 
-  describe('KMS key policy document longer than 32kB', function() {
-    const policy = new PolicyDocument();
-    for (let i = 1; i < 245; i++) {
-      policy.addStatements(new Statement({
-        sid: '' + i,
-        principals: [new RolePrincipal('123456789000', 'a_role')],
-        actions: ['action'],
-        resources: ['resource'],
-      }));
-    }
-    it('should be invalid', function() {
-      const errors = policy.validate(PolicyType.KMS);
-      expect(errors).to.deep.equal([
-        'The size of a KMS key policy document (32870) should not exceed 32kB.',
+  describe('#KMS key policy', function() {
+    describe('document longer than 32kB', function() {
+      const policy = new PolicyDocument();
+      for (let i = 1; i < 245; i++) {
+        policy.addStatements(new Statement({
+          sid: '' + i,
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }));
+      }
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.KMS);
+        expect(errors).to.deep.equal([
+          'The size of a KMS key policy document (32870) should not exceed 32kB.',
+        ]);
+      });
+    });
+    describe('having a Statement with alphanumeric Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe1234',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
       ]);
+      it('should be valid', function() {
+        expect(policy.validate(PolicyType.KMS)).to.be.empty;
+      });
+    });
+    describe('having a Statement with alphanumeric Sid with spaces', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe 1234',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
+      ]);
+      it('should be valid', function() {
+        const errors = policy.validate(PolicyType.KMS);
+        expect(errors).to.be.empty;
+      });
+    });
+    describe('having a Statement with non-alphanumeric Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe1234*',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
+      ]);
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.KMS);
+        expect(errors).to.deep.equal([
+          'Statement(aBcDe1234*) should only accept alphanumeric characters and spaces for \'sid\'' +
+          ' in the case of a KMS key policy.',
+        ]);
+      });
     });
   });
 

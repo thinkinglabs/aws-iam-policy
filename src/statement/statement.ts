@@ -112,6 +112,15 @@ export class Statement {
         );
       }
     }
+    if (this.sid && policyType == PolicyType.KMS) {
+      const sidRegEx = new RegExp('^[a-zA-Z0-9 ]*$');
+      if (!sidRegEx.test(this.sid)) {
+        errors.push(
+            `Statement(${this.sid}) should only accept alphanumeric characters and spaces for 'sid'` +
+            ' in the case of a KMS key policy.',
+        );
+      }
+    }
     return errors;
   }
 

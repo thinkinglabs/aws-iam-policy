@@ -143,6 +143,15 @@ describe('#Statement', function() {
       });
       expect(statement.validateForResourcePolicy(PolicyType.S3)).to.be.empty;
     });
+    it('should be valid for a KMS key policy', function() {
+      const statement = new Statement({
+        sid: 'ValidForKey',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['kms:Decrypt'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.KMS)).to.be.empty;
+    });
   });
 
   describe('when Sid has alphanumeric characters with spaces', function() {
@@ -178,6 +187,15 @@ describe('#Statement', function() {
         actions: ['s3:GetObject'],
       });
       expect(statement.validateForResourcePolicy(PolicyType.S3)).to.be.empty;
+    });
+    it('should be valid for a KMS key policy', function() {
+      const statement = new Statement({
+        sid: 'Valid For Key',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['kms:Decrypt'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.KMS)).to.be.empty;
     });
   });
   describe('when Sid has non-alphanumeric characters', function() {
@@ -215,6 +233,18 @@ describe('#Statement', function() {
       expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.deep.equal([
         'Statement(Invalid for Bucket!) should only accept alphanumeric characters for \'sid\'' +
         ' in the case of a SecretsManager secret policy.',
+      ]);
+    });
+    it('should be invalid for a KMS key policy', function() {
+      const statement = new Statement({
+        sid: 'Invalid for Key!',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['kms:Decrypt'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.KMS)).to.deep.equal([
+        'Statement(Invalid for Key!) should only accept alphanumeric characters and spaces for \'sid\'' +
+        ' in the case of a KMS key policy.',
       ]);
     });
   });
