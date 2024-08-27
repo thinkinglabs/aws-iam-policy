@@ -265,7 +265,7 @@ describe('#PolicyDocument', function() {
   });
 
   describe('#IAM policy', function() {
-    describe('longer than 6144 characters', function() {
+    describe('document longer than 6144 characters', function() {
       const policy = new PolicyDocument();
       for (let i = 1; i < 84; i++) {
         policy.addStatements(new Statement({sid: '' + i, actions: ['action'], resources: ['resource']}));
@@ -286,7 +286,9 @@ describe('#PolicyDocument', function() {
           resources: ['*'],
         }),
       ]);
-      expect(policy.validate(PolicyType.IAM)).to.be.empty;
+      it('should be valid', function() {
+        expect(policy.validate(PolicyType.IAM)).to.be.empty;
+      });
     });
     describe('having a Statement with non alpha-numerical Sid', function() {
       const policy = new PolicyDocument([
@@ -297,10 +299,12 @@ describe('#PolicyDocument', function() {
           resources: ['*'],
         }),
       ]);
-      const errors = policy.validate(PolicyType.IAM);
-      expect(errors).to.deep.equal([
-        'Statement(aBcDe 1234) should only accept alphanumeric characters for \'sid\' in the case of an IAM policy.',
-      ]);
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.IAM);
+        expect(errors).to.deep.equal([
+          'Statement(aBcDe 1234) should only accept alphanumeric characters for \'sid\' in the case of an IAM policy.',
+        ]);
+      });
     });
   });
 
@@ -340,21 +344,55 @@ describe('#PolicyDocument', function() {
     });
   });
 
-  describe('SecretsManager secret policy document longer than 20kB', function() {
-    const policy = new PolicyDocument();
-    for (let i = 1; i < 154; i++) {
-      policy.addStatements(new Statement({
-        sid: '' + i,
-        principals: [new RolePrincipal('123456789000', 'a_role')],
-        actions: ['action'],
-        resources: ['resource'],
-      }));
-    }
-    it('should be invalid', function() {
-      const errors = policy.validate(PolicyType.SecretsManager);
-      expect(errors).to.deep.equal([
-        'The size of a SecretsManager secret policy document (20585) should not exceed 20kB.',
+  describe('#SecretsManager secret policy', function() {
+    describe('document longer than 20kB', function() {
+      const policy = new PolicyDocument();
+      for (let i = 1; i < 154; i++) {
+        policy.addStatements(new Statement({
+          sid: '' + i,
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }));
+      }
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.SecretsManager);
+        expect(errors).to.deep.equal([
+          'The size of a SecretsManager secret policy document (20585) should not exceed 20kB.',
+        ]);
+      });
+    });
+    describe('having a Statement with alpha-numerical Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe1234',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
       ]);
+      it('should be valid', function() {
+        expect(policy.validate(PolicyType.SecretsManager)).to.be.empty;
+      });
+    });
+    describe('having a Statement with non alpha-numerical Sid', function() {
+      const policy = new PolicyDocument([
+        new Statement({
+          sid: 'aBcDe 1234',
+          effect: 'Allow',
+          principals: [new RolePrincipal('123456789000', 'a_role')],
+          actions: ['action'],
+          resources: ['resource'],
+        }),
+      ]);
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.SecretsManager);
+        expect(errors).to.deep.equal([
+          'Statement(aBcDe 1234) should only accept alphanumeric characters for \'sid\'' +
+          ' in the case of a SecretsManager secret policy.',
+        ]);
+      });
     });
   });
 });

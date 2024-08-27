@@ -8,6 +8,7 @@ import {
   AccountPrincipal,
   WildcardPrincipal,
   Condition,
+  PolicyType,
 } from '../../src';
 
 describe('#Statement', function() {
@@ -124,6 +125,15 @@ describe('#Statement', function() {
       });
       expect(statement.validateForIdentityPolicy()).to.be.empty;
     });
+    it('should be valid for a SecretsManager secret policy', function() {
+      const statement = new Statement({
+        sid: 'ValidForSecret',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['secretsmanager:GetSecretValue'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.be.empty;
+    });
   });
 
   describe('when Sid has non-alphanumeric characters', function() {
@@ -137,6 +147,18 @@ describe('#Statement', function() {
       expect(statement.validateForIdentityPolicy()).to.deep.equal([
         'Statement(Invalid for Identity) should only accept alphanumeric characters for \'sid\'' +
         ' in the case of an IAM policy.',
+      ]);
+    });
+    it('should be invalid for a SecretsManager secret policy', function() {
+      const statement = new Statement({
+        sid: 'Invalid for Secret',
+        effect: 'Allow',
+        principals: [new ServicePrincipal('aservice.amazonaws.com')],
+        actions: ['secretsmanager:GetSecretValue'],
+      });
+      expect(statement.validateForResourcePolicy(PolicyType.SecretsManager)).to.deep.equal([
+        'Statement(Invalid for Secret) should only accept alphanumeric characters for \'sid\'' +
+        ' in the case of a SecretsManager secret policy.',
       ]);
     });
   });

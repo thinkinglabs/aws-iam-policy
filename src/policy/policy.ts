@@ -70,7 +70,7 @@ export class PolicyDocument {
         policyType === PolicyType.S3 ||
         policyType === PolicyType.SecretsManager) {
       this.statements.forEach((stmt) => {
-        errors.push(...stmt.validateForResourcePolicy());
+        errors.push(...stmt.validateForResourcePolicy(policyType));
       });
       const doc = this.json;
       if (policyType === PolicyType.KMS && doc.length > 32*1024) {

@@ -3,6 +3,7 @@ import {Condition} from '../condition/condition';
 import {StatementJSONDeserialiser} from './deserialiser';
 import {StatementJSONSerialiser} from './serialiser';
 import {WildcardPrincipal} from '../principals/wildcard';
+import {PolicyType} from '../policy/policy';
 
 /* eslint-disable no-unused-vars */
 export type Effect = 'Allow' | 'Deny'
@@ -88,10 +89,19 @@ export class Statement {
     return errors;
   }
 
-  validateForResourcePolicy() {
+  validateForResourcePolicy(policyType?: PolicyType) {
     const errors: string[] = [];
     if (Object.keys(this.principals).length === 0 && Object.keys(this.notprincipals).length === 0) {
       errors.push(`Statement(${this.sid}) must specify at least one 'principal' or 'notprincipal'.`);
+    }
+    if (this.sid && policyType == PolicyType.SecretsManager) {
+      const sidRegEx = new RegExp('^[a-zA-Z0-9]*$');
+      if (!sidRegEx.test(this.sid)) {
+        errors.push(
+            `Statement(${this.sid}) should only accept alphanumeric characters for 'sid'` +
+            ' in the case of a SecretsManager secret policy.',
+        );
+      }
     }
     return errors;
   }
