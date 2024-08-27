@@ -1,5 +1,9 @@
 
-* Consolidate `PolicyDocument.validateForAnyPolicy`, `PolicyDocument.validateForIndentityPolicy` and `PolicyDocument.validateForResourcePolicy` into `PolicyDocument.validate(PolicyType)` where `PolicyType` accepts `IAM`, `KMS`, `S3` and `SecretsManager`. Additionally, extend the validation to the allowed policy document size ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
+* Consolidate `PolicyDocument.validateForAnyPolicy`, `PolicyDocument.validateForIndentityPolicy` and `PolicyDocument.validateForResourcePolicy` into `PolicyDocument.validate(PolicyType)` where `PolicyType` accepts `IAM`, `KMS`, `S3` and `SecretsManager` ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)). 
+
+* Extend the validation with accepted policy document size ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
+
+* Extend the validation with the accepted `Sid` values for IAM policy, KMS key policy, S3 bucket policy and SecretsManager secret policy ([#5](https://github.com/thinkinglabs/aws-iam-policy/issues/5)).
 
 :rotating_light: **BREAKING CHANGE**
 
