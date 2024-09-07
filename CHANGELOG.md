@@ -1,11 +1,16 @@
+# Changelog
 
-* Consolidate `PolicyDocument.validateForAnyPolicy`, `PolicyDocument.validateForIndentityPolicy` and `PolicyDocument.validateForResourcePolicy` into `PolicyDocument.validate(PolicyType)` where `PolicyType` accepts `IAM`, `KMS`, `S3` and `SecretsManager` ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)). 
+## 3.0.0 (7 September 2024)
 
-* Extend the validation with accepted policy document size ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
+* Extend the validation with policy document size quota ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
 
-* Extend the validation with the accepted `Sid` values for IAM policy, KMS key policy, S3 bucket policy and SecretsManager secret policy ([#5](https://github.com/thinkinglabs/aws-iam-policy/issues/5)).
+* Extend the validation with the valid `Sid` values for IAM policy, KMS key policy, S3 bucket policy and SecretsManager secret policy ([#5](https://github.com/thinkinglabs/aws-iam-policy/issues/5)).
+
+* Fix a bug where the root account principal was deserialised as an `ArnPrincipal` ([#26](https://github.com/thinkinglabs/aws-iam-policy/issues/26)). 
 
 :rotating_light: **BREAKING CHANGE**
+
+* Consolidate `PolicyDocument.validateForAnyPolicy`, `PolicyDocument.validateForIndentityPolicy` and `PolicyDocument.validateForResourcePolicy` into `PolicyDocument.validate(PolicyType)` where `PolicyType` accepts `IAM`, `KMS`, `S3` and `SecretsManager` ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
 
 * Add support for the role principal [#16](https://github.com/thinkinglabs/aws-iam-policy/issues/16)
 
@@ -23,13 +28,11 @@
 
   Deserialising an AWS Principal JSON fragment `{ "AWS": "arn:aws:iam::123456789000:user/a/path/a_user" }` will now produce a `UserPrincipal` instead of an `ArnPrincipal`.
 
-* Fix a bug where the root account principal was deserialised as an `ArnPrincipal` ([#26](https://github.com/thinkinglabs/aws-iam-policy/issues/26)). 
-
-## 2.7.0 (11 August 2023)
+## 2.7.0 (11 August 2024)
 
 * Add support for the CloudFront principal [#24](https://github.com/thinkinglabs/aws-iam-policy/issues/36) reported and fixed ([#25](https://github.com/thinkinglabs/aws-iam-policy/pull/25)) by [@araguacaima](https://github.com/araguacaima)
 
-## 2.6.1 (30 June 2023)
+## 2.6.1 (30 June 2024)
 
 * Export the `WildcardPrincipal` ([#23](https://github.com/thinkinglabs/aws-iam-policy/pull/23) by [@gabegorelick](https://github.com/gabegorelick)).
 
