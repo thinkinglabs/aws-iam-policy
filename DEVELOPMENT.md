@@ -1,5 +1,14 @@
 # Development Guidelines
 
+## Setup
+
+The Node.js version is managed by [`volta`](https://volta.sh/).
+
+Volta will automatically download the pinned Node.js version from
+`package.json`.
+
+Therefore, the project does not have a `.nvmrc` file.
+
 ## Publishing a new package
 
 To create a new version of the package, we run the following command manually:
