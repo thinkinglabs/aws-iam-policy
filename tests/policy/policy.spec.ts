@@ -221,6 +221,15 @@ describe('#PolicyDocument', function() {
         'Statement(2nd) must specify at least one \'resource\' or \'notresource\'.',
       ]);
     });
+
+    describe('with a policy id', function() {
+      const policy = new PolicyDocument([
+        new Statement({sid: '1st', principals: [new AccountPrincipal('012345678900')], actions: ['action']}),
+      ], 'an-id');
+      it('should be valid', function() {
+        expect(policy.validate(PolicyType.KMS)).to.be.empty;
+      });
+    });
   });
 
   describe('policy without actions', function() {
