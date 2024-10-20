@@ -26,14 +26,6 @@ describe('#PolicyDocumentJSONDeserialiser', function() {
     });
 
     describe('when json has a Statement', function() {
-      describe('and Statement is an object', function() {
-        const json = {Statement: {Sid: 'an sid'}};
-        it('should throw an Error', function() {
-          expect(() => PolicyDocumentJSONDeserialiser.fromJSON(json)).to.throw(Error)
-              .with.property('message', 'Unexpected type: Statement must be an array');
-        });
-      });
-
       describe('and Statement is a string', function() {
         const json = {Statement: 'statement'};
         it('should throw an Error', function() {
@@ -51,6 +43,20 @@ describe('#PolicyDocumentJSONDeserialiser', function() {
             new Statement({sid: 'sid1'}),
             new Statement({sid: 'sid2'}),
           ]);
+          expect(PolicyDocumentJSONDeserialiser.fromJSON(json)).to.deep.equal(expected);
+        });
+      });
+
+      describe('with an Id and a Statement array', function() {
+        const json = {
+          Id: 'an-id',
+          Statement: [{Sid: 'sid1'}, {Sid: 'sid2'}],
+        };
+        it('should return a Policy with Statements', function() {
+          const expected = new PolicyDocument([
+            new Statement({sid: 'sid1'}),
+            new Statement({sid: 'sid2'}),
+          ], 'an-id');
           expect(PolicyDocumentJSONDeserialiser.fromJSON(json)).to.deep.equal(expected);
         });
       });

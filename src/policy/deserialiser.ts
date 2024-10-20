@@ -13,6 +13,7 @@ export class PolicyDocumentJSONDeserialiser {
 
     const result = new PolicyDocument(
         statements.map((statement: any) => Statement.fromJSON(statement)),
+        obj.Id,
     );
     return result;
   }
