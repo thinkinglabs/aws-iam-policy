@@ -1,4 +1,5 @@
 import {PolicyDocumentJSONSerialiser} from './serialiser';
+import {PolicyDocumentJSONDeserialiser} from './deserialiser';
 import {Statement} from '../statement/statement';
 import {SidUniquenessValidator} from './sid-uniqueness';
 
@@ -46,13 +47,7 @@ export class PolicyDocument {
 
   static fromJson(json: string) {
     const obj = JSON.parse(json);
-    const result = new PolicyDocument();
-    const statements = obj.Statement;
-    if (statements && !Array.isArray(statements)) {
-      throw new Error('Statement must be an array');
-    }
-    result.addStatements(...statements.map((statement: any) => Statement.fromJSON(statement)));
-    return result;
+    return PolicyDocumentJSONDeserialiser.fromJSON(obj);
   }
 
   validate(policyType?: PolicyType) {
