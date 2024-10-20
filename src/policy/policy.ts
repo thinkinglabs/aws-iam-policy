@@ -64,6 +64,10 @@ export class PolicyDocument {
       return errors;
     }
     if (policyType === PolicyType.IAM) {
+      if (this._id) {
+        errors.push('Policy Id is not allowed for identity-based policies');
+      }
+
       this.statements.forEach((stmt) => {
         errors.push(...stmt.validateForIdentityPolicy());
       });

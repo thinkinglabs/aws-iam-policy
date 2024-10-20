@@ -188,6 +188,18 @@ describe('#PolicyDocument', function() {
         'Statement(2nd) must specify at least one \'principal\' or \'notprincipal\'.',
       ]);
     });
+
+    describe('with a policy id', function() {
+      const policy = new PolicyDocument([
+        new Statement({sid: '1st', actions: ['action'], resources: ['resource']}),
+      ], 'an-id');
+      it('should be invalid', function() {
+        const errors = policy.validate(PolicyType.IAM);
+        expect(errors).to.deep.equal([
+          'Policy Id is not allowed for identity-based policies',
+        ]);
+      });
+    });
   });
 
   describe('resource-based policy', function() {
