@@ -5,37 +5,42 @@ import {SidUniquenessValidator} from './sid-uniqueness';
 
 export class PolicyDocument {
   private _id?: string;
-  public statements: Statement[] = [];
+  private _statements: Statement[] = [];
 
   constructor(statements?: Statement[], id?: string) {
     this.addStatements(...statements || []);
     this._id = id;
   }
 
+  get id() {
+    return this._id;
+  }
+
   get isEmpty() {
     return this.statementCount === 0;
   }
 
+  get statements() {
+    return this._statements;
+  }
+
   get statementCount() {
-    return this.statements.length;
+    return this._statements.length;
   }
 
   public addStatements(...statements: Statement[]) {
     statements.forEach((statement) => {
-      if (!new SidUniquenessValidator(this.statements).validate(statement)) {
+      if (!new SidUniquenessValidator(this._statements).validate(statement)) {
         throw new Error(`Non-unique Sid "${statement.sid}"`);
       }
-      this.statements.push(statement);
+      this._statements.push(statement);
     });
   }
 
   getStatement(sid: string): Statement | undefined {
-    return this.statements.find((stmt) => stmt.sid === sid);
+    return this._statements.find((stmt) => stmt.sid === sid);
   }
 
-  get id() {
-    return this._id;
-  }
 
   get object() {
     return PolicyDocumentJSONSerialiser.toJSON(this);
@@ -52,7 +57,7 @@ export class PolicyDocument {
 
   validate(policyType?: PolicyType) {
     const errors: string[] = [];
-    this.statements.forEach((stmt) => {
+    this._statements.forEach((stmt) => {
       errors.push(...stmt.validateForAnyPolicy());
     });
     if (policyType === undefined) {
@@ -63,7 +68,7 @@ export class PolicyDocument {
         errors.push('Policy Id is not allowed for identity-based policies');
       }
 
-      this.statements.forEach((stmt) => {
+      this._statements.forEach((stmt) => {
         errors.push(...stmt.validateForIdentityPolicy());
       });
       const doc = this.json;
@@ -74,7 +79,7 @@ export class PolicyDocument {
     if (policyType === PolicyType.KMS ||
         policyType === PolicyType.S3 ||
         policyType === PolicyType.SecretsManager) {
-      this.statements.forEach((stmt) => {
+      this._statements.forEach((stmt) => {
         errors.push(...stmt.validateForResourcePolicy(policyType));
       });
       const doc = this.json;
