@@ -2,7 +2,9 @@
 
 ## 3.1.0
 
-* Add support for Policy Id to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
+* Add support for Policy `Id` to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
+
+* Move the policy `Version` at the top of the serialised JSON policy document.
 
 * Drop the minimal Node.js version requirement
 
