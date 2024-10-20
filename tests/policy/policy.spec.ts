@@ -46,7 +46,7 @@ describe('#PolicyDocument', function() {
         sid: 'anSID3',
         principals: [new WildcardPrincipal()],
       }),
-    ]);
+    ], 'an-id');
 
     it('should successfully pass a JSON round trip', function() {
       const json = policy.json;
@@ -60,7 +60,7 @@ describe('#PolicyDocument', function() {
       it('should throw an Error', function() {
         const input = JSON.stringify({Statement: new Statement({sid: 'not an array'})});
         expect(() => PolicyDocument.fromJson(input)).to.throw(Error)
-            .with.property('message', 'Statement must be an array');
+            .with.property('message', 'Unexpected type: Statement must be an array');
       });
     });
   });
