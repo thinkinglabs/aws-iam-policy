@@ -265,6 +265,11 @@ describe('#PolicyDocument', function() {
   });
 
   describe('#IAM policy', function() {
+    describe('id', function() {
+      const policy = new PolicyDocument([], 'an-id');
+      expect(policy.id).to.equal('an-id');
+    });
+
     describe('document longer than 6144 characters', function() {
       const policy = new PolicyDocument();
       for (let i = 1; i < 84; i++) {

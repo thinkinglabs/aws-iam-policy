@@ -3,10 +3,12 @@ import {Statement} from '../statement/statement';
 import {SidUniquenessValidator} from './sid-uniqueness';
 
 export class PolicyDocument {
+  private _id?: string;
   public statements: Statement[] = [];
 
-  constructor(statements?: Statement[]) {
+  constructor(statements?: Statement[], id?: string) {
     this.addStatements(...statements || []);
+    this._id = id;
   }
 
   get isEmpty() {
@@ -28,6 +30,10 @@ export class PolicyDocument {
 
   getStatement(sid: string): Statement | undefined {
     return this.statements.find((stmt) => stmt.sid === sid);
+  }
+
+  get id() {
+    return this._id;
   }
 
   get object() {
