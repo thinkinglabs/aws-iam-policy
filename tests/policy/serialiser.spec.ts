@@ -34,5 +34,27 @@ describe('#PolicyDocumentJSONSerialiser', function() {
         expect(PolicyDocumentJSONSerialiser.toJSON(input)).to.deep.equal(expected);
       });
     });
+
+    describe('when policy has an id set', function() {
+      const input = new PolicyDocument([new Statement({sid: 'an-sid'})], 'an-id');
+      it('should return a JSON policy with an Id element', function() {
+        const expected = {
+          Id: 'an-id',
+          Statement: [{
+            Sid: 'an-sid',
+            Effect: 'Allow',
+            Principal: undefined,
+            NotPrincipal: undefined,
+            Action: undefined,
+            NotAction: undefined,
+            Resource: undefined,
+            NotResource: undefined,
+            Condition: undefined,
+          }],
+          Version: '2012-10-17',
+        };
+        expect(PolicyDocumentJSONSerialiser.toJSON(input)).to.deep.equal(expected);
+      });
+    });
   });
 });

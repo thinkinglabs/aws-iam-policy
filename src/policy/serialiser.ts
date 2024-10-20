@@ -6,6 +6,7 @@ export class PolicyDocumentJSONSerialiser {
       return undefined;
     }
     return {
+      ...(policy.id ? {Id: policy.id} : {}),
       Statement: policy.statements.map((stmt) => stmt.toJSON()),
       Version: '2012-10-17',
     };
