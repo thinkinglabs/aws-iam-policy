@@ -1,12 +1,22 @@
 # Changelog
 
+## 3.1.0
+
+* Add support for Policy Id to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
+
+* Drop the minimal Node.js version requirement
+
+* Replace `npm` by [`volta`](https://volta.sh/) as Node.js version manager.
+
+* Introduce a matrix build on Node.js v18, v20, v22 ([#30](https://github.com/thinkinglabs/aws-iam-policy/issues/30))
+
 ## 3.0.0 (7 September 2024)
 
 * Extend the validation with policy document size quota ([#6](https://github.com/thinkinglabs/aws-iam-policy/issues/6)).
 
 * Extend the validation with the valid `Sid` values for IAM policy, KMS key policy, S3 bucket policy and SecretsManager secret policy ([#5](https://github.com/thinkinglabs/aws-iam-policy/issues/5)).
 
-* Fix a bug where the root account principal was deserialised as an `ArnPrincipal` ([#26](https://github.com/thinkinglabs/aws-iam-policy/issues/26)). 
+* Fix a bug where the root account principal was deserialised as an `ArnPrincipal` ([#26](https://github.com/thinkinglabs/aws-iam-policy/issues/26)).
 
 :rotating_light: **BREAKING CHANGE**
 
