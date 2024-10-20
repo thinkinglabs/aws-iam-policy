@@ -3,6 +3,10 @@ import {PolicyDocument} from './policy';
 
 export class PolicyDocumentJSONDeserialiser {
   static fromJSON(obj: any) {
+    if (obj.Id !== undefined && typeof obj.Id !== 'string') {
+      throw new Error('Unexpected type: Id must be a string');
+    }
+
     const statements = obj.Statement;
     if (statements === undefined) {
       return new PolicyDocument(undefined, obj.Id);

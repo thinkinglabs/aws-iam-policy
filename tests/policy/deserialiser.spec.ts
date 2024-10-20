@@ -23,9 +23,49 @@ describe('#PolicyDocumentJSONDeserialiser', function() {
           expect(PolicyDocumentJSONDeserialiser.fromJSON(json)).to.deep.equal(expected);
         });
       });
+
+      describe('and Id is a number', function() {
+        const json = {Id: 123};
+        it('should throw an Error', function() {
+          expect(() => PolicyDocumentJSONDeserialiser.fromJSON(json)).to.throw(Error)
+              .with.property('message', 'Unexpected type: Id must be a string');
+        });
+      });
+
+      describe('and Id is a boolean', function() {
+        const json = {Id: true};
+        it('should throw an Error', function() {
+          expect(() => PolicyDocumentJSONDeserialiser.fromJSON(json)).to.throw(Error)
+              .with.property('message', 'Unexpected type: Id must be a string');
+        });
+      });
+
+      describe('and Id is an object', function() {
+        const json = {Id: {}};
+        it('should throw an Error', function() {
+          expect(() => PolicyDocumentJSONDeserialiser.fromJSON(json)).to.throw(Error)
+              .with.property('message', 'Unexpected type: Id must be a string');
+        });
+      });
+
+      describe('and Id is an array', function() {
+        const json = {Id: []};
+        it('should throw an Error', function() {
+          expect(() => PolicyDocumentJSONDeserialiser.fromJSON(json)).to.throw(Error)
+              .with.property('message', 'Unexpected type: Id must be a string');
+        });
+      });
     });
 
     describe('when json has a Statement', function() {
+      describe('and Id is not a string', function() {
+        const json = {Id: 123};
+        it('should throw an Error', function() {
+          expect(() => PolicyDocumentJSONDeserialiser.fromJSON(json)).to.throw(Error)
+              .with.property('message', 'Unexpected type: Id must be a string');
+        });
+      });
+
       describe('and Statement is a string', function() {
         const json = {Statement: 'statement'};
         it('should throw an Error', function() {
