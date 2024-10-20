@@ -15,6 +15,16 @@ describe('#PolicyDocumentJSONDeserialiser', function() {
       });
     });
 
+    describe('when json has no Statement', function() {
+      describe('and Id is a string', function() {
+        const json = {Id: 'an-id'};
+        it('should return a PolicyDocument with an id', function() {
+          const expected = new PolicyDocument([], 'an-id');
+          expect(PolicyDocumentJSONDeserialiser.fromJSON(json)).to.deep.equal(expected);
+        });
+      });
+    });
+
     describe('when json has a Statement', function() {
       describe('and Statement is an object', function() {
         const json = {Statement: {Sid: 'an sid'}};

@@ -5,7 +5,7 @@ export class PolicyDocumentJSONDeserialiser {
   static fromJSON(obj: any) {
     const statements = obj.Statement;
     if (statements === undefined) {
-      return new PolicyDocument();
+      return new PolicyDocument(undefined, obj.Id);
     }
     if (!Array.isArray(statements)) {
       throw new Error('Unexpected type: Statement must be an array');
