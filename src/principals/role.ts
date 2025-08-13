@@ -13,6 +13,7 @@ class RolePrincipal extends ArnPrincipal {
 
   static validate(arn: string): RolePrincipal | undefined {
     const regex = new RegExp(
+        /* eslint-disable-next-line no-useless-escape */
         '^arn:aws:iam::([0-9]{12}):role((/[/a-zA-Z\+=\.@_-]{1,510})?/)([a-zA-Z0-9\+=\.@_-]{1,64})$',
     );
     const result = regex.exec(arn) as RegExpExecArray;

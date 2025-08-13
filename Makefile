@@ -7,6 +7,9 @@ release: ## Release a version
 install: ## Install dependencies
 	npm install
 
+lint: ## Lint code
+	npm run lint
+
 test: ## Execute tests
 	npm test
 

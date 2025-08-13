@@ -1,4 +1,5 @@
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export function parseArray(obj: any): string[] {
   if (obj === undefined) {
     return [];
@@ -18,3 +19,4 @@ export function parseArray(obj: any): string[] {
 function isArrayOfStrings(obj: any[]) {
   return obj.every((element) => typeof element === 'string');
 }
+/* eslint-enable  @typescript-eslint/no-explicit-any */

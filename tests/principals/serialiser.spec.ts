@@ -85,7 +85,7 @@ describe('#PrincipalJSONSerialiser', function() {
     });
 
     describe('when having two identical AWS principals', function() {
-      const userArn = `arn:aws:iam::111122223333:role/aRole`;
+      const userArn = 'arn:aws:iam::111122223333:role/aRole';
       const principals = [new ArnPrincipal(userArn), new ArnPrincipal(userArn)];
       it('should return a JSON object having an AWS property having a two item string array', function() {
         expect(PrincipalJSONSerialiser.toJSON(principals)).to.deep.equal({AWS: [userArn, userArn]});

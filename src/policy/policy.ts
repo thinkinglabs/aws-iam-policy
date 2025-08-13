@@ -97,11 +97,9 @@ export class PolicyDocument {
   }
 }
 
-/* eslint-disable no-unused-vars */
 export enum PolicyType {
   IAM,
   KMS,
   S3,
   SecretsManager,
 }
-/* eslint-enable no-unused-vars */

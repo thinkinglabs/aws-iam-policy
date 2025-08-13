@@ -1,6 +1,7 @@
 import {Statement} from '../statement/statement';
 import {PolicyDocument} from './policy';
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export class PolicyDocumentJSONDeserialiser {
   static fromJSON(obj: any) {
     if (obj.Id !== undefined && typeof obj.Id !== 'string') {
@@ -22,3 +23,4 @@ export class PolicyDocumentJSONDeserialiser {
     return result;
   }
 }
+/* eslint-enable  @typescript-eslint/no-explicit-any */

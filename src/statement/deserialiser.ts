@@ -4,6 +4,7 @@ import {Statement} from '../statement/statement';
 import {parseArray} from '../arrays';
 
 export class StatementJSONDeserialiser {
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   static fromJSON(obj: any) {
     return new Statement({
       sid: obj.Sid,

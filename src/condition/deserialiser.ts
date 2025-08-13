@@ -1,6 +1,7 @@
 import {Condition} from './condition';
 import {parseArray} from '../arrays';
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export class ConditionJSONDeserialiser {
   static fromJSON(input: any): Condition[] {
     return parseCondition(input);
@@ -13,13 +14,13 @@ export class ConditionJSONDeserialiser {
       if (typeof input !== 'object') {
         throw new Error(
             `Unsupported Condition type ${typeof input}: ` +
-            `expecting an object {[operator:string]: {[key:string]:string[]}}`);
+            'expecting an object {[operator:string]: {[key:string]:string[]}}');
       }
 
       if (Array.isArray(input)) {
         throw new Error(
-            `Unsupported Condition type array: ` +
-            `expecting an object {[operator:string]: {[key:string]:string[]}}`);
+            'Unsupported Condition type array: ' +
+            'expecting an object {[operator:string]: {[key:string]:string[]}}');
       }
 
       const result: Condition[] = Object.keys(input).flatMap((operator: any) => {
@@ -52,3 +53,4 @@ export class ConditionJSONDeserialiser {
     }
   };
 }
+/* eslint-enable  @typescript-eslint/no-explicit-any */

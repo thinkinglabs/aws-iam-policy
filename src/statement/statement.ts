@@ -5,9 +5,7 @@ import {StatementJSONSerialiser} from './serialiser';
 import {WildcardPrincipal} from '../principals/wildcard';
 import {PolicyType} from '../policy/policy';
 
-/* eslint-disable no-unused-vars */
 export type Effect = 'Allow' | 'Deny'
-/* eslint-enable no-unused-vars */
 
 export class Statement {
   public sid: string | undefined;
@@ -77,6 +75,7 @@ export class Statement {
     return StatementJSONSerialiser.toJSON(this);
   }
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   static fromJSON(obj: any): Statement {
     return StatementJSONDeserialiser.fromJSON(obj);
   }

@@ -1,4 +1,5 @@
 
+/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
 function normalise(obj: any): any | undefined {
   if (obj === undefined) {
     return undefined;
