@@ -33,25 +33,6 @@ describe('#Action', () => {
   });
 
   it('should validate iam:Create????', () => {
-    const action = 'iam:Create????';
-    const validIamActions = [
-      'iam:CreateUser',
-      'iam:DeleteUser',
-      'iam:UpdateUser',
-      'iam:CreateGroup',
-      'iam:DeleteGroup',
-      'iam:UpdateGroup',
-      'iam:CreatePolicy',
-      'iam:DeletePolicy',
-      'iam:UpdatePolicy',
-      'iam:CreateRole',
-      'iam:DeleteRole',
-      'iam:UpdateRole',
-    ];
-    const actual = validIamActions.reduce(
-        (accumulator, currentValue) => accumulator || new RegExp(`^${action.replaceAll('?', '.')}$`).test(currentValue),
-        false,
-    );
-    expect(actual).to.be.true;
+    expect(validateAction('iam:Create????')).to.be.true;
   });
 });
