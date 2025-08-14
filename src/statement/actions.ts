@@ -1,5 +1,18 @@
 
 export function validate(actions: string[]): string[] {
+  const result = actions.reduce(
+    (accumulator, action) => {
+      const valid = action.startsWith('iam:') ? validateIamAction(action) : true;
+      if (!valid) {
+        accumulator.push(`Invalid action: ${action}`);
+      }
+      return accumulator;
+    }, [] as string[],
+  );
+  return result;
+}
+
+function validateIamAction(action: string): boolean {
   const iamActions = [
     'iam:CreateUser',
     'iam:DeleteUser',
@@ -14,18 +27,10 @@ export function validate(actions: string[]): string[] {
     'iam:DeleteRole',
     'iam:UpdateRole',
   ];
-  const result = actions.reduce(
-    (accumulator, action) => {
-      const regexp = new RegExp(`^${action.replace('*', '.*').replaceAll('?', '.')}$`);
-      const valid = iamActions.reduce(
-        (accumulator, currentValue) => accumulator || regexp.test(currentValue),
-        false,
-      );
-      if (!valid) {
-        accumulator.push(`Invalid action: ${action}`);
-      }
-      return accumulator;
-    }, [] as string[],
+  const regexp = new RegExp(`^${action.replace('*', '.*').replaceAll('?', '.')}$`);
+  const valid = iamActions.reduce(
+    (accumulator, currentValue) => accumulator || regexp.test(currentValue),
+    false,
   );
-  return result;
+  return valid;
 }

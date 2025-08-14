@@ -39,5 +39,7 @@ describe('#Action', () => {
     ]);
   });
 
-
+  it('should valiate qdeveloper:StartAgentSession', () => {
+    expect(validate(['qdeveloper:StartAgentSession'])).to.be.empty;
+  });
 });
