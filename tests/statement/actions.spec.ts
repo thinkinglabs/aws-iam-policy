@@ -15,8 +15,9 @@ function validateAction(action: string): boolean {
     'iam:DeleteRole',
     'iam:UpdateRole',
   ];
+  const regexp = new RegExp(`^${action.replace('*', '.*').replaceAll('?', '.')}$`);
   const result = iamActions.reduce(
-      (accumulator, currentValue) => accumulator || new RegExp(`^${action.replace('*', '.*')}$`).test(currentValue),
+      (accumulator, currentValue) => accumulator || regexp.test(currentValue),
       false,
   );
   return result;
@@ -28,26 +29,7 @@ describe('#Action', () => {
   });
 
   it('should not validate iam:Create?', () => {
-    const action = 'iam:Create?';
-    const validIamActions = [
-      'iam:CreateUser',
-      'iam:DeleteUser',
-      'iam:UpdateUser',
-      'iam:CreateGroup',
-      'iam:DeleteGroup',
-      'iam:UpdateGroup',
-      'iam:CreatePolicy',
-      'iam:DeletePolicy',
-      'iam:UpdatePolicy',
-      'iam:CreateRole',
-      'iam:DeleteRole',
-      'iam:UpdateRole',
-    ];
-    const actual = validIamActions.reduce(
-        (accumulator, currentValue) => accumulator || new RegExp(`^${action.replaceAll('?', '.')}$`).test(currentValue),
-        false,
-    );
-    expect(actual).to.be.false;
+    expect(validateAction('iam:Create?')).to.be.false;
   });
 
   it('should validate iam:Create????', () => {
