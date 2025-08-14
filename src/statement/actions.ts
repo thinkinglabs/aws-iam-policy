@@ -1,5 +1,5 @@
 
-export function validate(actions: string[]): boolean {
+export function validate(actions: string[]): string[] {
   const iamActions = [
     'iam:CreateUser',
     'iam:DeleteUser',
@@ -17,12 +17,15 @@ export function validate(actions: string[]): boolean {
   const result = actions.reduce(
     (accumulator, action) => {
       const regexp = new RegExp(`^${action.replace('*', '.*').replaceAll('?', '.')}$`);
-      const result = iamActions.reduce(
+      const valid = iamActions.reduce(
         (accumulator, currentValue) => accumulator || regexp.test(currentValue),
         false,
-      );  
-      return accumulator || result;
-    }, false,
+      );
+      if (!valid) {
+        accumulator.push(`Invalid action: ${action}`);
+      }
+      return accumulator;
+    }, [] as string[],
   );
   return result;
 }
