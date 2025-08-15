@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0
+
+* Add support to validate the list of `Statement.actions` and `Statement.notactions` to contain valid IAM permissions [#31](https://github.com/thinkinglabs/aws-iam-policy/issues/31).
+
 ## 3.1.0
 
 * Add support for Policy `Id` to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
