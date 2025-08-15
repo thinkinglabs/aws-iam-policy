@@ -285,6 +285,31 @@ describe('#PolicyDocument', function() {
     });
   });
 
+  describe('policy with actions', function() {
+    describe('and valid iam action', function() {
+      const policy = new PolicyDocument([
+        new Statement({sid: '1st', actions: ['iam:GetRole', 'ec2:DescribeInstances']}),
+      ]);
+  
+      it('should be valid for any policy', function() {
+        const errors = policy.validate();
+        expect(errors).to.be.empty;
+      });
+    });
+    describe('and invalid iam action', function() {
+      const policy = new PolicyDocument([
+        new Statement({sid: '1st', actions: ['iam:DescribeRole', 'ec2:DescribeInstances']}),
+      ]);
+  
+      it('should be invalid for any policy', function() {
+        const errors = policy.validate();
+        expect(errors).to.be.deep.equal([
+          'Invalid action \'iam:DescribeRole\'',
+        ]);
+      });
+    });
+  });
+
   describe('#IAM policy', function() {
     describe('id', function() {
       const policy = new PolicyDocument([], 'an-id');
