@@ -4,6 +4,7 @@ import {StatementJSONDeserialiser} from './deserialiser';
 import {StatementJSONSerialiser} from './serialiser';
 import {WildcardPrincipal} from '../principals/wildcard';
 import {PolicyType} from '../policy/policy';
+import {validateActions} from './actions';
 
 export type Effect = 'Allow' | 'Deny'
 
@@ -85,6 +86,7 @@ export class Statement {
     if ((this.actions.length === 0) && (this.notactions.length === 0)) {
       errors.push(`Statement(${this.sid}) must specify at least one 'action' or 'notaction'.`);
     }
+    errors.push(...validateActions(this.actions));
     return errors;
   }
 

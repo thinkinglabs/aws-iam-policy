@@ -1,10 +1,10 @@
 
-export function validate(actions: string[]): string[] {
+export function validateActions(actions: string[]): string[] {
   const result = actions.reduce(
     (accumulator, action) => {
       const valid = action.startsWith('iam:') ? validateIamAction(action) : true;
       if (!valid) {
-        accumulator.push(`Invalid action: ${action}`);
+        accumulator.push(`Invalid action '${action}'`);
       }
       return accumulator;
     }, [] as string[],
@@ -23,6 +23,7 @@ function validateIamAction(action: string): boolean {
     'iam:CreatePolicy',
     'iam:DeletePolicy',
     'iam:UpdatePolicy',
+    'iam:GetRole',
     'iam:CreateRole',
     'iam:DeleteRole',
     'iam:UpdateRole',
