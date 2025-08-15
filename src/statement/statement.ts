@@ -87,6 +87,7 @@ export class Statement {
       errors.push(`Statement(${this.sid}) must specify at least one 'action' or 'notaction'.`);
     }
     errors.push(...validate(this.actions));
+    errors.push(...validate(this.notactions));
     return errors;
   }
 

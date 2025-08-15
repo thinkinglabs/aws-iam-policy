@@ -104,11 +104,53 @@ describe('#Statement', function() {
   });
 
   describe('with actions', function() {
+    describe('with valid iam actions', function() {
+      const statement = new Statement({
+        sid: 'ValidIAMActions',
+        effect: 'Allow',
+        actions: ['iam:ListUsers', 'iam:*User'],
+        resources: ['*'],
+      });
+
+      it('should be invalid', function() {
+        expect(statement.validateForAnyPolicy()).to.be.empty;
+      });
+    });
     describe('with invalid iam actions', function() {
       const statement = new Statement({
         sid: 'ValidIAMActions',
         effect: 'Allow',
         actions: ['iam:DescribeUsers', 'iam:*Principal'],
+        resources: ['*'],
+      });
+
+      it('should be invalid', function() {
+        expect(statement.validateForAnyPolicy()).to.be.deep.equal([
+          'Invalid action \'iam:DescribeUsers\'',
+          'Invalid action \'iam:*Principal\'',
+        ]);
+      });
+    });
+  });
+
+  describe('with notactions', function() {
+    describe('with valid iam actions', function() {
+      const statement = new Statement({
+        sid: 'ValidIAMActions',
+        effect: 'Allow',
+        notactions: ['iam:ListUsers', 'iam:*User'],
+        resources: ['*'],
+      });
+
+      it('should be invalid', function() {
+        expect(statement.validateForAnyPolicy()).to.be.empty;
+      });
+    });
+    describe('with invalid iam actions', function() {
+      const statement = new Statement({
+        sid: 'ValidIAMActions',
+        effect: 'Allow',
+        notactions: ['iam:DescribeUsers', 'iam:*Principal'],
         resources: ['*'],
       });
 
