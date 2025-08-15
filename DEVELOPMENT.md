@@ -23,24 +23,12 @@ commit it to git and tag it with the same version, and push to the remote repo.
 Both the commit and the tag are pushed and the Github Actions workflow will kick
 in to publish the package to the NPM Registry.
 
-## Retrieve the list of valid actions for an AWS service
+## Retrieve the list of valid actions for a given AWS service
 
 Surrounded with single quotes and trailing comma.
 
 ```bash
-$ curl --header 'Connection: keep-alive' \
-     --header 'Pragma: no-cache' \
-     --header 'Cache-Control: no-cache' \
-     --header 'Accept: */*' \
-     --header 'Referer: https://awspolicygen.s3.amazonaws.com/policygen.html' \
-     --header 'Accept-Language: en-US,en;q=0.9' \
-     --silent \
-     --compressed \
-     'https://awspolicygen.s3.amazonaws.com/js/policies.js' |
-    cut -d= -f2 |
-    jq -r '.serviceMap[] | .StringPrefix as $prefix | .Actions[] | "\($prefix):\(.)"' |
-    sort |
-    uniq | grep 'iam:' | awk '{print "\047" $1 "\047" "\054"}'
+$ ./aws_iam_actions iam
 'iam:AddClientIDToOpenIDConnectProvider',
 'iam:AddRoleToInstanceProfile',
 'iam:AddUserToGroup',
