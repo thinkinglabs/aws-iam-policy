@@ -22,6 +22,7 @@ Node.js lts/gallium (16.x)
 - Validating the uniqueness of `Sid` within the scope of an IAM Policy document
   when adding Statements.
 - Retrieval of Policy Statements by `Sid`.
+- Validate `Statement.actions` against the list of valid IAM permissions with support for multi-character wildcard (`*`) and single-character wildcard (`?`).
 
 ## Documentation
 
@@ -156,6 +157,17 @@ Validate a policy document.
   // validate any policy
   // when valid returns an empty list
   // when invalid returns a list of errors
+  const policy = new iam.PolicyDocument([
+    new iam.Statement({
+      sid: 'AllowReadIAM',
+      effect: 'Allow',
+      actions: [
+        'iam:Get*',
+        'iam:List*',
+      ],
+      resources: ['*'],
+    })
+  ]);
   const errors = policy.validate();
   if (errors) {
     throw errors;
