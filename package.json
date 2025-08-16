@@ -21,7 +21,8 @@
   "keywords": [
     "aws",
     "iam",
-    "policy"
+    "policy",
+    "dsl"
   ],
   "author": "ThinkingLabs",
   "license": "MIT",
