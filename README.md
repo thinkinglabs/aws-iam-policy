@@ -12,7 +12,7 @@ The primary reasons for creating the library were:
 
 ## Requirements
 
-Node.js lts/gallium (16.x)
+Node.js lts/hydrogen (18.x)
 
 ## Features
 
