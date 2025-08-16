@@ -22,7 +22,7 @@ Node.js lts/gallium (16.x)
 - Validating the uniqueness of `Sid` within the scope of an IAM Policy document
   when adding Statements.
 - Retrieval of Policy Statements by `Sid`.
-- Validate `Statement.actions` against the list of valid IAM permissions with support for multi-character wildcard (`*`) and single-character wildcard (`?`).
+- Validate `Statement.actions` against the list of valid `iam` and `ec2` permissions with support for multi-character wildcard (`*`) and single-character wildcard (`?`).
 
 ## Documentation
 
