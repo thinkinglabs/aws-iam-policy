@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.1
+
+* Fix 
+
 ## 3.2.0
 
 * Bump Node.js to v24, and keep support for v18, v20, v22
