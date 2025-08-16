@@ -140,7 +140,7 @@ describe('#Action', () => {
     expect(validate(['ecr:ListRepositories'])).to.be.deep.equal(['Invalid action \'ecr:ListRepositories\'']);
   });
 
-  it('should validate kms', () => {
+  it('should validate ecr', () => {
     expect(validate([
       'ecr:GetAuthorizationToken',
       'ecr:GetDownloadUrlForLayer',
@@ -166,6 +166,23 @@ describe('#Action', () => {
       'lambda:AddPermission',
       'lambda:RemovePermission',
       'lambda:InvokeFunction',
+    ])).to.be.empty;
+  });
+
+  it('should not validate rds:ListDBInstances', () => {
+    expect(validate(['rds:ListDBInstances'])).to.be.deep.equal(['Invalid action \'rds:ListDBInstances\'']);
+  });
+
+  it('should validate rds', () => {
+    expect(validate([
+      'rds:CreateDBInstance',
+      'rds:ModifyDBInstance',
+      'rds:DescribeDBInstances',
+      'rds:ListTagsForResource',
+      'rds:AddTagsToResource',
+      'rds:DescribeDBSnapshots',
+      'rds:CreateDBSnapshot',
+      'rds:CopyDBSnapshot',
     ])).to.be.empty;
   });
 });
