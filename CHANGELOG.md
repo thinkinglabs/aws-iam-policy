@@ -16,6 +16,8 @@
 
   * ECS (`ecs`) [#35](https://github.com/thinkinglabs/aws-iam-policy/issues/35).
 
+  * KMS (`kms`) [#36](https://github.com/thinkinglabs/aws-iam-policy/issues/36).
+
 ## 3.1.0
 
 * Add support for Policy `Id` to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
