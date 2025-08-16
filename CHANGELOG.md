@@ -14,6 +14,8 @@
 
   * S3 (`s3`) permissions [#34](https://github.com/thinkinglabs/aws-iam-policy/issues/34).
 
+  * ECS (`ecs`) permissions [#35](https://github.com/thinkinglabs/aws-iam-policy/issues/35).
+
 ## 3.1.0
 
 * Add support for Policy `Id` to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
