@@ -4,17 +4,17 @@
 
 * Bump Node.js to v24, and keep support for v18, v20, v22
 
-* Add support to validate the list of `Statement.actions` and `Statement.notactions` to contain valid
+* Add support to validate `Statement.actions` and `Statement.notactions` to contain valid permissions for:
 
-  * IAM (`iam`) permissions [#31](https://github.com/thinkinglabs/aws-iam-policy/issues/31).
+  * IAM (`iam`) [#31](https://github.com/thinkinglabs/aws-iam-policy/issues/31).
 
-  * EC2 (`ec2`) permissions [#32](https://github.com/thinkinglabs/aws-iam-policy/issues/32).
+  * EC2 (`ec2`) [#32](https://github.com/thinkinglabs/aws-iam-policy/issues/32).
   
-  * CloudWatch Logs (`logs`) permissions [#33](https://github.com/thinkinglabs/aws-iam-policy/issues/33).
+  * CloudWatch Logs (`logs`) [#33](https://github.com/thinkinglabs/aws-iam-policy/issues/33).
 
-  * S3 (`s3`) permissions [#34](https://github.com/thinkinglabs/aws-iam-policy/issues/34).
+  * S3 (`s3`) [#34](https://github.com/thinkinglabs/aws-iam-policy/issues/34).
 
-  * ECS (`ecs`) permissions [#35](https://github.com/thinkinglabs/aws-iam-policy/issues/35).
+  * ECS (`ecs`) [#35](https://github.com/thinkinglabs/aws-iam-policy/issues/35).
 
 ## 3.1.0
 
