@@ -103,4 +103,22 @@ describe('#Action', () => {
       's3:DeleteObject',
     ])).to.be.empty;
   });
+
+  it('should not validate ecs:ModifyService', () => {
+    expect(validate(['ecs:ModifyService'])).to.be.deep.equal(['Invalid action \'ecs:ModifyService\'']);
+  });
+
+  it('should validate ecs', () => {
+    expect(validate([
+      'ecs:CreateCluster',
+      'ecs:ListClusters',
+      'ecs:DescribeClusters',
+      'ecs:UpdateCluster',
+      'ecs:RegisterTaskDefinition',
+      'ecs:CreateService',
+      'ecs:UpdateService',
+      'ecs:StartTask',
+      'ecs:StopTask',
+    ])).to.be.empty;
+  });
 });
