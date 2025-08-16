@@ -2,7 +2,11 @@
 
 ## 3.2.0
 
-* Add support to validate the list of `Statement.actions` and `Statement.notactions` to contain valid IAM permissions [#31](https://github.com/thinkinglabs/aws-iam-policy/issues/31).
+* Add support to validate the list of `Statement.actions` and `Statement.notactions` to contain valid
+
+  * IAM permissions [#31](https://github.com/thinkinglabs/aws-iam-policy/issues/31).
+
+  * EC2 permissions [#32](https://github.com/thinkinglabs/aws-iam-policy/issues/32).
 
 ## 3.1.0
 
