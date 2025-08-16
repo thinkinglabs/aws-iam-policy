@@ -121,4 +121,18 @@ describe('#Action', () => {
       'ecs:StopTask',
     ])).to.be.empty;
   });
+
+  it('should not validate kms:DescribeKeys', () => {
+    expect(validate(['kms:DescribeKeys'])).to.be.deep.equal(['Invalid action \'kms:DescribeKeys\'']);
+  });
+
+  it('should validate kms', () => {
+    expect(validate([
+      'kms:ListKeys',
+      'kms:DescribeKey',
+      'kms:Encrypt',
+      'kms:Decrypt',
+      'kms:GenerateDataKey',
+    ])).to.be.empty;
+  });
 });
