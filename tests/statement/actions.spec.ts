@@ -81,12 +81,26 @@ describe('#Action', () => {
     expect(validate(['logs:UpdateLogGroup'])).to.be.deep.equal(['Invalid action \'logs:UpdateLogGroup\'']);
   });
 
-  it('should validate logs:CreateLogGroup', () => {
+  it('should validate logs', () => {
     expect(validate([
       'logs:CreateLogGroup',
       'logs:DescribeLogGroups',
       'logs:CreateLogStream',
       'logs:PutLogEvents',
+    ])).to.be.empty;
+  });
+
+  it('should not validate s3:ListBuckets', () => {
+    expect(validate(['s3:ListBuckets'])).to.be.deep.equal(['Invalid action \'s3:ListBuckets\'']);
+  });
+
+  it('should validate s3', () => {
+    expect(validate([
+      's3:CreateBucket',
+      's3:ListBucket',
+      's3:GetObject',
+      's3:PutObject',
+      's3:DeleteObject',
     ])).to.be.empty;
   });
 });
