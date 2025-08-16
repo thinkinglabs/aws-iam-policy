@@ -135,4 +135,19 @@ describe('#Action', () => {
       'kms:GenerateDataKey',
     ])).to.be.empty;
   });
+
+  it('should not validate ecr:ListRepositories', () => {
+    expect(validate(['ecr:ListRepositories'])).to.be.deep.equal(['Invalid action \'ecr:ListRepositories\'']);
+  });
+
+  it('should validate kms', () => {
+    expect(validate([
+      'ecr:GetAuthorizationToken',
+      'ecr:GetDownloadUrlForLayer',
+      'ecr:BatchGetImage',
+      'ecr:BatchCheckLayerAvailability',
+      'ecr:ListImages',
+      'ecr:DescribeImages',
+    ])).to.be.empty;
+  });
 });

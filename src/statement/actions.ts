@@ -4,6 +4,7 @@ import logsActions from './actions/logs';
 import s3Actions from './actions/s3';
 import ecsActions from './actions/ecs';
 import kmsActions from './actions/kms';
+import ecrActions from './actions/ecr';
 
 export function validate(actions: string[]): string[] {
   const result = actions.reduce(
@@ -33,6 +34,8 @@ function validateAction(action: string): boolean {
       return validateActionAgainstSetOfActions(action, ecsActions);
     case 'kms':
       return validateActionAgainstSetOfActions(action, kmsActions);
+    case 'ecr':
+      return validateActionAgainstSetOfActions(action, ecrActions);
     default:
       return true;
   }
