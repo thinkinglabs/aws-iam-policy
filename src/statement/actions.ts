@@ -3,7 +3,7 @@ import iamActions from './actions/iam';
 export function validate(actions: string[]): string[] {
   const result = actions.reduce(
     (accumulator, action) => {
-      const valid = action.startsWith('iam:') ? validateAction(action, iamActions) : true;
+      const valid = validateAction(action);
       if (!valid) {
         accumulator.push(`Invalid action '${action}'`);
       }
@@ -13,7 +13,17 @@ export function validate(actions: string[]): string[] {
   return result;
 }
 
-function validateAction(action: string, validActions: string[]): boolean {
+function validateAction(action: string): boolean {
+  const servicePrefix = action.split(':')[0];
+  switch (servicePrefix) {
+    case 'iam':
+      return validateActionAgainstSetOfActions(action, iamActions);
+    default:
+      return true;
+  }
+}
+
+function validateActionAgainstSetOfActions(action: string, validActions: string[]): boolean {
   const regexp = new RegExp(`^${action.replace('*', '.*').replaceAll('?', '.')}$`);
   const valid = validActions.reduce(
     (accumulator, currentValue) => accumulator || regexp.test(currentValue),
