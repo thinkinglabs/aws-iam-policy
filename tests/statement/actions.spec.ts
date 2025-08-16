@@ -150,4 +150,22 @@ describe('#Action', () => {
       'ecr:DescribeImages',
     ])).to.be.empty;
   });
+
+  it('should not validate lambda:DescribeFunctions', () => {
+    expect(validate(['lambda:DescribeFunctions'])).to.be.deep.equal(['Invalid action \'lambda:DescribeFunctions\'']);
+  });
+
+  it('should validate lambda', () => {
+    expect(validate([
+      'lambda:Get*',
+      'lambda:List*',
+      'lambda:Create*',
+      'lambda:Publish*',
+      'lambda:Update*',
+      'lambda:Put*',
+      'lambda:AddPermission',
+      'lambda:RemovePermission',
+      'lambda:InvokeFunction',
+    ])).to.be.empty;
+  });
 });
