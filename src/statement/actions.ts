@@ -1,4 +1,5 @@
 import iamActions from './actions/iam';
+import ec2Actions from './actions/ec2';
 
 export function validate(actions: string[]): string[] {
   const result = actions.reduce(
@@ -18,6 +19,8 @@ function validateAction(action: string): boolean {
   switch (servicePrefix) {
     case 'iam':
       return validateActionAgainstSetOfActions(action, iamActions);
+    case 'ec2':
+      return validateActionAgainstSetOfActions(action, ec2Actions);
     default:
       return true;
   }
