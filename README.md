@@ -30,7 +30,7 @@ Node.js lts/hydrogen (18.x)
 Install the package.
 
 ```bash
-npm install --save-dev @thinkinglabs/aws-iam-policy
+npm install --save @thinkinglabs/aws-iam-policy
 ```
 
 Create a policy document.
