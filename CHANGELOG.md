@@ -2,7 +2,7 @@
 
 ## 3.2.1
 
-* Fix 
+* Fix bug "ReferenceError: exports is not defined" ([#40](https://github.com/thinkinglabs/aws-iam-policy/issues/40))
 
 ## 3.2.0
 
