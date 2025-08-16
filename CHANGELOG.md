@@ -12,6 +12,8 @@
   
   * CloudWatch Logs (`logs`) permissions [#33](https://github.com/thinkinglabs/aws-iam-policy/issues/33).
 
+  * S3 (`s3`) permissions [#34](https://github.com/thinkinglabs/aws-iam-policy/issues/34).
+
 ## 3.1.0
 
 * Add support for Policy `Id` to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
