@@ -1,6 +1,7 @@
 # aws-iam-policy [![Build Status](https://travis-ci.org/thinkinglabs/aws-iam-policy.svg?branch=main)](https://travis-ci.org/thinkinglabs/aws-iam-policy)
 
-A Node.js package for working with AWS IAM Policy documents.
+A TypeScript DSL for handling AWS IAM Policy documents programmatically instead
+of using JSON strings.
 
 The primary reasons for creating the library were:
 
