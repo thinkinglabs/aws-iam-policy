@@ -2,6 +2,8 @@
 
 ## 3.2.0
 
+* Bump Node.js to v24, and keep support for v18, v20, v22
+
 * Add support to validate the list of `Statement.actions` and `Statement.notactions` to contain valid
 
   * IAM permissions [#31](https://github.com/thinkinglabs/aws-iam-policy/issues/31).
