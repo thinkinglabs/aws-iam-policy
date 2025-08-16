@@ -76,4 +76,17 @@ describe('#Action', () => {
       'ec2:DescribeInstances',
     ])).to.be.empty;
   });
+
+  it('should not validate logs:UpdateLogGroup', () => {
+    expect(validate(['logs:UpdateLogGroup'])).to.be.deep.equal(['Invalid action \'logs:UpdateLogGroup\'']);
+  });
+
+  it('should validate logs:CreateLogGroup', () => {
+    expect(validate([
+      'logs:CreateLogGroup',
+      'logs:DescribeLogGroups',
+      'logs:CreateLogStream',
+      'logs:PutLogEvents',
+    ])).to.be.empty;
+  });
 });

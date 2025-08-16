@@ -1,5 +1,6 @@
 import iamActions from './actions/iam';
 import ec2Actions from './actions/ec2';
+import logsActions from './actions/logs';
 
 export function validate(actions: string[]): string[] {
   const result = actions.reduce(
@@ -21,6 +22,8 @@ function validateAction(action: string): boolean {
       return validateActionAgainstSetOfActions(action, iamActions);
     case 'ec2':
       return validateActionAgainstSetOfActions(action, ec2Actions);
+    case 'logs':
+      return validateActionAgainstSetOfActions(action, logsActions);
     default:
       return true;
   }
