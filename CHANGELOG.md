@@ -22,6 +22,8 @@
 
   * Lambda (`lambda`) [#38](https://github.com/thinkinglabs/aws-iam-policy/issues/38).
 
+  * RDS (`rds`) [#39](https://github.com/thinkinglabs/aws-iam-policy/issues/39).
+
 ## 3.1.0
 
 * Add support for Policy `Id` to the `PolicyDocument` ([#29](https://github.com/thinkinglabs/aws-iam-policy/issues/29)).
