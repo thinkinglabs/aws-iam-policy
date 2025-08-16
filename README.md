@@ -22,7 +22,7 @@ Node.js lts/hydrogen (18.x)
 - Validating the uniqueness of `Sid` within the scope of an IAM Policy document
   when adding Statements.
 - Retrieval of Policy Statements by `Sid`.
-- Validate `Statement.actions` to contain valid `iam`, `kms`, `ec2`, `lambda`, `ecs`, `ecr`, `logs`, `s3` permissions;
+- Validate `Statement.actions` to contain valid `iam`, `kms`, `ec2`, `lambda`, `ecs`, `ecr`, `logs`, `s3`, `rds` permissions;
   - with support for multi-character wildcard (`*`) and single-character wildcard (`?`).
 
 ## Documentation
