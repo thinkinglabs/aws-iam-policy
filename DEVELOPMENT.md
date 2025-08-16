@@ -28,7 +28,7 @@ in to publish the package to the NPM Registry.
 Surrounded with single quotes and trailing comma.
 
 ```bash
-$ ./aws_iam_actions iam
+$ ./aws_service_actions iam
 'iam:AddClientIDToOpenIDConnectProvider',
 'iam:AddRoleToInstanceProfile',
 'iam:AddUserToGroup',
@@ -36,4 +36,10 @@ $ ./aws_iam_actions iam
 'iam:AttachRolePolicy',
 'iam:AttachUserPolicy',
 ...
+```
+
+macOS: copy the list of actions on the clipboard.
+
+```bash
+./aws_service_actions iam | pbcopy
 ```
