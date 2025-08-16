@@ -8,10 +8,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "lint": "eslint",
-    "test": "npm run lint && mocha",
+    "test": "npm run lint && tsc && mocha",
     "preversion": "npm test",
     "postversion": "git push origin main --follow-tags",
-    "prepublishOnly": "npm test && tsc"
+    "prepublishOnly": "npm test"
   },
   "files": [
     "dist",
@@ -30,12 +30,12 @@
     "node": "24.6.0"
   },
   "devDependencies": {
+    "typescript": "^5",
     "@types/chai": "^4.2.15",
     "@types/mocha": "^8.2.0",
     "@types/node": "^24",
     "globals": "^16.3.0",
     "ts-node": "^9.1.1",
-    "typescript": "^5",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
     "eslint": "^9",
