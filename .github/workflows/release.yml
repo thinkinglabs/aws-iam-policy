@@ -4,6 +4,10 @@ on:
   push:
     tags: ['v[0-9]+.[0-9]+.[0-9]+*'] # only a valid semver tag
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   publish-package:
     runs-on: ubuntu-latest
